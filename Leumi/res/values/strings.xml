@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Leumi</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="tel_num"><b>טל:</b></string>
+    <string name="cell_num"><b>נייד:</b></string>
+    <string name="fax"><b>פקס:</b></string>
+    <string name="email"><b>דוא״ל:</b></string>
+    <string name="unit"><b>יחידה:</b></string>
+    <string name="job"><b>תפקיד:</b></string>
+    <string name="organization_hierarchy">היררכיה אירגונית</string>
+    
+    <string name="somthing_went_wrong">זמנית לא ניתן להציג את העמוד המבוקש. אנא נסה שנית במועד מאוחר יותר</string>
+    <string name="office">משרד:</string>
+ 	<string name="cellphone">נייד: </string>
+ 	<string name="impossible_to_load_service">לא ניתן להשלים את השירות</string>
+ 	<string name="no_phone_num_found">לא קיים מספר טלפון במערכת</string>
+ 	<string name="make_a_call">התקשר</string>
+ 	<string name="no_email_found">לא קיימת כתובת אי מייל במערכת</string>
+ 	
+ 	<string name="first_name">שם פרטי:</string>
+ 	<string name="last_name">שם משפחה:</string>
+ 	<string name="free_search">חיפוש חופשי:</string>
+ 	<string name="free_unit_search">חיפוש יחידה ישירה:</string>
+ 	<string name="advance_search">חיפוש מתקדם</string>
+ 	
+ 	<string name="search_results">תוצאות חיפוש:</string>
+ 	<string name="filter_results_by_unit">סנן תוצאות לפי יחידה</string>
+ 	<string name="filter_results_by_job">סנן תוצאות לפי תפקיד</string>
+ 	
+ 	<string name="service_description">תיאור השירות:</string>
+ 	<string name="communication_options">פרטי התקשרות</string>
+ 	<string name="houres_of_service">שעות פתיחה</string>
+ 	<string name="link_to_service">קישור לשירות</string>
+ 	<string name="responsible_party">גורם אחראי</string>
+ 	
+ 	<string name="yom_a"><b>יום א:</b></string>
+ 	<string name="yom_b"><b>יום ב:</b></string>
+ 	<string name="yom_c"><b>יום ג:</b></string>
+ 	<string name="yom_d"><b>יום ד:</b></string>
+ 	<string name="yom_e"><b>יום ה:</b></string>
+ 	<string name="yom_f"><b>יום ו:</b></string>
+ 	<string name="yom_g"><b>יום ש:</b></string>
+ 	<string name="from">מ</string>
+ 	<string name="till">עד</string>
+</resources>

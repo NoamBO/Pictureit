@@ -1,0 +1,37 @@
+package com.pictureit.leumi.server;
+
+import utilities.BaseHttpGet;
+import android.content.Context;
+
+
+public class GetAutoComplete extends BaseHttpGet {
+
+	private String searchType;
+	
+	public GetAutoComplete(Context ctx, String searchType, HttpCalback callback) {
+		super(ctx);
+		this.callback = callback;
+		this.searchType = searchType;
+	}
+
+	@Override
+	protected String doInBackground(String... params) {
+		String request = params[0];
+		prepare(request.replace(" ", "+"));
+	    return super.doInBackground(params);
+	}
+
+
+	@Override
+	protected void prepare(String request) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ServerAddresses.HOST)
+		.append(ServerAddresses.BASE_PATH)
+		.append(ServerAddresses.AUTOCOMPLETE_METHOD_PATH)
+		.append("/").append(searchType)
+		.append("?").append(ServerAddresses.TERM).append("=")
+		.append(request);
+		
+		setUrl(sb.toString());
+	}
+}
