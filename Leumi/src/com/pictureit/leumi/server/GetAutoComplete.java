@@ -25,13 +25,11 @@ public class GetAutoComplete extends BaseHttpGet {
 	@Override
 	protected void prepare(String request) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(ServerAddresses.HOST)
-		.append(ServerAddresses.BASE_PATH)
-		.append(ServerAddresses.AUTOCOMPLETE_METHOD_PATH)
+		sb.append(ServerAddresses.AUTOCOMPLETE_METHOD_PATH)
 		.append("/").append(searchType)
 		.append("?").append(ServerAddresses.TERM).append("=")
 		.append(request);
 		
-		setUrl(sb.toString());
+		super.prepare(sb.toString());
 	}
 }

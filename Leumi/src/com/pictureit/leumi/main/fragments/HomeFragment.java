@@ -210,25 +210,42 @@ public class HomeFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				PostSearch postSearch = new PostSearch(getActivity(), new HttpCalback() {
-					
-					@Override
-					public void onAnswerReturn(Object answer) {
-						if(JsonToObject.jsonToUserProfile((String) answer) == null)
-							return;
-						
-						Fragment f = new EmploeeProfileFragment();
-						Bundle args = new Bundle();
-						args.putString(Const.JSON, (String) answer);
-						f.setArguments(args);
-						((MainActivity)getActivity()).addFragment(f);
-						etSearch.setText("");
-					}
-				});
 				Emploee e = (Emploee) parent.getItemAtPosition(position);
-				postSearch.getEmploeeForSearchID(e.SearchID);
+				onAutocopletionPressed(e);
 			}
 		});
+		
+	}
+
+	protected void onAutocopletionPressed(Emploee emploee) {
+		final Fragment f;
+		boolean snifSelected = emploee.SearchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF);
+		if(!snifSelected)
+			f = new EmploeeProfileFragment();
+		else
+			f = new Fragment();
+		
+		PostSearch postSearch = new PostSearch(getActivity(), new HttpCalback() {
+			
+			@Override
+			public void onAnswerReturn(Object answer) {
+				if(JsonToObject.jsonToUserProfile((String) answer) == null)
+					return;
+				
+				
+				Bundle args = new Bundle();
+				args.putString(Const.JSON, (String) answer);
+				f.setArguments(args);
+				((MainActivity)getActivity()).addFragment(f);
+				etSearch.setText("");
+			}
+		});
+		
+		if(!snifSelected)
+			postSearch.getEmploeeForSearchID(emploee.SearchID);
+		else
+			postSearch.getBranchEmployeesForDepartmentCode(emploee.SearchID);
+		
 		
 	}
 

@@ -34,14 +34,12 @@ public class GetService extends BaseHttpGet {
 	protected void prepare(String request) {
 		
 		StringBuilder sb = new StringBuilder();
-		sb.append(ServerAddresses.HOST)
-		.append(ServerAddresses.BASE_PATH)
-		.append(ServerAddresses.GET_SERVICE_METHOD_PATH)
+		sb.append(ServerAddresses.GET_SERVICE_METHOD_PATH)
 		.append(ServerAddresses.GET_SERVICE_ACTION_PATH)
 		.append("?").append(ServerAddresses.ID)
 		.append("=").append(request);
 		
-		setUrl(sb.toString());
+		super.prepare(sb.toString());
 	}
 
 }

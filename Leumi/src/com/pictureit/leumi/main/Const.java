@@ -8,6 +8,8 @@ public class Const {
 	
 	public static final int FRAGMENT_NAME_MY_PROFILE = 3;
 	
+	public static final String SYSTEM_TYPE_SNIF = "Snif";
+	
 	public static final String SERVICE_CLICK = "ServiceClick";
 	
 	public static final String JSON = "json";
@@ -41,4 +43,6 @@ public class Const {
 	public static final String SYSTEM_IDENTITY_DESC = "SystemIdentityDesc";
 	
 	public static final String SYSTEM_IDENTITY = "SystemIdentity";
+
+
 }

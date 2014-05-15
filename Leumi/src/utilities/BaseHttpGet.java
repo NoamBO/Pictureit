@@ -8,6 +8,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 
+import com.pictureit.leumi.server.ServerAddresses;
+
 import android.content.Context;
 
 //Written by @Noam Bar-Oz
@@ -48,7 +50,10 @@ public class BaseHttpGet extends HttpBase {
 	
 	@Override
 	protected void prepare(String request) {
-
+		StringBuilder sb = new StringBuilder();
+		sb.append(ServerAddresses.HOST)
+		.append(ServerAddresses.BASE_PATH)
+		.append(request);
+		setUrl(sb.toString());
 	}
-
 }

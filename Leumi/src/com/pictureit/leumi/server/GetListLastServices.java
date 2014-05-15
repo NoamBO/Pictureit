@@ -18,14 +18,7 @@ public class GetListLastServices extends BaseHttpGet {
 
 	@Override
 	protected void prepare(String request) {
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(ServerAddresses.HOST)
-		.append(ServerAddresses.BASE_PATH)
-		.append(ServerAddresses.GET_SERVICES_LIST);
-		
-		setUrl(sb.toString());
-
+		super.prepare(ServerAddresses.GET_SERVICES_LIST);
 	}
 
 }
