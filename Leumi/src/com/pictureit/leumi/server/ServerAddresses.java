@@ -10,7 +10,7 @@ public class ServerAddresses {
 	
 	public static final String TERM = "term";
 
-	public static final String GETBRANCH_METHOD_PATH = "/GetBranch";
+	public static final String GET_BRANCH_METHOD_PATH = "/GetBranch";
 
 	public static final String GET_SERVICE_METHOD_PATH = "/GetServiceClick";
 	

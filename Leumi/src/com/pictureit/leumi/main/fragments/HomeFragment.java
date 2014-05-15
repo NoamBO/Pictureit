@@ -28,6 +28,7 @@ import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.main.R.id;
 import com.pictureit.leumi.main.R.layout;
 import com.pictureit.leumi.server.GetAutoComplete;
+import com.pictureit.leumi.server.GetBrunch;
 import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
 import com.pictureit.leumi.server.PostSearch;
@@ -223,29 +224,31 @@ public class HomeFragment extends Fragment {
 		if(!snifSelected)
 			f = new EmploeeProfileFragment();
 		else
-			f = new Fragment();
+			f = new BranchFragment();
 		
-		PostSearch postSearch = new PostSearch(getActivity(), new HttpCalback() {
+		HttpCalback callback = new HttpCalback() {
 			
 			@Override
 			public void onAnswerReturn(Object answer) {
-				if(JsonToObject.jsonToUserProfile((String) answer) == null)
+				if(answer == null)
 					return;
-				
-				
+
 				Bundle args = new Bundle();
-				args.putString(Const.JSON, (String) answer);
+				args.putString(Const.JSON, answer.toString());
 				f.setArguments(args);
 				((MainActivity)getActivity()).addFragment(f);
 				etSearch.setText("");
 			}
-		});
+		};
 		
-		if(!snifSelected)
+		if(!snifSelected) {
+			PostSearch postSearch = new PostSearch(getActivity(), callback);
 			postSearch.getEmploeeForSearchID(emploee.SearchID);
-		else
-			postSearch.getBranchEmployeesForDepartmentCode(emploee.SearchID);
-		
+		}
+		else {
+			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
+			getBranch.execute(emploee.SearchID);
+		}
 		
 	}
 

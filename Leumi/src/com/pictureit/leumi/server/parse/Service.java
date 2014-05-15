@@ -15,7 +15,7 @@ public class Service {
 	public ArrayList<ContactInfo> ContactInfo;
 	public LikingData LikingData;
 	public Register Register;
-	public ArrayList<ServiceHourOperatation> ServiceHourOperatation;
+	public ArrayList<HourOperatation> ServiceHourOperatation;
 	public String ServiceOwner;
 	public String ServiceUnitCode;
 	public String ServiceUrl;
@@ -34,13 +34,4 @@ public class Service {
 		public String Status;
 	}
 
-	public class ServiceHourOperatation {
-		public String CloseOpen;
-		public String DayInWeek;
-		public String EFrom;
-		public String ETo;
-		public String HourBeforeShabat;
-		public String MFrom;
-		public String MTo;
-	}
 }

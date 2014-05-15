@@ -12,7 +12,6 @@ import com.google.gson.reflect.TypeToken;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 import com.pictureit.leumi.server.parse.Service.LikingData;
 import com.pictureit.leumi.server.parse.Service.Register;
-import com.pictureit.leumi.server.parse.Service.ServiceHourOperatation;
 
 public class JsonToObject {
 	
@@ -28,6 +27,8 @@ public class JsonToObject {
 	private static final String NO_RESULT = "NotResult";
 	
 	private static final String RESULT = "result";
+	
+	private static final String BRANCHS = "branchs";
 
 	public static boolean isStatusOk(String json) {
 		try {
@@ -39,6 +40,39 @@ public class JsonToObject {
 			return false;
 		}
 		return false;
+	}
+	
+	public static Branch jsonToBranch(String json) {
+		Branch b = null;
+		JSONObject j = null;
+		try {
+			j = new JSONObject(json);
+			if(!j.getString(SEARCH_STATUS).equals(SEARCH_STATUS_OK))
+				return null;
+			JSONObject o = j.getJSONArray(BRANCHS).getJSONObject(0);
+			
+			b = new Branch();
+			b.BankName = jsonGetString(o, "BankName");
+			b.BankNum = jsonGetString(o, "BankNum");
+			b.BranchCity = jsonGetString(o, "BranchCity");
+			b.BranchFax = jsonGetString(o, "BranchFax");
+			b.BranchName = jsonGetString(o, "BranchName");
+			b.BranchNum = jsonGetString(o, "BranchNum");
+			b.BranchPhone = jsonGetString(o, "BranchPhone");
+			b.BranchStreet = jsonGetString(o, "BranchStreet");
+			b.BranchZipCode = jsonGetString(o, "BranchZipCode");
+			b.DepartmentCode = jsonGetString(o, "DepartmentCode");
+			
+			Type typeOfHourOperatation = new TypeToken<ArrayList<HourOperatation>>(){}.getType();
+			ArrayList<HourOperatation> BranchHourOperatation = new Gson().fromJson(jsonGetJsonArray(o, "BranchHourOperatation").toString(), typeOfHourOperatation);
+			b.BranchHourOperatation = BranchHourOperatation;
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return b;
 	}
 
 	public static ArrayList<Emploee> jsonToAutoComplete(String json) {
@@ -88,6 +122,9 @@ public class JsonToObject {
 		Profile p = null;
 		try {
 			JSONObject jsonObject = new JSONObject(json);
+			if(!isStatusOk(json))
+				return null;
+			
 			JSONArray jsonArray = jsonObject.getJSONArray("persons");
 			if (jsonArray.length() > 0) {
 				p = new Gson().fromJson(jsonArray.get(0).toString(),
@@ -176,8 +213,8 @@ public class JsonToObject {
 			s.ServiceUrl = jsonGetString(o, ServiceUrl);
 
 
-			Type typeOfServiceHourOperatation = new TypeToken<ArrayList<ServiceHourOperatation>>(){}.getType();
-			ArrayList<ServiceHourOperatation> ServiceHourOperatationList = new Gson().fromJson(jsonGetJsonArray(o, ServiceHourOperatation).toString(), typeOfServiceHourOperatation);
+			Type typeOfServiceHourOperatation = new TypeToken<ArrayList<HourOperatation>>(){}.getType();
+			ArrayList<HourOperatation> ServiceHourOperatationList = new Gson().fromJson(jsonGetJsonArray(o, ServiceHourOperatation).toString(), typeOfServiceHourOperatation);
 			
 			Type typeOfContactInfo = new TypeToken<ArrayList<ContactInfo>>(){}.getType();
 			ArrayList<ContactInfo> ContactInfoList = new Gson().fromJson(jsonGetJsonArray(o, ContactInfo).toString(), typeOfContactInfo);

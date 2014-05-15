@@ -20,11 +20,11 @@ import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.PostServiceRegistration;
 import com.pictureit.leumi.server.SearchCallback;
+import com.pictureit.leumi.server.parse.HourOperatation;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Service;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
-import com.pictureit.leumi.server.parse.Service.ServiceHourOperatation;
 
 public class ServiceFragment extends BaseRegularFragmentNotMain {
 	
@@ -211,7 +211,7 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 	}
 
 	private void setTvOpenHours(
-			ArrayList<ServiceHourOperatation> serviceHourOperatation, TextView tvOpenHours, TextView tvOpenDays) {
+			ArrayList<HourOperatation> serviceHourOperatation, TextView tvOpenHours, TextView tvOpenDays) {
 		
 		final String CLOSE = "Close";
 		
@@ -220,7 +220,7 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 			return;
 		}
 		
-		ArrayList<ServiceHourOperatation> s = serviceHourOperatation;
+		ArrayList<HourOperatation> s = serviceHourOperatation;
 		StringBuilder sbHours = new StringBuilder();
 		StringBuilder sbDays = new StringBuilder();
 		for (int i = 0; i < serviceHourOperatation.size(); i++) {
