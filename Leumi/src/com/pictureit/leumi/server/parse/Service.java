@@ -20,7 +20,13 @@ public class Service {
 	public String ServiceUnitCode;
 	public String ServiceUrl;
 
-	public class ContactInfo {
+	public static class ContactInfo {
+		
+		public ContactInfo(String value, String contact) {
+			this.contact = contact;
+			this.Value = value;
+		}
+		
 		public String Value;
 		public String contact;
 	}

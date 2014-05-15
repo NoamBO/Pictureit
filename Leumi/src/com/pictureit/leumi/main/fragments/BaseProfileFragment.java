@@ -48,7 +48,7 @@ public class BaseProfileFragment extends BaseFragment {
 	private ImageView arrowHierarchy;
 	private ViewGroup vgHierarchyHeader;
 	private TextView tvUnit;
-	private Profile mProfile;
+	protected Profile mProfile;
 	private ImageButton ibCall, ibSms, ibMail;
 	private ListView mListView;
 	private ArrayList<NameValue> mArrayList;

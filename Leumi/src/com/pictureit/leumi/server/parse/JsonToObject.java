@@ -17,6 +17,7 @@ public class JsonToObject {
 	
 	public static final String CONTACT_INFO_CONTACT_VALUE_PHONE = "Phone";
 	public static final String CONTACT_INFO_CONTACT_VALUE_E_MAIL = "Mail";
+	public static final String CONTACT_INFO_CONTACT_VALUE_FAX = "Fax";
 
 	private final static String INDEXSES = "indexses";
 

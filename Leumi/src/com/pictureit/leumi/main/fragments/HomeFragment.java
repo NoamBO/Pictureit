@@ -222,7 +222,7 @@ public class HomeFragment extends Fragment {
 		final Fragment f;
 		boolean snifSelected = emploee.SearchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF);
 		if(!snifSelected)
-			f = new EmploeeProfileFragment();
+			f = new ProfileFragmentKindAutocomplete();
 		else
 			f = new BranchFragment();
 		

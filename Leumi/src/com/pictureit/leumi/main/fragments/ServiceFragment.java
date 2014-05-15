@@ -213,44 +213,14 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 	private void setTvOpenHours(
 			ArrayList<HourOperatation> serviceHourOperatation, TextView tvOpenHours, TextView tvOpenDays) {
 		
-		final String CLOSE = "Close";
-		
 		if(serviceHourOperatation == null) {
 			vgOpenHours.setVisibility(View.GONE);
 			return;
 		}
 		
-		ArrayList<HourOperatation> s = serviceHourOperatation;
-		StringBuilder sbHours = new StringBuilder();
-		StringBuilder sbDays = new StringBuilder();
-		for (int i = 0; i < serviceHourOperatation.size(); i++) {
-			if (!s.get(i).CloseOpen.equalsIgnoreCase(CLOSE)) {
-				sbDays.append(getDayString(s.get(i).DayInWeek));
-				if (s.get(i).MFrom != null
-						&& !s.get(i).MFrom.equalsIgnoreCase(""))
-					sbHours.append(getResources().getString(R.string.from) + "- ")
-							.append(s.get(i).MFrom)
-							.append(" "
-									+ getResources().getString(R.string.till)
-									+ " ").append(s.get(i).MTo);
-				if (s.get(i).EFrom != null
-						&& !s.get(i).EFrom.equalsIgnoreCase(""))
-					sbHours.append(
-							" , " + getResources().getString(R.string.from)
-									+ "- ")
-							.append(s.get(i).EFrom)
-							.append(" "
-									+ getResources().getString(R.string.till)
-									+ " ").append(s.get(i).ETo);
-				if (i < serviceHourOperatation.size()){
-					sbHours.append("\n");
-					sbDays.append("\n");
-				}
-			}
-		}
-		tvOpenDays.setText(sbDays.toString());
-		tvOpenHours.setText(sbHours.toString());
-		if(sbDays.length() < 1)
+		int minimumDaysOpenToShowFeature = ScreensHelper.setOpenHouersTextViews(serviceHourOperatation, tvOpenHours, tvOpenDays, getActivity()).length();
+		
+		if(minimumDaysOpenToShowFeature < 1)
 			vgOpenHours.setVisibility(View.GONE);
 	}
 
@@ -259,27 +229,9 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 			vgCommunication.setVisibility(View.GONE);
 			return;
 		}
+		int minimumNumbersToShowFeature = ScreensHelper.setCommunicationText(contactInfo, tvCommunication, tvCommunicationName, getActivity()).length();
 		
-		StringBuilder sbAddress = new StringBuilder();
-		StringBuilder sbAddressType = new StringBuilder();
-		for (int i = 0; i < contactInfo.size(); i++) {
-			if(contactInfo.get(i).contact.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_PHONE)) {
-				sbAddressType.append(getText(R.string.tel_num));
-				sbAddress.append(contactInfo.get(i).Value);
-			} else if (contactInfo.get(i).contact.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_E_MAIL)) {
-				sbAddressType.append(getText(R.string.email));
-				sbAddress.append(contactInfo.get(i).Value);
-			}
-
-			if (i < contactInfo.size()){
-				sbAddress.append("\n");
-				sbAddressType.append("\n");
-			}
-		}
-		tvCommunication.setText(sbAddress.toString());
-		tvCommunicationName.setText(sbAddressType.toString());
-		
-		if(sbAddressType.length() < 1)
+		if(minimumNumbersToShowFeature < 1)
 			vgCommunication.setVisibility(View.GONE);
 	}
 
@@ -287,25 +239,5 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		this.mService = service;
 	}
 
-	private String getDayString(String dayInWeek) {
-		switch (Integer.valueOf(dayInWeek)) {
-		case 1:
-			return getResources().getString(R.string.yom_a)+"  ";
-		case 2:
-			return getResources().getString(R.string.yom_b)+"  ";
-		case 3:
-			return getResources().getString(R.string.yom_c)+" "+"  ";
-		case 4:
-			return getResources().getString(R.string.yom_d)+"  ";
-		case 5:
-			return getResources().getString(R.string.yom_e)+"  ";
-		case 6:
-			return getResources().getString(R.string.yom_f)+"  "+"  ";
-		case 7:
-			return getResources().getString(R.string.yom_g)+"  ";
-		default:
-			break;
-		}
-		return "";
-	}
+
 }

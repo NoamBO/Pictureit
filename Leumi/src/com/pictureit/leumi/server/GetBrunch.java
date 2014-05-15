@@ -30,10 +30,5 @@ public class GetBrunch extends BaseHttpGet {
 		
 		super.prepare(sb.toString());
 	}
-	
-	@Override
-	protected void onPostExecute(Object result) {
-		Branch b = JsonToObject.jsonToBranch((String) result);
-		super.onPostExecute(b);
-	}
+
 }
