@@ -199,6 +199,7 @@ public class JsonToObject {
 		final String ServiceOwner = "ServiceOwner";
 		final String ServiceUnitCode = "ServiceUnitCode";
 		final String ServiceUrl = "ServiceUrl";
+		final String ServiceID = "ServiceID";
 		
 		Service s = new Service();
 		try {
@@ -212,14 +213,14 @@ public class JsonToObject {
 			s.ServiceOwner = jsonGetString(o, ServiceOwner);
 			s.ServiceUnitCode = jsonGetString(o, ServiceUnitCode);
 			s.ServiceUrl = jsonGetString(o, ServiceUrl);
-
+			s.ServiceID = jsonGetString(o, ServiceID);
+			
 
 			Type typeOfServiceHourOperatation = new TypeToken<ArrayList<HourOperatation>>(){}.getType();
 			ArrayList<HourOperatation> ServiceHourOperatationList = new Gson().fromJson(jsonGetJsonArray(o, ServiceHourOperatation).toString(), typeOfServiceHourOperatation);
 			
 			Type typeOfContactInfo = new TypeToken<ArrayList<ContactInfo>>(){}.getType();
 			ArrayList<ContactInfo> ContactInfoList = new Gson().fromJson(jsonGetJsonArray(o, ContactInfo).toString(), typeOfContactInfo);
-
 
 			LikingData LikingDataList = jsonGetFromGson(jsonGetJsonArray(o, ContactInfo).toString(), LikingData.class);			
 			Register RegisterList = jsonGetFromGson(jsonGetJsonArray(o, ContactInfo).toString(), Register.class);
@@ -228,13 +229,30 @@ public class JsonToObject {
 			s.LikingData = LikingDataList;
 			s.Register = RegisterList;
 			s.ServiceHourOperatation = ServiceHourOperatationList;
-			
+			s.LikingData = new Gson().fromJson(o.getJSONObject("LikingData").toString(), LikingData.class);
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
 
 		return s;
+	}
+	
+
+	public static LikingData jsonToLikingData(String json) {
+		LikingData ld = null;
+		try {
+			if(!isStatusOk(json))
+				return null;
+			
+			JSONObject o = new JSONObject(json);
+			ld = new LikingData();
+			ld.LikingCount = String.valueOf(jsonGetInteger(o, "count"));
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ld;
 	}
 	
 	
@@ -282,4 +300,5 @@ public class JsonToObject {
 		}
 		return value;
 	}
+
 }

@@ -65,6 +65,7 @@
                     android:background="@drawable/likeicongray" />
 
                 <TextView
+                    android:id="@+id/tv_service_likes_count"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background="@drawable/bubble"
@@ -72,6 +73,7 @@
                     android:gravity="center"
                     android:maxEms="1"
                     android:singleLine="true" />
+
             </LinearLayout>
 
             <LinearLayout

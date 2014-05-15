@@ -19,6 +19,7 @@ public class Service {
 	public String ServiceOwner;
 	public String ServiceUnitCode;
 	public String ServiceUrl;
+	public String ServiceID;
 
 	public static class ContactInfo {
 		
@@ -31,7 +32,7 @@ public class Service {
 		public String contact;
 	}
 
-	public class LikingData {
+	public static class LikingData {
 		public String Liking;
 		public String LikingCount;
 	}

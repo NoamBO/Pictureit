@@ -8,6 +8,10 @@ public class Const {
 	
 	public static final int FRAGMENT_NAME_MY_PROFILE = 3;
 	
+	public static final String REGISTER_STATUS_REGISTERED = "1";
+	
+	public static final String ALREADY_LIKE = "1";
+	
 	public static final String SYSTEM_TYPE_SNIF = "Snif";
 	
 	public static final String SERVICE_CLICK = "ServiceClick";
@@ -44,5 +48,8 @@ public class Const {
 	
 	public static final String SYSTEM_IDENTITY = "SystemIdentity";
 
+	public static final String LIKING_REQUEST_TYPE_LIKE = "1";
+			
+	public static final String LIKING_REQUEST_TYPE_UNLIKE = "0";
 
 }

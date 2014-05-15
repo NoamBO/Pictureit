@@ -17,6 +17,7 @@
     <string name="office">משרד:</string>
  	<string name="cellphone">נייד: </string>
  	<string name="impossible_to_load_service">לא ניתן להשלים את השירות</string>
+ 	<string name="already_signed_to_this_service">אתה כבר רשום לשירות זה</string>
  	<string name="no_phone_num_found">לא קיים מספר טלפון במערכת</string>
  	<string name="make_a_call">התקשר</string>
  	<string name="no_email_found">לא קיימת כתובת אי מייל במערכת</string>

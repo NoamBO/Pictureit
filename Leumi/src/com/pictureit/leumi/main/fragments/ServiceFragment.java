@@ -3,6 +3,7 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import utilities.HttpBase.HttpCalback;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -15,8 +16,10 @@ import android.widget.TextView;
 
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
+import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.Dialogs;
 import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.server.PostLike;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.PostServiceRegistration;
 import com.pictureit.leumi.server.SearchCallback;
@@ -25,6 +28,7 @@ import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Service;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
+import com.pictureit.leumi.server.parse.Service.LikingData;
 
 public class ServiceFragment extends BaseRegularFragmentNotMain {
 	
@@ -51,6 +55,7 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		TextView tvCommunicationName = findView(v, R.id.tv_service_communication_name);
 		TextView tvOpenHours = findView(v, R.id.tv_service_houres_of_service);
 		TextView tvOpenDays = findView(v, R.id.tv_service_days_of_service);
+		tvLike = findView(v, R.id.tv_service_likes_count);
 		
 		TextView tvLinkToService = findView(v, R.id.tv_service_link_to_service);
 		tvResponsibleParty = findView(v, R.id.tv_service_responsible_party);
@@ -73,11 +78,19 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		setTvCommunication(mService.ContactInfo, tvCommunication, tvCommunicationName);
 		setTvOpenHours(mService.ServiceHourOperatation, tvOpenHours, tvOpenDays);
 		setTvLinkToService(tvLinkToService, mService.ServiceUrl);
-//		tvLike.setText(mService.LikingData.LikingCount);
+		setTvLike();
 		
 		return v;
 	}
 	
+	private void setTvLike() {
+		tvLike.setText(mService.LikingData.LikingCount);
+		if(mService.LikingData.Liking.equalsIgnoreCase(Const.ALREADY_LIKE))
+			ibLike.setBackgroundResource(R.drawable.likeiconblue);
+		else
+			ibLike.setBackgroundResource(R.drawable.likeicongray);
+	}
+
 	private void setTvResponsibleParty(TextView tvResponsibleParty2, String serviceOwner, String serviceUnitCode) {
 		if(serviceUnitCode != null && serviceOwner != null
 				&& !serviceUnitCode.equals("") && !serviceOwner.equals("")) {
@@ -127,7 +140,26 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		ibLike.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				// TODO Auto-generated method stub
+				PostLike like = new PostLike(getActivity(), new HttpCalback() {
+					
+					@Override
+					public void onAnswerReturn(Object object) {
+						LikingData likingData = JsonToObject.jsonToLikingData((String) object);
+						if(Integer.valueOf(likingData.LikingCount) > Integer.valueOf(mService.LikingData.LikingCount))
+							likingData.Liking = Const.LIKING_REQUEST_TYPE_LIKE;
+						else
+							likingData.Liking = Const.LIKING_REQUEST_TYPE_UNLIKE;
+						mService.LikingData = likingData;
+						setTvLike();
+					}
+				});
+				String likeRequest;
+				if(mService.LikingData.Liking.equals(Const.ALREADY_LIKE))
+					likeRequest = Const.LIKING_REQUEST_TYPE_UNLIKE;
+				else
+					likeRequest = Const.LIKING_REQUEST_TYPE_LIKE;
+				like.like(mService.ServiceID, likeRequest);
+					
 			}
 		});
 		vgCommunication.setOnClickListener(new OnClickListener() {	
@@ -162,14 +194,24 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		});
 	}
 
+
+	@SuppressWarnings("unused")
 	protected void follow() {
 		if(true)
 			return;
-		@SuppressWarnings("unused")
+
+		if(mService.Register.Status .equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED)) {
+			new AlertDialog.Builder(getActivity())
+			.setTitle(R.string.impossible_to_load_service)
+			.setMessage(R.string.already_signed_to_this_service)
+			.create().show();
+			return;
+		}
+		
+		// TODO signin to service
 		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCalback() {
 			@Override
 			public void onAnswerReturn(Object object) {
-				// TODO Auto-generated method stub
 				
 			}
 		});
