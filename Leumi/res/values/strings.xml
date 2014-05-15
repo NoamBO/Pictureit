@@ -36,6 +36,7 @@
  	<string name="houres_of_service">שעות פתיחה</string>
  	<string name="link_to_service">קישור לשירות</string>
  	<string name="responsible_party">גורם אחראי</string>
+ 	<string name="address">כתובת</string>
  	
  	<string name="yom_a"><b>יום א:</b></string>
  	<string name="yom_b"><b>יום ב:</b></string>

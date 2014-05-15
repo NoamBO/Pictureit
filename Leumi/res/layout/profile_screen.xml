@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingRight="15dp"
-                    android:textColor="#104E8B"
+                    android:textColor="@color/main_name_blue_color"
                     android:textSize="22sp" />
 
                 <LinearLayout
