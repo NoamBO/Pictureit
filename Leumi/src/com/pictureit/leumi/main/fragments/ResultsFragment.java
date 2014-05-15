@@ -22,6 +22,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.MainActivity;
@@ -29,6 +31,7 @@ import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Profile;
+import com.squareup.picasso.Picasso;
 
 public class ResultsFragment extends BaseRegularFragmentNotMain {
 
@@ -76,7 +79,7 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 	
 	@Override
 	public void onDestroyView() {
-		mMainAdapter.imageLoader.clearCache();
+		//mMainAdapter.imageLoader.clearCache();
 		super.onDestroyView();
 	}
 	
@@ -189,8 +192,9 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 		
 		private String filterDepartment ="";
 		private String filterJob ="";
-		
-		private ImageLoader imageLoader;
+		private com.nostra13.universalimageloader.core.ImageLoader imageLoader;
+		private DisplayImageOptions options;
+		//private ImageLoader imageLoader;
 		
 		@SuppressWarnings("unchecked")
 		public ResultsAdapter(Context context,
@@ -201,7 +205,20 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 			suggestions = new ArrayList<Profile>();
 			
 			ctx = context;
-			imageLoader = new ImageLoader(ctx);
+			//imageLoader = new ImageLoader(ctx);
+			
+			options = new DisplayImageOptions.Builder()
+			.showImageForEmptyUri(R.drawable.cellprofileimg)
+			.showImageOnFail(R.drawable.cellprofileimg)
+			.showImageOnLoading(R.drawable.cellprofileimg)
+	        .resetViewBeforeLoading(false)  // default
+	        .delayBeforeLoading(1000)
+	        .cacheInMemory(false) // default
+	        .cacheOnDisc(false) // default
+	        .considerExifParams(false) // default
+	        .displayer(new SimpleBitmapDisplayer()) // default
+	        .build();
+			imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
 		}
 		
 		@Override
@@ -254,8 +271,7 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 			});
 			
 			String picUrl = getItem(position).L144WorkerPictureUrl;
-			if(picUrl != null && !picUrl.equalsIgnoreCase(""))
-				imageLoader.DisplayImage(picUrl, holder.profileImage);
+			imageLoader.displayImage(picUrl, holder.profileImage, options);
 			
 			return convertView;
 		}

@@ -21,6 +21,9 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
@@ -59,6 +62,20 @@ public class BaseProfileFragment extends BaseFragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_screen, container, false);
 
+		ImageView profilePic = findView(v, R.id.iv_profile_screen);
+		ImageLoader il = ImageLoader.getInstance();
+		DisplayImageOptions options = new DisplayImageOptions.Builder()
+		.showImageForEmptyUri(R.drawable.cellprofileimg)
+		.showImageOnFail(R.drawable.cellprofileimg)
+		.showImageOnLoading(R.drawable.cellprofileimg)
+        .resetViewBeforeLoading(false)  // default
+        .delayBeforeLoading(1000)
+        .cacheInMemory(false) // default
+        .cacheOnDisc(false) // default
+        .considerExifParams(false) // default
+        .displayer(new SimpleBitmapDisplayer()) // default
+        .build();
+		
 		tvUnit = (TextView) v.findViewById(R.id.tv_profile_unit);
 		TextView tvProfileName = (TextView) v
 				.findViewById(R.id.tv_profile_name);
@@ -99,6 +116,7 @@ public class BaseProfileFragment extends BaseFragment {
 			                "<u>"+mProfile.L144Department+"</u> "));
 				
 			initListview(mProfile.L144Lineage, mProfile.L144OrgNameLineage);
+			il.displayImage(mProfile.L144WorkerPictureUrl, profilePic, options);
 		}
 		return v;
 	}

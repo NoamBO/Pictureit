@@ -1,11 +1,14 @@
 package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.server.PostSearch;
+import com.pictureit.leumi.server.SearchCallback;
 import com.pictureit.leumi.server.parse.Branch;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
@@ -17,6 +20,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,9 +28,12 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import utilities.BaseFragment;
+import utilities.HttpBase.HttpCalback;
 
 public class BranchFragment extends BaseFragment {
 
+	private static final Integer[] NUMBERS_VALID_BANK = {10, 34};
+	
 	private TextView tvBranch;
 	private ImageButton ibCall, ibNavigate;
 	private Branch mBranch;
@@ -56,10 +63,30 @@ public class BranchFragment extends BaseFragment {
 		setCommunicationTextViews(tvTelephoneNumber, tvTelephoneName);
 		setTvAddress(tvAddress);
 		setOpenHoursTextViews(tvOpenHours, tvOpenDays);
+		setTvBranchNameFunctionality(tvBranch);
 		
 		return v;
 	}
 	
+	private void setTvBranchNameFunctionality(TextView textView) {
+		if(Arrays.asList(NUMBERS_VALID_BANK).contains(Integer.valueOf(mBranch.BankNum))) {
+			textView.setText(
+		            Html.fromHtml(
+		                "<u>"+mBranch.BankName+"</u> "));
+			
+			textView.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					PostSearch search = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity()));
+					search.getBranchEmployeesForDepartmentCode(mBranch.DepartmentCode);
+				}
+			});
+		} else {
+			textView.setText(mBranch.BankName);
+		}
+	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
