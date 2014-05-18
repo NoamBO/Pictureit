@@ -10,6 +10,11 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+import com.pictureit.leumi.main.Dialogs;
+import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.main.Settings;
+
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -23,6 +28,7 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 	private int statusCode;
 	protected Context ctx;
 	protected ProgressDialog mProgressDialog;
+	protected boolean showProgressDialog = true;
 
 	public HttpBase(Context ctx){
 		this.ctx = ctx;
@@ -32,20 +38,35 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 	@Override
 	protected abstract String doInBackground(String... params);
 
+	protected boolean isConnectionAvailable(Context context) {
+		if(Settings.isNetworkAvailable(context)) {
+			Dialogs.generalDialog((Activity) context, context.getResources().getString(R.string.no_internet_connection));
+			return false;
+		}
+		return true;
+	}
+	
 	@Override
 	protected void onPreExecute() {
-		  mProgressDialog = new ProgressDialog(ctx);
+		if(!isConnectionAvailable(ctx)) {
+			this.cancel(true);
+			return;
+		}
+		
+		if(showProgressDialog) {
+			mProgressDialog = new ProgressDialog(ctx);
 	        mProgressDialog.setMessage("please wait...");
 	        mProgressDialog.show();
 	        mProgressDialog.setCancelable(false);
 	        mProgressDialog.setCanceledOnTouchOutside(false);
-	        
+		}
 		super.onPreExecute();
 	}
 	
 	@Override
 	protected void onPostExecute(Object result) {
-		mProgressDialog.cancel();
+		if(mProgressDialog!=null)
+			mProgressDialog.cancel();
 		super.onPostExecute(result);
 	}
 	

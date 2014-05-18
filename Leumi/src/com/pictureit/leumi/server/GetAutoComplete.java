@@ -13,6 +13,12 @@ public class GetAutoComplete extends BaseHttpGet {
 		this.callback = callback;
 		this.searchType = searchType;
 	}
+	
+	@Override
+	protected void onPreExecute() {
+		showProgressDialog = false;
+		super.onPreExecute();
+	}
 
 	@Override
 	protected String doInBackground(String... params) {

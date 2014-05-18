@@ -26,14 +26,11 @@ import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
 import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
-import com.pictureit.leumi.main.R.id;
-import com.pictureit.leumi.main.R.layout;
 import com.pictureit.leumi.server.GetAutoComplete;
 import com.pictureit.leumi.server.GetBrunch;
 import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
 import com.pictureit.leumi.server.PostSearch;
-import com.pictureit.leumi.server.ServerAddresses;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
@@ -41,7 +38,6 @@ import com.pictureit.leumi.server.parse.Service;
 
 public class HomeFragment extends Fragment {
 
-	private boolean mToggle;
 	private ListView lvAutoCompleteSearch, lvServicesList;
 	private EditText etSearch;
 	private ImageButton ibTellUsYouDidntFindService;
@@ -132,7 +128,6 @@ public class HomeFragment extends Fragment {
 					getActivity(), getLastServicesCallback);
 			getListLastServices.execute();
 		}
-		mToggle = false;
 		return v;
 	}
 
