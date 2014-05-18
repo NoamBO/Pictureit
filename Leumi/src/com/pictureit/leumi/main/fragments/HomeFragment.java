@@ -5,9 +5,9 @@ import java.util.List;
 
 import utilities.OutgoingCommunication;
 import utilities.HttpBase.HttpCalback;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.pictureit.leumi.main.BaseEditTextListener;
 import com.pictureit.leumi.main.Const;
+import com.pictureit.leumi.main.LocalStorageManager;
 import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.main.R.id;
@@ -71,6 +72,7 @@ public class HomeFragment extends Fragment {
 		public void onAnswerReturn(Object answer) {
 			if (answer != null) {
 				mLastServicesList = JsonToObject.jsonToLastServicesList((String) answer);
+				LocalStorageManager.homeServicesList = mLastServicesList;
 				setServicesList();
 			}
 
@@ -110,6 +112,10 @@ public class HomeFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.home_screen, container, false);
+		
+		if(LocalStorageManager.homeServicesList != null)
+			mLastServicesList = LocalStorageManager.homeServicesList;
+		
 		etSearch = (EditText) v.findViewById(R.id.et_search);
 		etSearch.setText("");
 		lvAutoCompleteSearch = (ListView) v

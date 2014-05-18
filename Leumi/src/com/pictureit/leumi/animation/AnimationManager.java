@@ -175,13 +175,13 @@ public class AnimationManager {
 		});
 	}
 	
-	public static void collapseExtraServicesByY(View container, final View view, Activity activity) {
-		collapseExtraServicesByY(container, view, activity, null);
+	public static boolean collapseExtraServicesByY(View container, final View view, Activity activity) {
+		return collapseExtraServicesByY(container, view, activity, null);
 	}
 	
-	public static void collapseExtraServicesByY(View container, final View view, Activity activity, HashMap<String, View> additionalViews) {
+	public static boolean collapseExtraServicesByY(View container, final View view, Activity activity, HashMap<String, View> additionalViews) {
 		if(!isExtraServicesVisible)
-			return;
+			return false;
 		
 		View swipeButton = activity.findViewById(R.id.iv_btn_open_webview);
 		
@@ -207,6 +207,8 @@ public class AnimationManager {
 			public void onAnimationCancel(Animator animation) {
 			}
 		});
+		
+		return true;
 	}
 	
 	public static int getListViewHeight(ListView listView) {

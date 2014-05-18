@@ -5,12 +5,12 @@
     tools:context="com.pictureit.leumi.main.MainActivity"
     tools:ignore="MergeRootFrame" >
 
-    <FrameLayout 
-        android:id="@+id/container"
+    <utilities.CustomViewPager
+        android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/iv_empty_view_to_messure_slider_height" >
-    </FrameLayout>
+    </utilities.CustomViewPager>
 
     <ImageView
         android:id="@+id/iv_empty_view_to_messure_slider_height"

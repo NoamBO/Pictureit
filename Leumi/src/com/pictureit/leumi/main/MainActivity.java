@@ -2,14 +2,19 @@ package com.pictureit.leumi.main;
 
 import java.util.HashMap;
 
+import utilities.CustomViewPager;
 import utilities.SoftKeyboard;
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,23 +23,38 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.fragments.AdvanceSearch;
 import com.pictureit.leumi.main.fragments.HomeFragment;
 import com.pictureit.leumi.main.fragments.BaseProfileFragment;
+import com.pictureit.leumi.main.fragments.RootAdvanceSearchFragment;
+import com.pictureit.leumi.main.fragments.RootHomeFragment;
+import com.pictureit.leumi.main.fragments.RootMyProfileFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
-	private ViewGroup container;
 	private ViewGroup tabsButtonsContainer;
 	Fragment fHome, fAdvanceSearch;
 	Fragment fMyProfile;
 	ViewGroup vgHome, vgMyProfile, vgAdvanceSearch;
 	ImageView ivSwipeToOpenWebView;
 	WebView wvMoreServices;
-	private int mTabPicked;
 
+	FragmentPagerAdapter mAdapter;
+	CustomViewPager mPager;
+	
+	private final int ROOT_VIEW_HOME = R.id.root_view_home;
+	private final int ROOT_VIEW_ADVANCE_SEARCH = R.id.root_view_advance_search;
+	private final int ROOT_VIEW_MY_PROFILE = R.id.root_view_my_profile;
+
+	private final int HOME_FRAGMENT_ID = 0;
+	private final int ADVANCE_SEARCH_FRAGMENT_ID = 1;
+	private final int MY_PROFILE_FRAGMENT_ID = 2;
+	
+	private boolean isOkToFinishApp = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,7 +65,10 @@ public class MainActivity extends Activity {
 	}
 
 	private void initUI() {
-		container = (ViewGroup) findViewById(R.id.container);
+		mPager = (CustomViewPager) findViewById(R.id.pager);
+		mAdapter = new myPagerAdapter(getSupportFragmentManager());
+		mPager.setAdapter(mAdapter);
+		
 		vgHome = (ViewGroup) findViewById(R.id.button1);
 		vgMyProfile = (ViewGroup) findViewById(R.id.button3);
 		vgAdvanceSearch = (ViewGroup) findViewById(R.id.button2);
@@ -57,20 +80,33 @@ public class MainActivity extends Activity {
 		fAdvanceSearch = new AdvanceSearch();
 		fMyProfile = new BaseProfileFragment();
 
-		mTabPicked = 1;
-		addFragment(fHome);
-
 		initListeners();
 	}
 
 	public void addFragment(Fragment f) {
-		FragmentTransaction transaction = getFragmentManager()
-				.beginTransaction();
-
-		transaction.replace(R.id.container, f);
-		transaction.addToBackStack(null);
-
-		transaction.commit();
+		
+		int res;
+		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+		switch (mPager.getCurrentItem()) {
+		case 0:
+			res = ROOT_VIEW_HOME;
+			break;
+		case 1:
+			res = ROOT_VIEW_ADVANCE_SEARCH;
+			break;
+		case 2:
+			res = ROOT_VIEW_MY_PROFILE;
+		default:
+			res = ROOT_VIEW_HOME;
+			break;
+		}
+		
+			
+		t.replace(res, f);
+		t.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+		t.addToBackStack(null);
+		mPager.setPagingEnabled(false);
+		t.commit();
 		
 		SoftKeyboard.hideSoftKeyboard(MainActivity.this);
 		
@@ -88,11 +124,9 @@ public class MainActivity extends Activity {
 //		tabsButtonsContainer.setVisibility(View.VISIBLE);
 	}
 
-	public void replaceTab(Fragment f) {
-		if (f == null)
-			return;
-		onTabChange();
-		addFragment(f);
+	public void replaceTab(int fragmentId) {
+		onTabChange(fragmentId);
+		mPager.setCurrentItem(fragmentId);
 	}
 
 	private void initListeners() {
@@ -100,11 +134,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (Const.FRAGMENT_NAME_HOME == mTabPicked)
-					return;
-				replaceTab(fHome);
-				mTabPicked = 1;
-				vgHome.setBackgroundResource(R.drawable.tb_selectedtab);
+				replaceTab(HOME_FRAGMENT_ID);
 			}
 		});
 
@@ -112,11 +142,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (Const.FRAGMENT_NAME_ADVANCED_SEARCH == mTabPicked)
-					return;
-				replaceTab(fAdvanceSearch);
-				mTabPicked = 2;
-				vgAdvanceSearch.setBackgroundResource(R.drawable.tb_selectedtab);
+				replaceTab(ADVANCE_SEARCH_FRAGMENT_ID);
 			}
 		});
 
@@ -124,24 +150,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				if (Const.FRAGMENT_NAME_MY_PROFILE == mTabPicked)
-					return;
-				replaceTab(fMyProfile);
-				mTabPicked = 3;
-				vgMyProfile.setBackgroundResource(R.drawable.tb_selectedtab);
-			}
-		});
-
-		container.setOnTouchListener(new OnSwipeTouchListener(
-				getApplicationContext()) {
-			@Override
-			public void onSwipeLeft() {
-				getWantedTabOnSwipeLeft();
-			}
-
-			@Override
-			public void onSwipeRight() {
-				getWantedTabOnSwipeRight();
+				replaceTab(MY_PROFILE_FRAGMENT_ID);
 			}
 		});
 
@@ -157,84 +166,124 @@ public class MainActivity extends Activity {
 				hideWebView();
 			}
 		});
+		
+		mPager.setOnPageChangeListener(new OnPageChangeListener() {
+			int from,to = -1;
+			@Override
+			public void onPageSelected(int arg0) {
+//				onTabChange(arg0);
+				to = arg0;
+			}
+			
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+				hideWebView();
+				from = arg0;
+			}
+			
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+				if(to != -1){
+					onTabChange(to);
+					from = to = -1;
+				}
+			}
+		});
 	}
 
-	protected void hideWebView() {
-//		if(tabsButtonsContainer.getVisibility() == View.GONE) {
-//			HashMap<String, View> hm = new HashMap<String, View>();
-//			hm.put("remove", tabsButtonsContainer);
-//			AnimationManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
-//					wvMoreServices, MainActivity.this, hm);
-//			}
-//		else
-		AnimationManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
+	protected boolean hideWebView() {
+		return AnimationManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
 				wvMoreServices, MainActivity.this);
 	}
 
 	protected void showWebView() {
-//		if(tabsButtonsContainer.getVisibility() == View.GONE) {
-//			HashMap<String, View> hm = new HashMap<String, View>();
-//			hm.put("add", tabsButtonsContainer);
-//			AnimationManager.expandExtraServicesByY(findViewById(R.id.ll_test),
-//					wvMoreServices, MainActivity.this, hm);
-//			}
-//		else
 		AnimationManager.expandExtraServicesByY(findViewById(R.id.ll_test),
 				wvMoreServices, MainActivity.this);
 	}
 
-	private void getWantedTabOnSwipeLeft() {
-		switch (mTabPicked) {
-		case Const.FRAGMENT_NAME_HOME:
-			vgAdvanceSearch.performClick();
-			break;
-		case Const.FRAGMENT_NAME_ADVANCED_SEARCH:
-			vgMyProfile.performClick();
-			break;
-		default:
-			break;
-		}
-
-	}
-
-	private void getWantedTabOnSwipeRight() {
-		switch (mTabPicked) {
-		case Const.FRAGMENT_NAME_ADVANCED_SEARCH:
-			vgHome.performClick();
-			break;
-		case Const.FRAGMENT_NAME_MY_PROFILE:
-			vgAdvanceSearch.performClick();
-			break;
-		default:
-			break;
-		}
-	}
-
-	private void onTabChange() {
-		getFragmentManager().executePendingTransactions();
-		getFragmentManager().popBackStack(null,
-				FragmentManager.POP_BACK_STACK_INCLUSIVE);
+	private void onTabChange(int tabPosition) {
+//		getFragmentManager().executePendingTransactions();
+//		getFragmentManager().popBackStack(null,
+//				FragmentManager.POP_BACK_STACK_INCLUSIVE);
 		vgHome.setBackgroundResource(0);
 		vgAdvanceSearch.setBackgroundResource(0);
 		vgMyProfile.setBackgroundResource(0);
+		
+		switch (tabPosition) {
+		case HOME_FRAGMENT_ID:
+			vgHome.setBackgroundResource(R.drawable.tb_selectedtab);
+			break;
+		case ADVANCE_SEARCH_FRAGMENT_ID:
+			vgAdvanceSearch.setBackgroundResource(R.drawable.tb_selectedtab);
+			break;
+		case MY_PROFILE_FRAGMENT_ID:
+			vgMyProfile.setBackgroundResource(R.drawable.tb_selectedtab);
+			break;
+		}
+		isOkToFinishApp = false;
 		hideWebView();
 	}
 
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		final int LENGTH_SHORT = 2000; // 2 seconds
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			
+			if(hideWebView())
+				return false;
 
-			if (getFragmentManager().getBackStackEntryCount() > 1
-					&& tabsButtonsContainer.getVisibility() == View.GONE)
+			if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
+				mPager.setPagingEnabled(true);
 				returnTabsButtons();
+			}
 
-			if (getFragmentManager().getBackStackEntryCount() == 1) {
-				this.finish();
+			if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+				if(isOkToFinishApp)
+					this.finish();
+				else {
+					Toast.makeText(getApplicationContext(), "Press again to exit", Toast.LENGTH_SHORT).show();
+					isOkToFinishApp = true;
+					new Handler().postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							isOkToFinishApp = false;
+						}
+					}, LENGTH_SHORT);
+				}
 				return false;
 			}
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	private class myPagerAdapter extends FragmentPagerAdapter {
+
+		private final int TOTAL_PAGES = 3;
+		
+		public myPagerAdapter(FragmentManager fm) {
+			super(fm);
+			// TODO Auto-generated constructor stub
+		}
+		
+		
+
+		@Override
+		public Fragment getItem(int arg0) {
+			switch (arg0) {
+			case 0:
+				return new RootHomeFragment();
+			case 1:
+				return new RootAdvanceSearchFragment();
+			case 2:
+				return new RootMyProfileFragment();
+			}
+			return null;
+		}
+
+		@Override
+		public int getCount() {
+			// TODO Auto-generated method stub
+			return TOTAL_PAGES;
+		}}
 
 }

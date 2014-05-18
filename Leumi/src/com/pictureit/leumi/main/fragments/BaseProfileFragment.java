@@ -195,6 +195,7 @@ public class BaseProfileFragment extends BaseFragment {
 	protected void changeHierarchyListVisibility() {
 		if (mListView.getVisibility() == View.GONE) {
 			arrowHierarchy.setBackgroundResource(R.drawable.arrowleft);
+			AnimationManager.expand(mListView);
 			mListView.setVisibility(View.VISIBLE);
 		} else {
 			mListView.setVisibility(View.GONE);

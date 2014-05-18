@@ -19,6 +19,7 @@ import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.Dialogs;
 import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.main.Settings;
 import com.pictureit.leumi.server.PostLike;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.PostServiceRegistration;
@@ -225,9 +226,9 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 
 	protected void showHideView(View slider) {
 		if(slider.getVisibility() == View.VISIBLE)
-			AnimationManager.collapse(slider, 300);
+			AnimationManager.collapse(slider, Settings.SERVICE_VIEWS_COLLAPSE_ADDITIONAL_TIME);
 		else
-			AnimationManager.expand(slider, 300);
+			AnimationManager.expand(slider, Settings.SERVICE_VIEWS_EXPAND_ADDITIONAL_TIME);
 	}
 
 	protected void email(ArrayList<ContactInfo> ci) {
