@@ -6,9 +6,9 @@ import android.net.NetworkInfo;
 
 public class Settings {
 
-	public static int SERVICE_VIEWS_COLLAPSE_ADDITIONAL_TIME = 300;
+	public static int SERVICE_VIEWS_COLLAPSE_ADDITIONAL_TIME = 200;
 
-	public static int SERVICE_VIEWS_EXPAND_ADDITIONAL_TIME = 300;
+	public static int SERVICE_VIEWS_EXPAND_ADDITIONAL_TIME = 200;
 
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager) context

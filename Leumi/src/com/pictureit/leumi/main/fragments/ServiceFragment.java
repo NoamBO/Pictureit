@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.pictureit.leumi.animation.AnimationManager;
@@ -166,25 +167,25 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		vgCommunication.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				showHideView(sliderCommunication);
+				showHideView(sliderCommunication, R.id.iv_communication_options_arrow, view);
 			}
 		});
 		vgOpenHours.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				showHideView(sliderOpenHours);
+				showHideView(sliderOpenHours, R.id.iv__hour_opening_arrow, view);
 			}
 		});
 		vgLinkToService.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				showHideView(sliderLinkToService);
+				showHideView(sliderLinkToService, R.id.iv_link_to_service_arrow, view);
 			}
 		});
 		vgResponsibleParty.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				showHideView(tvResponsibleParty);
+				showHideView(tvResponsibleParty, R.id.iv_responsible_party_arrow, view);
 			}
 		});
 		tvResponsibleParty.setOnClickListener(new OnClickListener() {
@@ -224,11 +225,18 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		postSearchPeopleInResponsibleUnit.getEmployeeForDepartment(mService.ServiceOwner);
 	}
 
-	protected void showHideView(View slider) {
-		if(slider.getVisibility() == View.VISIBLE)
-			AnimationManager.collapse(slider, Settings.SERVICE_VIEWS_COLLAPSE_ADDITIONAL_TIME);
-		else
-			AnimationManager.expand(slider, Settings.SERVICE_VIEWS_EXPAND_ADDITIONAL_TIME);
+	protected void showHideView(View slider, int arrowResId, View button) {
+		ViewGroup vg = (ViewGroup) button.getParent();
+		ImageView arrow = findView(vg, arrowResId);
+		if (slider.getVisibility() == View.VISIBLE) {
+			arrow.setBackgroundResource(R.drawable.arrowdown);
+			AnimationManager.collapse(slider,
+					Settings.SERVICE_VIEWS_COLLAPSE_ADDITIONAL_TIME);
+		} else {
+			arrow.setBackgroundResource(R.drawable.arrowup);
+			AnimationManager.expand(slider,
+					Settings.SERVICE_VIEWS_EXPAND_ADDITIONAL_TIME);
+		}
 	}
 
 	protected void email(ArrayList<ContactInfo> ci) {

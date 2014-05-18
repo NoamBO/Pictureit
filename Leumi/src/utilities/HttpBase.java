@@ -39,7 +39,7 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 	protected abstract String doInBackground(String... params);
 
 	protected boolean isConnectionAvailable(Context context) {
-		if(Settings.isNetworkAvailable(context)) {
+		if(!Settings.isNetworkAvailable(context)) {
 			Dialogs.generalDialog((Activity) context, context.getResources().getString(R.string.no_internet_connection));
 			return false;
 		}

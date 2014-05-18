@@ -73,7 +73,6 @@
                     android:gravity="center"
                     android:maxEms="1"
                     android:singleLine="true" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -122,6 +121,7 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/iv_communication_options_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -175,6 +175,7 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/iv__hour_opening_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -227,6 +228,7 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/iv_link_to_service_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -269,6 +271,7 @@
                 android:textSize="15sp" />
 
             <ImageView
+                android:id="@+id/iv_responsible_party_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

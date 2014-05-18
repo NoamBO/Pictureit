@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			convertView = getActivity().getLayoutInflater().inflate(
 					R.layout.simple_textview, null);
 			TextView textView = (TextView) convertView
