@@ -192,12 +192,12 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected boolean hideWebView() {
-		return AnimationManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
+		return ExtraServicesWebViewManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
 				wvMoreServices, MainActivity.this);
 	}
 
 	protected void showWebView() {
-		AnimationManager.expandExtraServicesByY(findViewById(R.id.ll_test),
+		ExtraServicesWebViewManager.expandExtraServicesByY(findViewById(R.id.ll_test),
 				wvMoreServices, MainActivity.this);
 	}
 
