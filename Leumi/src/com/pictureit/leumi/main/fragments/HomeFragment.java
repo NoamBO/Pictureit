@@ -3,8 +3,8 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
-import utilities.OutgoingCommunication;
 import utilities.HttpBase.HttpCalback;
+import utilities.OutgoingCommunication;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,17 +16,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.pictureit.leumi.main.BaseEditTextListener;
+import com.pictureit.leumi.main.AutoCompleteTextViewHandler;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
 import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
-import com.pictureit.leumi.server.GetAutoComplete;
 import com.pictureit.leumi.server.GetBrunch;
 import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
@@ -38,29 +37,12 @@ import com.pictureit.leumi.server.parse.Service;
 
 public class HomeFragment extends Fragment {
 
-	private ListView lvAutoCompleteSearch, lvServicesList;
-	private EditText etSearch;
+	private ListView lvServicesList;
+	private AutoCompleteTextView etSearch;
 	private ImageButton ibTellUsYouDidntFindService;
 	private ImageButton ibSearch;
-	private ArrayList<Emploee> emploees;
-	
-	private AutocomplteListViewAnapter adapter;
 
 	private ArrayList<LeumiService> mLastServicesList;
-
-	private HttpCalback autoCompleteCallback = new HttpCalback() {
-
-		@Override
-		public void onAnswerReturn(Object answer) {
-
-			if (answer != null) {
-				emploees = JsonToObject.jsonToAutoComplete((String) answer);
-				adapter = new AutocomplteListViewAnapter(
-						getActivity(), android.R.layout.simple_list_item_1, emploees);
-				lvAutoCompleteSearch.setAdapter(adapter);
-			}
-		}
-	};
 
 	private HttpCalback getLastServicesCallback = new HttpCalback() {
 
@@ -112,10 +94,11 @@ public class HomeFragment extends Fragment {
 		if(LocalStorageManager.homeServicesList != null)
 			mLastServicesList = LocalStorageManager.homeServicesList;
 		
-		etSearch = (EditText) v.findViewById(R.id.et_search);
+		etSearch = (AutoCompleteTextView) v.findViewById(R.id.et_search);
 		etSearch.setText("");
-		lvAutoCompleteSearch = (ListView) v
-				.findViewById(R.id.lv_main_autocomplete_search);
+		new AutoCompleteTextViewHandler().setListener(getActivity(), etSearch,Const.MOBILE_FULL);
+//		lvAutoCompleteSearch = (ListView) v
+//				.findViewById(R.id.lv_main_autocomplete_search);
 		lvServicesList = (ListView) v.findViewById(R.id.lv_main_services_list);
 
 		ibTellUsYouDidntFindService = (ImageButton) v.findViewById(R.id.ib_main_no_service_found);
@@ -135,30 +118,7 @@ public class HomeFragment extends Fragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
-		etSearch.addTextChangedListener(new BaseEditTextListener() {
 
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				
-//				if (mToggle) {
-//					mToggle = false;
-//					return;
-//				}
-				String searchString = etSearch.getText().toString();
-				if (searchString.length() < 1 && lvAutoCompleteSearch != null && emploees!= null) {
-					emploees.removeAll(emploees);
-					adapter.notifyDataSetChanged();
-					return;
-				}
-
-				GetAutoComplete autoComplete = new GetAutoComplete(
-						getActivity(), Const.MOBILE_FULL, autoCompleteCallback);
-				autoComplete.execute(searchString);
-//				mToggle = true;
-			}
-		});
 		
 		lvServicesList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -207,7 +167,7 @@ public class HomeFragment extends Fragment {
 			}
 		});
 		
-		lvAutoCompleteSearch.setOnItemClickListener(new OnItemClickListener() {
+		etSearch.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -256,43 +216,6 @@ public class HomeFragment extends Fragment {
 	private void getServiceClick(int sid) {
 		GetService getService = new GetService(getActivity(), getServiceCallback);
 		getService.execute(String.valueOf(sid));
-	}
-
-	private class AutocomplteListViewAnapter extends ArrayAdapter<Emploee> {
-
-		
-
-		public AutocomplteListViewAnapter(Context context, int resource,
-				List<Emploee> emploees) {
-			super(context, resource, emploees);
-			
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			convertView = getActivity().getLayoutInflater().inflate(
-					R.layout.simple_textview, null);
-			TextView textView = (TextView) convertView
-					.findViewById(R.id.textview1);
-			textView.setText(emploees.get(position).SearchKey);
-			return convertView;
-		}
-
-		@Override
-		public int getCount() {
-			return emploees.size();
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return 0;
-		}
-
-		@Override
-		public Emploee getItem(int position) {
-			return emploees.get(position);
-		}
-
 	}
 
 	private class LastServicesListViewAdapter extends

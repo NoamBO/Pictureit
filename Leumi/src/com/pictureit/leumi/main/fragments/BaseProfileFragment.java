@@ -27,6 +27,7 @@ import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
+import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.SearchCallback;
@@ -40,8 +41,15 @@ public class BaseProfileFragment extends BaseFragment {
 		
 		@Override
 		public void onAnswerReturn(Object answer) {
-			// TODO Auto-generated method stub
-			
+		if(!JsonToObject.isStatusOk((String)answer)) {
+			showErrorDialog();
+			return;
+		}
+			ResultsFragment f = new ResultsFragment();
+			Bundle b = new Bundle();
+			b.putString(Const.JSON, (String) answer);
+			f.setArguments(b);
+			((MainActivity)getActivity()).addFragment(f);
 		}
 	};
 	
