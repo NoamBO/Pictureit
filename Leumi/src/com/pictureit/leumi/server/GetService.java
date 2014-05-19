@@ -25,12 +25,6 @@ public class GetService extends BaseHttpGet {
 	}
 	
 	@Override
-	protected void onPostExecute(Object result) {
-			Service s = JsonToObject.jsonGetService((String) result);
-		super.onPostExecute(s);
-	}
-	
-	@Override
 	protected void prepare(String request) {
 		
 		StringBuilder sb = new StringBuilder();

@@ -47,8 +47,9 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		View v = inflater.inflate(R.layout.service_layout, null);
 
 		if(mService == null) {
-			showErrorDialog();
-			return v;
+			Bundle b = getArguments();
+			String json = b.getString(Const.JSON);
+			mService = JsonToObject.jsonGetService(json);
 		}
 		
 		TextView tvTitle = findView(v, R.id.tv_service_title);
@@ -285,10 +286,5 @@ public class ServiceFragment extends BaseRegularFragmentNotMain {
 		if(minimumNumbersToShowFeature < 1)
 			vgCommunication.setVisibility(View.GONE);
 	}
-
-	public void setData(Service service) {
-		this.mService = service;
-	}
-
 
 }

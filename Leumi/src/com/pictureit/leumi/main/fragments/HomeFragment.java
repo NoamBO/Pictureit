@@ -3,6 +3,9 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 import utilities.OutgoingCommunication;
@@ -105,25 +108,6 @@ public class HomeFragment extends BaseFragment {
 		lvServicesList.setAdapter(adapter);
 	}
 	
-	private HttpCalback getServiceCallback = new HttpCalback() {
-
-		@Override
-		public void onAnswerReturn(Object answer) {
-			if (answer != null) {
-				Bundle b = new Bundle();
-				String s = answer.toString();
-				b.putString(Const.JSON, s);
-				
-				ServiceFragment f = new ServiceFragment();
-				f.setData((Service) answer);
-				f.setArguments(b);
-				((MainActivity)getActivity()).addFragment(f);
-				
-			}
-
-		}
-	};
-	
 	public HomeFragment() {
 	}
 
@@ -221,23 +205,23 @@ public class HomeFragment extends BaseFragment {
 			f = new ProfileFragmentKindAutocomplete();
 		else if(requestType.equalsIgnoreCase(Const.DEPARTMENT))
 			f = new ResultsFragment();
+		else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK))
+			f = new ServiceFragment();
 		else
 			return;
 		HttpCalback callback = new HttpCalback() {
 			
 			@Override
 			public void onAnswerReturn(Object answer) {
-				if(answer == null)
-					return;
-				if(!JsonToObject.isStatusOk(answer.toString())) {
+				if(answer == null || !JsonToObject.isStatusOk(answer.toString())) {
 					showErrorDialog();
 					return;
 				}
+				etSearch.clearComposingText();
 				Bundle args = new Bundle();
 				args.putString(Const.JSON, answer.toString());
 				f.setArguments(args);
 				((MainActivity)getActivity()).addFragment(f);
-				etSearch.setText("");
 			}
 		};
 		
@@ -247,13 +231,51 @@ public class HomeFragment extends BaseFragment {
 		} else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME)) {
 			PostSearch postSearch = new PostSearch(getActivity(), callback);
 			postSearch.getEmploeeForSearchID(emploee.SearchID);
+		} else if(requestType.equalsIgnoreCase(Const.DEPARTMENT)) {
+			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
+			searchForDepartment.getEmployeeForDepartment(emploee.SearchID);
+		} else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK)) {
+			GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
+			getService.execute(emploee.SearchID);
 		}
-		//else if(requestType.equalsIgnoreCase(Const.DEPARTMENT))
+		
 	
 	}
 
+	private HttpCalback getCallbackForServiceClick() {
+		return new HttpCalback() {
+
+			@Override
+			public void onAnswerReturn(Object answer) {
+				if (answer == null) {
+					showErrorDialog();
+					return;
+				}
+				try {
+					JSONObject j = new JSONObject(answer.toString());
+					if (!JsonToObject.isStatusOk(j.getString("result"))) {
+						showErrorDialog();
+						return;
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+					showErrorDialog();
+					return;
+				}
+				etSearch.clearComposingText();
+				Bundle b = new Bundle();
+				String s = answer.toString();
+				b.putString(Const.JSON, s);
+
+				ServiceFragment f = new ServiceFragment();
+				f.setArguments(b);
+				((MainActivity) getActivity()).addFragment(f);
+			}
+		};
+	}
+
 	private void getServiceClick(int sid) {
-		GetService getService = new GetService(getActivity(), getServiceCallback);
+		GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
 		getService.execute(String.valueOf(sid));
 	}
 
