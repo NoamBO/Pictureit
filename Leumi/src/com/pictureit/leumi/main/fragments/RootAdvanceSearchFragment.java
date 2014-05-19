@@ -11,13 +11,17 @@ import android.view.ViewGroup;
 
 public class RootAdvanceSearchFragment extends Fragment {
 
+	private AdvanceSearch advanceSearchFragment;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.advance_search_root_layout, null);
+		advanceSearchFragment = new AdvanceSearch();
 		FragmentTransaction t = getFragmentManager().beginTransaction();
-		t.replace(R.id.root_view_advance_search, new AdvanceSearch());
+		t.replace(R.id.root_view_advance_search, advanceSearchFragment, "AdvanceSearch");
 		t.commit();
 		return v;
 	}
+
 }

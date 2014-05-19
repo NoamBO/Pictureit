@@ -1,5 +1,7 @@
 package com.pictureit.leumi.main.fragments;
 
+import java.util.ArrayList;
+
 import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 import android.app.Fragment;
@@ -26,6 +28,28 @@ public class AdvanceSearch extends BaseFragment {
 			etSearchByJob;
 	
 	private ImageButton ibSearch;
+	
+	private ArrayList<AutoCompleteTextView> autoCompleteTextViewArray;
+	private ArrayList<AutoCompleteTextViewHandler> handlersArray;
+	
+	public void resetTextViews() {
+		if(etFirstName == null
+				|| etLastName == null
+				|| etFreeText == null
+				|| etFreeUnitSearch == null
+				|| etSearchByJob == null)
+			return;
+		for (int i = 0; i < autoCompleteTextViewArray.size(); i++) {
+			autoCompleteTextViewArray.get(i).setText("");
+		}
+	}
+	
+	public void removeCallbacks() {
+		if(handlersArray != null)
+			for (int i = 0; i < handlersArray.size(); i++) {
+				handlersArray.get(i).cancelTask();
+			}
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,18 +69,37 @@ public class AdvanceSearch extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etFirstName, Const.FIRST_NAME);;
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etLastName, Const.LAST_NAME);
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etFreeText, Const.FREE_TEXT);
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etFreeUnitSearch, Const.DEPARTMENT);
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etSearchByJob, Const.JOB);
+		
+		autoCompleteTextViewArray = new ArrayList<AutoCompleteTextView>();
+		autoCompleteTextViewArray.add(etFirstName);
+		autoCompleteTextViewArray.add(etLastName);
+		autoCompleteTextViewArray.add(etFreeText);
+		autoCompleteTextViewArray.add(etFreeUnitSearch);
+		autoCompleteTextViewArray.add(etSearchByJob);
+		
+		handlersArray = new ArrayList<AutoCompleteTextViewHandler>();
+		AutoCompleteTextViewHandler a = new AutoCompleteTextViewHandler();
+		a.setListener(getActivity(), etFirstName, Const.FIRST_NAME);
+		AutoCompleteTextViewHandler b = new AutoCompleteTextViewHandler();
+		b.setListener(getActivity(), etLastName, Const.LAST_NAME);
+		AutoCompleteTextViewHandler c = new AutoCompleteTextViewHandler();
+		c.setListener(getActivity(), etFreeText, Const.FREE_TEXT);
+		AutoCompleteTextViewHandler d = new AutoCompleteTextViewHandler();
+		d.setListener(getActivity(), etFreeUnitSearch, Const.DEPARTMENT);
+		AutoCompleteTextViewHandler e = new AutoCompleteTextViewHandler();
+		e.setListener(getActivity(), etSearchByJob, Const.JOB);
+		
+		handlersArray.add(a);
+		handlersArray.add(b);
+		handlersArray.add(c);
+		handlersArray.add(d);
+		handlersArray.add(e);
 		
 		ibSearch.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				PostSearch httpSearch = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity()));
+				PostSearch httpSearch = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity(), autoCompleteTextViewArray));
 				httpSearch.getEmployeesForAdvanceSearch(etLastName.getText().toString()
 						, etFirstName.getText().toString()
 						, etFreeUnitSearch.getText().toString()

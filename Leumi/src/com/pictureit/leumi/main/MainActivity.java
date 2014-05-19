@@ -223,17 +223,29 @@ public class MainActivity extends FragmentActivity {
 		
 		switch (tabPosition) {
 		case HOME_FRAGMENT_ID:
+			clearAdvanceSearchTextViews();
 			vgHome.setBackgroundResource(R.drawable.tb_selectedtab);
 			break;
 		case ADVANCE_SEARCH_FRAGMENT_ID:
 			vgAdvanceSearch.setBackgroundResource(R.drawable.tb_selectedtab);
 			break;
 		case MY_PROFILE_FRAGMENT_ID:
+			clearAdvanceSearchTextViews();
 			vgMyProfile.setBackgroundResource(R.drawable.tb_selectedtab);
 			break;
 		}
 		isOkToFinishApp = false;
 		hideWebView();
+	}
+	
+	//private void clearHomeFragmentTextView()
+	
+	private void clearAdvanceSearchTextViews() {
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag("AdvanceSearch");
+		 if(fragment instanceof AdvanceSearch) {
+			 ((AdvanceSearch) fragment).resetTextViews();
+			 ((AdvanceSearch) fragment).removeCallbacks();
+		 }
 	}
 
 	@Override

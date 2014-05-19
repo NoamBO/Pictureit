@@ -21,6 +21,8 @@ public class AutoCompleteTextViewHandler {
 	AutoCompleteTextView editText;
 	
 	GetAutoComplete autoComplete;
+	
+	public boolean isOkToShowDropDown;
 
 	public AutoCompleteTextViewHandler() {
 	}
@@ -60,6 +62,7 @@ public class AutoCompleteTextViewHandler {
 				if(autoComplete != null && !autoComplete.isCancelled())
 					autoComplete.cancel(true);
 
+				isOkToShowDropDown = true;
 				autoComplete = new GetAutoComplete(ctx,
 						serverRequestType, callback);
 				autoComplete.execute(searchString);
@@ -67,20 +70,28 @@ public class AutoCompleteTextViewHandler {
 
 		});
 	}
+	
+	public void cancelTask() {
+		if(autoComplete != null && !autoComplete.isCancelled()){
+			autoComplete.cancel(true);
+		}
+		isOkToShowDropDown = false;
+	}
 
 	private void setCallback() {
 		callback = new HttpCalback() {
 
 			@Override
 			public void onAnswerReturn(Object answer) {
-				ArrayList<Emploee> emploees = JsonToObject
-						.jsonToAutoComplete((String) answer);
-				AutoCompleteAdapter adapter = new AutoCompleteAdapter(ctx,
-						android.R.layout.simple_list_item_2, emploees);
+				if (isOkToShowDropDown) {
+					ArrayList<Emploee> emploees = JsonToObject
+							.jsonToAutoComplete((String) answer);
+					AutoCompleteAdapter adapter = new AutoCompleteAdapter(ctx,
+							android.R.layout.simple_list_item_2, emploees);
 
-				editText.setAdapter(adapter);
-				editText.showDropDown();
-				
+					editText.setAdapter(adapter);
+					editText.showDropDown();
+				}
 			}
 		};
 		

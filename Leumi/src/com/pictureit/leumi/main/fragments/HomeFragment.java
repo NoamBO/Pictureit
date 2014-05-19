@@ -217,7 +217,7 @@ public class HomeFragment extends BaseFragment {
 					showErrorDialog();
 					return;
 				}
-				etSearch.clearComposingText();
+				etSearch.setText("");
 				Bundle args = new Bundle();
 				args.putString(Const.JSON, answer.toString());
 				f.setArguments(args);
@@ -262,7 +262,7 @@ public class HomeFragment extends BaseFragment {
 					showErrorDialog();
 					return;
 				}
-				etSearch.clearComposingText();
+				etSearch.setText("");
 				Bundle b = new Bundle();
 				String s = answer.toString();
 				b.putString(Const.JSON, s);
