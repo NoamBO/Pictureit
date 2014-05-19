@@ -44,6 +44,9 @@ public class AutoCompleteTextViewHandler {
 			public void onTextChanged(CharSequence s, int start, int before,
 					int count) {
 
+				if(s.toString().length() < 1)
+					editText.setAdapter(null);
+				
 				if (editText.isPerformingCompletion()) {
 					completionPerforce();
 					return;

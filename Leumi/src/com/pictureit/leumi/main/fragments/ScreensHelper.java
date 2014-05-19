@@ -21,8 +21,8 @@ public class ScreensHelper {
 			StringBuilder sbHours = new StringBuilder();
 			StringBuilder sbDays = new StringBuilder();
 			for (int i = 0; i < serviceHourOperatation.size(); i++) {
+				sbDays.append(getDayString(s.get(i).DayInWeek, activity));
 				if (!s.get(i).CloseOpen.equalsIgnoreCase(CLOSE)) {
-					sbDays.append(getDayString(s.get(i).DayInWeek, activity));
 					if (s.get(i).MFrom != null
 							&& !s.get(i).MFrom.equalsIgnoreCase(""))
 						sbHours.append(activity.getText(R.string.from) + "- ")
@@ -39,10 +39,12 @@ public class ScreensHelper {
 								.append(" "
 										+ activity.getText(R.string.till)
 										+ " ").append(s.get(i).ETo);
-					if (i < serviceHourOperatation.size()){
-						sbHours.append("\n");
-						sbDays.append("\n");
-					}
+				} else {
+					sbHours.append(activity.getText(R.string.close));
+				}
+				if (i < serviceHourOperatation.size()){
+					sbHours.append("\n");
+					sbDays.append("\n");
 				}
 			}
 			tvOpenDays.setText(sbDays.toString());

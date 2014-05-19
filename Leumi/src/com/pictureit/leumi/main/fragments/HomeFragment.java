@@ -241,15 +241,15 @@ public class HomeFragment extends BaseFragment {
 			}
 		};
 		
-//		if(!snifSelected) {
-//			PostSearch postSearch = new PostSearch(getActivity(), callback);
-//			postSearch.getEmploeeForSearchID(emploee.SearchID);
-//		}
-//		else {
-//			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
-//			getBranch.execute(emploee.SearchID);
-//		}
-		
+		if(requestType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF)) {
+			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
+			getBranch.execute(emploee.SearchID);
+		} else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME)) {
+			PostSearch postSearch = new PostSearch(getActivity(), callback);
+			postSearch.getEmploeeForSearchID(emploee.SearchID);
+		}
+		//else if(requestType.equalsIgnoreCase(Const.DEPARTMENT))
+	
 	}
 
 	private void getServiceClick(int sid) {

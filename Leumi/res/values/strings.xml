@@ -49,4 +49,5 @@
  	<string name="yom_g"><b>יום ש:</b></string>
  	<string name="from">מ</string>
  	<string name="till">עד</string>
+ 	<string name="close">סגור</string>
 </resources>
