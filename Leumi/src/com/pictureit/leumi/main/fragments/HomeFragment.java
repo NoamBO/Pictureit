@@ -203,7 +203,7 @@ public class HomeFragment extends BaseFragment {
 			f = new BranchFragment();
 		else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
 			f = new ProfileFragmentKindAutocomplete();
-		else if(requestType.equalsIgnoreCase(Const.DEPARTMENT))
+		else if(requestType.equalsIgnoreCase(Const.DEPARTMENT) || requestType.equalsIgnoreCase(Const.JOB))
 			f = new ResultsFragment();
 		else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK))
 			f = new ServiceFragment();
@@ -234,6 +234,9 @@ public class HomeFragment extends BaseFragment {
 		} else if(requestType.equalsIgnoreCase(Const.DEPARTMENT)) {
 			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
 			searchForDepartment.getEmployeeForDepartment(emploee.SearchID);
+		} else if(requestType.equalsIgnoreCase(Const.JOB)) {
+			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
+			searchForDepartment.getEmployeeForDepartment(emploee.SearchKey);
 		} else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK)) {
 			GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
 			getService.execute(emploee.SearchID);
