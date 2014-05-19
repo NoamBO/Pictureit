@@ -5,7 +5,12 @@ import java.util.List;
 
 import utilities.HttpBase.HttpCalback;
 import utilities.OutgoingCommunication;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
@@ -26,6 +31,7 @@ import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
 import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.main.Settings;
 import com.pictureit.leumi.server.GetBrunch;
 import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
@@ -43,6 +49,27 @@ public class HomeFragment extends Fragment {
 	private ImageButton ibSearch;
 
 	private ArrayList<LeumiService> mLastServicesList;
+	
+	private final BroadcastReceiver mNetworkStateReceiver = new BroadcastReceiver() {
+	    @Override
+	        public void onReceive(Context context, Intent intent) {
+	    	ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+	        NetworkInfo info = cm.getActiveNetworkInfo();
+	        if (info != null) {
+	            if (info.isConnected()) {
+	                if(LocalStorageManager.homeServicesList == null) {
+	                	setServicesList();
+	                	getActivity().unregisterReceiver(this);
+	                }
+	            } 
+	        } 
+	        }
+	    };
+	    
+	    public void registerInternetReceiver() {
+			IntentFilter mNetworkStateFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+			getActivity().registerReceiver(mNetworkStateReceiver , mNetworkStateFilter);
+		}
 
 	private HttpCalback getLastServicesCallback = new HttpCalback() {
 
@@ -56,8 +83,21 @@ public class HomeFragment extends Fragment {
 
 		}
 	};
-	
+
 	private void setServicesList() {
+		if (LocalStorageManager.homeServicesList != null)
+			mLastServicesList = LocalStorageManager.homeServicesList;
+		if (!(mLastServicesList != null && mLastServicesList.size() > 0)) {
+			if(!Settings.isNetworkAvailable(getActivity())) {
+				registerInternetReceiver();
+				return;
+			}
+			GetListLastServices getListLastServices = new GetListLastServices(
+					getActivity(), getLastServicesCallback);
+			getListLastServices.execute();
+			return;
+		}
+
 		LastServicesListViewAdapter adapter = new LastServicesListViewAdapter(
 				getActivity(), android.R.layout.simple_list_item_1,
 				mLastServicesList);
@@ -82,7 +122,7 @@ public class HomeFragment extends Fragment {
 
 		}
 	};
-
+	
 	public HomeFragment() {
 	}
 
@@ -90,9 +130,6 @@ public class HomeFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.home_screen, container, false);
-		
-		if(LocalStorageManager.homeServicesList != null)
-			mLastServicesList = LocalStorageManager.homeServicesList;
 		
 		etSearch = (AutoCompleteTextView) v.findViewById(R.id.et_search);
 		etSearch.setText("");
@@ -103,14 +140,8 @@ public class HomeFragment extends Fragment {
 
 		ibTellUsYouDidntFindService = (ImageButton) v.findViewById(R.id.ib_main_no_service_found);
 		ibSearch = (ImageButton) v.findViewById(R.id.ib_search);
+		setServicesList();
 		
-		if (mLastServicesList != null && mLastServicesList.size() > 0) {
-			setServicesList();
-		} else {
-			GetListLastServices getListLastServices = new GetListLastServices(
-					getActivity(), getLastServicesCallback);
-			getListLastServices.execute();
-		}
 		return v;
 	}
 

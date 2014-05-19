@@ -5,8 +5,14 @@ import java.util.HashMap;
 import utilities.CustomViewPager;
 import utilities.SoftKeyboard;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -54,6 +60,8 @@ public class MainActivity extends FragmentActivity {
 	private final int MY_PROFILE_FRAGMENT_ID = 2;
 	
 	private boolean isOkToFinishApp = false;
+	
+
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -255,6 +263,8 @@ public class MainActivity extends FragmentActivity {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+	
+	
 	
 	private class myPagerAdapter extends FragmentPagerAdapter {
 
