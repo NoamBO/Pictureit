@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_hierarchy_row_parent"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp" >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/iv_listview_row_arrow_down"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/arrowdown" />
 
-        <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/iv_listview_row_arrow_down"
+        android:layout_toRightOf="@+id/iv_listview_row_arrow_left"
+        android:orientation="horizontal"
+        android:paddingRight="5dp" >
+
+        <utilities.AutoResizeTextView
             android:id="@+id/tv_listview_row_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp"
+            android:gravity="right"
+            android:paddingLeft="5dp"
             android:textSize="17sp" />
-
-        <ImageView
-            android:id="@+id/iv_listview_row_arrow_down"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/arrowdown" />
     </LinearLayout>
 
     <ImageView

@@ -2,6 +2,8 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
+import utilities.AutoResizeTextView;
+import utilities.AutoResizeTextViewSetter;
 import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -203,7 +207,7 @@ public class BaseProfileFragment extends BaseFragment {
 	protected void changeHierarchyListVisibility() {
 		if (mListView.getVisibility() == View.GONE) {
 			arrowHierarchy.setBackgroundResource(R.drawable.arrowleft);
-			AnimationManager.expand(mListView);
+			//AnimationManager.expand(mListView);
 			mListView.setVisibility(View.VISIBLE);
 		} else {
 			mListView.setVisibility(View.GONE);
@@ -236,20 +240,21 @@ public class BaseProfileFragment extends BaseFragment {
 		@Override
 		public View getView(int position, View arg01, ViewGroup listView) {
 			View v = getActivity().getLayoutInflater().inflate(R.layout.hierarchy_row, null);
-			TextView tvName = (TextView) v.findViewById(R.id.tv_listview_row_name);
+			AutoResizeTextView tvName = (AutoResizeTextView) v.findViewById(R.id.tv_listview_row_name);
+			tvName.setSingleLine(true);
 			ImageView ivArrowDown = (ImageView) v.findViewById(R.id.iv_listview_row_arrow_down);
 			ImageView ivArrowLeft = (ImageView) v.findViewById(R.id.iv_listview_row_arrow_left);
-			
+			RelativeLayout parent = (RelativeLayout) v.findViewById(R.id.rl_hierarchy_row_parent);
 			if(position == 0
 					|| position == 1)
 				ivArrowLeft.setVisibility(View.GONE);
 			
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			params.rightMargin = position*8;
-			params.gravity = Gravity.CENTER_VERTICAL;
-			ivArrowDown.setLayoutParams(params);
-			
-			tvName.setText(mArrayList.get(position).name);
+			//RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			parent.setPadding(0, 10, position*8, 10);
+			//params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			//ivArrowDown.setLayoutParams(params);
+			//parent.setLayoutParams(params);
+			AutoResizeTextViewSetter.setText(tvName, mArrayList.get(position).name);
 			return v;
 		}
 		
