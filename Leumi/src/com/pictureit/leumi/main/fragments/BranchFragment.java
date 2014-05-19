@@ -30,7 +30,7 @@ import android.widget.TextView;
 import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 
-public class BranchFragment extends BaseFragment {
+public class BranchFragment extends BaseRegularFragmentNotMain {
 
 	private static final Integer[] NUMBERS_VALID_BANK = {10, 34};
 	
@@ -41,7 +41,6 @@ public class BranchFragment extends BaseFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		((MainActivity)getActivity()).lowerTabsButtons();
 		
 		if(getArguments() == null)
 			return super.onCreateView(inflater, container, savedInstanceState);

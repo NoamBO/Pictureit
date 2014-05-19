@@ -4,10 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/leumi_header" />
+        android:background="@drawable/leumi_header" >
+
+        <ImageButton
+            android:id="@+id/ib_go_home_profile_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:visibility="gone" />
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/profile_scrollView"

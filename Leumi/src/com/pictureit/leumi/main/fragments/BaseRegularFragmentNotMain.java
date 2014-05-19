@@ -1,11 +1,14 @@
 package com.pictureit.leumi.main.fragments;
 
 import com.pictureit.leumi.main.MainActivity;
+import com.pictureit.leumi.main.R;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import utilities.BaseFragment;
 
 public class BaseRegularFragmentNotMain extends BaseFragment {
@@ -16,4 +19,18 @@ public class BaseRegularFragmentNotMain extends BaseFragment {
 		((MainActivity)getActivity()).lowerTabsButtons();
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
+	
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+//		ImageButton ibHome = findView(getView(), R.id.ib_go_home);
+//
+//		ibHome.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View v) {
+//				((MainActivity) getActivity()).goHome();
+//			}
+//		});
+//	}
 }

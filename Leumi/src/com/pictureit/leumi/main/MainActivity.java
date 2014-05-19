@@ -61,7 +61,11 @@ public class MainActivity extends FragmentActivity {
 	
 	private boolean isOkToFinishApp = false;
 	
-
+//	public void goHome() {
+//
+//		replaceTab(HOME_FRAGMENT_ID);
+//		returnTabsButtons();
+//	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

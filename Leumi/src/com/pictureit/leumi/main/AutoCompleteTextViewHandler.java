@@ -19,6 +19,8 @@ public class AutoCompleteTextViewHandler {
 	HttpCalback callback;
 
 	AutoCompleteTextView editText;
+	
+	GetAutoComplete autoComplete;
 
 	public AutoCompleteTextViewHandler() {
 	}
@@ -51,8 +53,11 @@ public class AutoCompleteTextViewHandler {
 				if (searchString.length() < 1) {
 					return;
 				}
+				
+				if(autoComplete != null && !autoComplete.isCancelled())
+					autoComplete.cancel(true);
 
-				GetAutoComplete autoComplete = new GetAutoComplete(ctx,
+				autoComplete = new GetAutoComplete(ctx,
 						serverRequestType, callback);
 				autoComplete.execute(searchString);
 			}

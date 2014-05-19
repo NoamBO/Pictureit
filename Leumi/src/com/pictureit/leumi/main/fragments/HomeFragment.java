@@ -3,6 +3,7 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 import utilities.OutgoingCommunication;
 import android.content.BroadcastReceiver;
@@ -41,7 +42,7 @@ import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
 import com.pictureit.leumi.server.parse.Service;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
 	private ListView lvServicesList;
 	private AutoCompleteTextView etSearch;
@@ -212,19 +213,26 @@ public class HomeFragment extends Fragment {
 
 	protected void onAutocopletionPressed(Emploee emploee) {
 		final Fragment f;
-		boolean snifSelected = emploee.SearchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF);
-		if(!snifSelected)
-			f = new ProfileFragmentKindAutocomplete();
-		else
+		String requestType = emploee.SearchType;
+
+		if(requestType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF))
 			f = new BranchFragment();
-		
+		else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
+			f = new ProfileFragmentKindAutocomplete();
+		else if(requestType.equalsIgnoreCase(Const.DEPARTMENT))
+			f = new ResultsFragment();
+		else
+			return;
 		HttpCalback callback = new HttpCalback() {
 			
 			@Override
 			public void onAnswerReturn(Object answer) {
 				if(answer == null)
 					return;
-
+				if(!JsonToObject.isStatusOk(answer.toString())) {
+					showErrorDialog();
+					return;
+				}
 				Bundle args = new Bundle();
 				args.putString(Const.JSON, answer.toString());
 				f.setArguments(args);
@@ -233,14 +241,14 @@ public class HomeFragment extends Fragment {
 			}
 		};
 		
-		if(!snifSelected) {
-			PostSearch postSearch = new PostSearch(getActivity(), callback);
-			postSearch.getEmploeeForSearchID(emploee.SearchID);
-		}
-		else {
-			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
-			getBranch.execute(emploee.SearchID);
-		}
+//		if(!snifSelected) {
+//			PostSearch postSearch = new PostSearch(getActivity(), callback);
+//			postSearch.getEmploeeForSearchID(emploee.SearchID);
+//		}
+//		else {
+//			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
+//			getBranch.execute(emploee.SearchID);
+//		}
 		
 	}
 
