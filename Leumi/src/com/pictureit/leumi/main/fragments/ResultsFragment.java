@@ -1,5 +1,6 @@
 package com.pictureit.leumi.main.fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import utilities.imageloader.ImageLoader;
@@ -183,8 +184,14 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 				android.R.layout.simple_list_item_2, departmentArray));
 	}
 	
+	@Override
+	public void onDetach() {
+		imageLoader.clearMemoryCache();
+		super.onDetach();
+	}
+	
 	public class ResultsAdapter extends ArrayAdapter<Profile>{
-		
+
 		private ArrayList<Profile> arrayList;
 		private ArrayList<Profile> itemsAll;
 	    private ArrayList<Profile> suggestions;
@@ -192,9 +199,6 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 		
 		private String filterDepartment ="";
 		private String filterJob ="";
-		private com.nostra13.universalimageloader.core.ImageLoader imageLoader;
-		private DisplayImageOptions options;
-		//private ImageLoader imageLoader;
 		
 		@SuppressWarnings("unchecked")
 		public ResultsAdapter(Context context,
@@ -205,20 +209,7 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 			suggestions = new ArrayList<Profile>();
 			
 			ctx = context;
-			//imageLoader = new ImageLoader(ctx);
-			
-			options = new DisplayImageOptions.Builder()
-			.showImageForEmptyUri(R.drawable.cellprofileimg)
-			.showImageOnFail(R.drawable.cellprofileimg)
-			.showImageOnLoading(R.drawable.cellprofileimg)
-	        .resetViewBeforeLoading(false)  // default
-	        .delayBeforeLoading(1000)
-	        .cacheInMemory(false) // default
-	        .cacheOnDisc(false) // default
-	        .considerExifParams(false) // default
-	        .displayer(new SimpleBitmapDisplayer()) // default
-	        .build();
-			imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
+
 		}
 		
 		@Override

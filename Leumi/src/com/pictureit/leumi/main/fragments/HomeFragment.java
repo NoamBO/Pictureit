@@ -203,15 +203,16 @@ public class HomeFragment extends BaseFragment {
 
 	protected void onAutocopletionPressed(Emploee emploee) {
 		final Fragment f;
-		String requestType = emploee.SearchType;
+		String searchType = emploee.SearchType;
+		String systemType = emploee.SystemType;
 
-		if(requestType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF))
+		if(searchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF))
 			f = new BranchFragment();
-		else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
+		else if(searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
 			f = new ProfileFragmentKindAutocomplete();
-		else if(requestType.equalsIgnoreCase(Const.DEPARTMENT) || requestType.equalsIgnoreCase(Const.JOB))
+		else if(searchType.equalsIgnoreCase(Const.DEPARTMENT) || searchType.equalsIgnoreCase(Const.JOB))
 			f = new ResultsFragment();
-		else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK))
+		else if(systemType.equalsIgnoreCase(Const.SERVICE_CLICK))
 			f = new ServiceFragment();
 		else
 			return;
@@ -231,19 +232,19 @@ public class HomeFragment extends BaseFragment {
 			}
 		};
 		
-		if(requestType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF)) {
+		if(searchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF)) {
 			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
 			getBranch.execute(emploee.SearchID);
-		} else if(requestType.equalsIgnoreCase(Const.FIRST_LAST_NAME)) {
+		} else if(searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME)) {
 			PostSearch postSearch = new PostSearch(getActivity(), callback);
 			postSearch.getEmploeeForSearchID(emploee.SearchID);
-		} else if(requestType.equalsIgnoreCase(Const.DEPARTMENT)) {
+		} else if(searchType.equalsIgnoreCase(Const.DEPARTMENT)) {
 			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
-			searchForDepartment.getEmployeeForDepartment(emploee.SearchID);
-		} else if(requestType.equalsIgnoreCase(Const.JOB)) {
+			searchForDepartment.getBranchEmployeesForDepartmentCode(emploee.SearchID);
+		} else if(searchType.equalsIgnoreCase(Const.JOB)) {
 			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
 			searchForDepartment.getEmployeeForDepartment(emploee.SearchKey);
-		} else if(emploee.SystemType.equalsIgnoreCase(Const.SERVICE_CLICK)) {
+		} else if(systemType.equalsIgnoreCase(Const.SERVICE_CLICK)) {
 			GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
 			getService.execute(emploee.SearchID);
 		}

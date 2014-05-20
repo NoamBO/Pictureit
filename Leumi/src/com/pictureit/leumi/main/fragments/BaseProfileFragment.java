@@ -8,7 +8,6 @@ import utilities.BaseFragment;
 import utilities.HttpBase.HttpCalback;
 import android.os.Bundle;
 import android.text.Html;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,16 +17,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
@@ -67,26 +60,19 @@ public class BaseProfileFragment extends BaseFragment {
 	private ImageButton ibCall, ibSms, ibMail;
 	private ListView mListView;
 	private ArrayList<NameValue> mArrayList;
-	private ScrollView scrollView;
 
+	@Override
+	public void onDetach() {
+		imageLoader.clearMemoryCache();
+		super.onDetach();
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_screen, container, false);
 
 		ImageView profilePic = findView(v, R.id.iv_profile_screen);
-		ImageLoader il = ImageLoader.getInstance();
-		DisplayImageOptions options = new DisplayImageOptions.Builder()
-		.showImageForEmptyUri(R.drawable.cellprofileimg)
-		.showImageOnFail(R.drawable.cellprofileimg)
-		.showImageOnLoading(R.drawable.cellprofileimg)
-        .resetViewBeforeLoading(false)  // default
-        .delayBeforeLoading(1000)
-        .cacheInMemory(false) // default
-        .cacheOnDisc(false) // default
-        .considerExifParams(false) // default
-        .displayer(new SimpleBitmapDisplayer()) // default
-        .build();
 		
 		tvUnit = (TextView) v.findViewById(R.id.tv_profile_unit);
 		TextView tvProfileName = (TextView) v
@@ -104,7 +90,6 @@ public class BaseProfileFragment extends BaseFragment {
 		ibSms = (ImageButton) v.findViewById(R.id.ib_profile_send_sms);
 		ibMail = (ImageButton) v.findViewById(R.id.ib_profile_email);
 		mListView = (ListView) v.findViewById(R.id.lv_profile_organization_hierarchy);
-		scrollView = findView(v, R.id.profile_scrollView);
 		
 		if (mProfile == null) {
 			Bundle b = getArguments();
@@ -128,7 +113,7 @@ public class BaseProfileFragment extends BaseFragment {
 			                "<u>"+mProfile.L144Department+"</u> "));
 				
 			initListview(mProfile.L144Lineage, mProfile.L144OrgNameLineage);
-			il.displayImage(mProfile.L144WorkerPictureUrl, profilePic, options);
+			imageLoader.displayImage(mProfile.L144WorkerPictureUrl, profilePic, options);
 		}
 		return v;
 	}
@@ -221,19 +206,16 @@ public class BaseProfileFragment extends BaseFragment {
 		
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return mArrayList.size();
 		}
 
 		@Override
 		public Object getItem(int arg0) {
-			// TODO Auto-generated method stub
 			return mArrayList.get(arg0);
 		}
 
 		@Override
 		public long getItemId(int arg0) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
 
@@ -242,18 +224,13 @@ public class BaseProfileFragment extends BaseFragment {
 			View v = getActivity().getLayoutInflater().inflate(R.layout.hierarchy_row, null);
 			AutoResizeTextView tvName = (AutoResizeTextView) v.findViewById(R.id.tv_listview_row_name);
 			tvName.setSingleLine(true);
-			ImageView ivArrowDown = (ImageView) v.findViewById(R.id.iv_listview_row_arrow_down);
 			ImageView ivArrowLeft = (ImageView) v.findViewById(R.id.iv_listview_row_arrow_left);
 			RelativeLayout parent = (RelativeLayout) v.findViewById(R.id.rl_hierarchy_row_parent);
 			if(position == 0
 					|| position == 1)
 				ivArrowLeft.setVisibility(View.GONE);
 			
-			//RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			parent.setPadding(0, 10, position*8, 10);
-			//params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-			//ivArrowDown.setLayoutParams(params);
-			//parent.setLayoutParams(params);
 			AutoResizeTextViewSetter.setText(tvName, mArrayList.get(position).name);
 			return v;
 		}
