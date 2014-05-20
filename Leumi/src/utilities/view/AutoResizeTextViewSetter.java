@@ -11,4 +11,16 @@ public class AutoResizeTextViewSetter {
 		}
 		textView.setText(fixString + text + fixString);
 	}
+	
+	public static String elipsizeText(int maxLenth, String string) {
+		String[] charSecuence = string.split("");
+		if(charSecuence.length > maxLenth) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < maxLenth; i++) {
+				sb.append(charSecuence[i]);
+			}
+			string = sb.toString()+"..";
+		}
+		return string;
+	}
 }

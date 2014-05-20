@@ -2,6 +2,8 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
+import utilities.view.AutoResizeTextView;
+import utilities.view.AutoResizeTextViewSetter;
 import android.app.Activity;
 import android.widget.TextView;
 
@@ -65,7 +67,7 @@ public class ScreensHelper {
 			} else if (contactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_E_MAIL)) {
 				sbAddressType.append(activity.getText(R.string.email));
-				sbAddress.append(contactInfo.get(i).Value);
+				sbAddress.append(AutoResizeTextViewSetter.elipsizeText(35, contactInfo.get(i).Value));
 
 			} else if (contactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_FAX)) {
