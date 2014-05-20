@@ -7,8 +7,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import utilities.BaseFragment;
-import utilities.server.HttpBase.HttpCalback;
 import utilities.OutgoingCommunication;
+import utilities.server.HttpBase.HttpCalback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -43,7 +43,6 @@ import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
-import com.pictureit.leumi.server.parse.Service;
 
 public class HomeFragment extends BaseFragment {
 

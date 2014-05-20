@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import com.pictureit.leumi.server.parse.NameValue;
-import com.pictureit.leumi.server.parse.Profile;
 
 public class CallSmsEMailMenager {
 	

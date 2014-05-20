@@ -1,15 +1,12 @@
 package com.pictureit.leumi.main.fragments;
 
-import com.pictureit.leumi.main.MainActivity;
-import com.pictureit.leumi.main.R;
-
+import utilities.BaseFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import utilities.BaseFragment;
+
+import com.pictureit.leumi.main.MainActivity;
 
 public class BaseRegularFragmentNotMain extends BaseFragment {
 

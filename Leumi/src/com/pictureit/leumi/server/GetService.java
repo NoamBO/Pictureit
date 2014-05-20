@@ -1,15 +1,7 @@
 package com.pictureit.leumi.server;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.google.gson.Gson;
-import com.pictureit.leumi.server.parse.JsonToObject;
-import com.pictureit.leumi.server.parse.Service;
-
 import utilities.server.BaseHttpGet;
 import android.content.Context;
-import android.util.Log;
 
 public class GetService extends BaseHttpGet {
 

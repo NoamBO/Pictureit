@@ -1,20 +1,10 @@
 package com.pictureit.leumi.animation;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-import com.pictureit.leumi.main.R;
-import com.pictureit.leumi.main.R.anim;
-
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Point;
-import android.os.Handler;
 import android.view.Display;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -22,11 +12,45 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Transformation;
-import android.webkit.WebView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.pictureit.leumi.main.R;
+
 public class AnimationManager {
+	
+	
+	@SuppressWarnings("unused")
+	private static int getHeightToExpand(int heightPersents, Activity activity, HashMap<String, View> additionalViews) {
+		Display display = activity.getWindowManager().getDefaultDisplay();
+		
+		double persents = heightPersents/100f;
+		
+		@SuppressWarnings("deprecation")
+		int height = display.getHeight();	
+		int targetHeight = (int)(height*persents);
+		
+		if(additionalViews != null) {
+			if(additionalViews.containsKey("add"))
+			{
+				View v = additionalViews.get("add");
+				v.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+						MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+				int eh = v.getMeasuredHeight();
+				targetHeight =+ eh;
+			}
+			if(additionalViews.containsKey("remove"))
+			{
+				View v = additionalViews.get("remove");
+				v.measure(MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
+						MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
+				int eh = v.getMeasuredHeight();
+				targetHeight =- eh;
+			}
+		}
+		
+		return targetHeight;
+	}
 	
 
 

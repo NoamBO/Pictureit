@@ -1,18 +1,7 @@
 package com.pictureit.leumi.main;
 
-import java.util.HashMap;
-
 import utilities.view.CustomViewPager;
 import utilities.view.SoftKeyboard;
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -25,22 +14,20 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.fragments.AdvanceSearch;
-import com.pictureit.leumi.main.fragments.HomeFragment;
 import com.pictureit.leumi.main.fragments.BaseProfileFragment;
+import com.pictureit.leumi.main.fragments.HomeFragment;
 import com.pictureit.leumi.main.fragments.RootAdvanceSearchFragment;
 import com.pictureit.leumi.main.fragments.RootHomeFragment;
 import com.pictureit.leumi.main.fragments.RootMyProfileFragment;
 
 public class MainActivity extends FragmentActivity {
-
+	
 	private ViewGroup tabsButtonsContainer;
 	Fragment fHome, fAdvanceSearch;
 	Fragment fMyProfile;
@@ -87,7 +74,6 @@ public class MainActivity extends FragmentActivity {
 		wvMoreServices = (WebView) findViewById(R.id.wv_main_webview);
 		ivSwipeToOpenWebView = (ImageView) findViewById(R.id.iv_btn_open_webview);
 		tabsButtonsContainer = (ViewGroup) findViewById(R.id.tabsButtonsHost1);
-
 		fHome = new HomeFragment();
 		fAdvanceSearch = new AdvanceSearch();
 		fMyProfile = new BaseProfileFragment();
@@ -180,7 +166,7 @@ public class MainActivity extends FragmentActivity {
 		});
 		
 		mPager.setOnPageChangeListener(new OnPageChangeListener() {
-			int from,to = -1;
+			int to = -1;
 			@Override
 			public void onPageSelected(int arg0) {
 //				onTabChange(arg0);
@@ -190,14 +176,13 @@ public class MainActivity extends FragmentActivity {
 			@Override
 			public void onPageScrolled(int arg0, float arg1, int arg2) {
 				hideWebView();
-				from = arg0;
 			}
 			
 			@Override
 			public void onPageScrollStateChanged(int arg0) {
 				if(to != -1){
 					onTabChange(to);
-					from = to = -1;
+					to = -1;
 				}
 			}
 		});

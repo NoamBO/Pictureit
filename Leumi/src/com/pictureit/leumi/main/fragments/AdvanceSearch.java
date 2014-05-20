@@ -3,8 +3,6 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import utilities.BaseFragment;
-import utilities.server.HttpBase.HttpCalback;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +13,9 @@ import android.widget.ImageButton;
 
 import com.pictureit.leumi.main.AutoCompleteTextViewHandler;
 import com.pictureit.leumi.main.Const;
-import com.pictureit.leumi.main.Dialogs;
-import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.SearchCallback;
-import com.pictureit.leumi.server.parse.JsonToObject;
 
 public class AdvanceSearch extends BaseFragment {
 

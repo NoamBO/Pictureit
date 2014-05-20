@@ -1,15 +1,12 @@
 package utilities;
 
+import android.support.v4.app.Fragment;
+import android.view.View;
+
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.main.Dialogs;
 import com.pictureit.leumi.main.R;
-import com.pictureit.leumi.main.Settings;
-
-import android.app.Dialog;
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.view.View;
 
 //Written by @Noam Bar-Oz
 

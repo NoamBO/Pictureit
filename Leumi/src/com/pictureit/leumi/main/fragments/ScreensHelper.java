@@ -3,7 +3,6 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.pictureit.leumi.main.R;

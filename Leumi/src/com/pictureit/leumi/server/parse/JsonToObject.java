@@ -187,7 +187,6 @@ public class JsonToObject {
 		return returnArray;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static Service jsonGetService(String json) {
 		//   jsonGetService   Values
 		final String ApealerDetails = "ApealerDetails";

@@ -1,14 +1,11 @@
 package com.pictureit.leumi.main.fragments;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import utilities.imageloader.ImageLoader;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,8 +20,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.MainActivity;
@@ -32,7 +27,6 @@ import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Profile;
-import com.squareup.picasso.Picasso;
 
 public class ResultsFragment extends BaseRegularFragmentNotMain {
 
@@ -295,8 +289,8 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 	                arrayList.clear();
 	                suggestions.clear();
 	                for (Profile profile : itemsAll) {
-	                    if(profile.L144Department.toLowerCase().startsWith(filterDepartment.toLowerCase())
-	                    		&& profile.L144Job.toLowerCase().startsWith(filterJob.toLowerCase())){
+	                    if(profile.L144Department.startsWith(filterDepartment)
+	                    		&& profile.L144Job.startsWith(filterJob)){
 	                        suggestions.add(profile);
 	                    }
 	                }

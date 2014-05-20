@@ -3,19 +3,6 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.pictureit.leumi.main.CallSmsEMailMenager;
-import com.pictureit.leumi.main.Const;
-import com.pictureit.leumi.main.MainActivity;
-import com.pictureit.leumi.main.R;
-import com.pictureit.leumi.server.PostSearch;
-import com.pictureit.leumi.server.SearchCallback;
-import com.pictureit.leumi.server.parse.Branch;
-import com.pictureit.leumi.server.parse.JsonToObject;
-import com.pictureit.leumi.server.parse.NameValue;
-import com.pictureit.leumi.server.parse.Service;
-import com.pictureit.leumi.server.parse.Service.ContactInfo;
-
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,8 +14,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import utilities.BaseFragment;
-import utilities.server.HttpBase.HttpCalback;
+
+import com.pictureit.leumi.main.CallSmsEMailMenager;
+import com.pictureit.leumi.main.Const;
+import com.pictureit.leumi.main.R;
+import com.pictureit.leumi.server.PostSearch;
+import com.pictureit.leumi.server.SearchCallback;
+import com.pictureit.leumi.server.parse.Branch;
+import com.pictureit.leumi.server.parse.JsonToObject;
+import com.pictureit.leumi.server.parse.NameValue;
+import com.pictureit.leumi.server.parse.Service.ContactInfo;
 
 public class BranchFragment extends BaseRegularFragmentNotMain {
 

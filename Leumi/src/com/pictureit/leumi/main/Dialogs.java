@@ -1,7 +1,5 @@
 package com.pictureit.leumi.main;
 
-import java.nio.channels.AlreadyConnectedException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;

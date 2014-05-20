@@ -1,10 +1,7 @@
 package com.pictureit.leumi.server;
 
-import com.pictureit.leumi.server.parse.Branch;
-import com.pictureit.leumi.server.parse.JsonToObject;
-
-import android.content.Context;
 import utilities.server.BaseHttpGet;
+import android.content.Context;
 
 public class GetBrunch extends BaseHttpGet {
 
