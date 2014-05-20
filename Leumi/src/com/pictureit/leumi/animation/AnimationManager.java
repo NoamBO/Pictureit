@@ -20,8 +20,7 @@ import com.pictureit.leumi.main.R;
 public class AnimationManager {
 	
 	
-	@SuppressWarnings("unused")
-	private static int getHeightToExpand(int heightPersents, Activity activity, HashMap<String, View> additionalViews) {
+	public static int getHeightToExpand(int heightPersents, Activity activity, HashMap<String, View> additionalViews) {
 		Display display = activity.getWindowManager().getDefaultDisplay();
 		
 		double persents = heightPersents/100f;

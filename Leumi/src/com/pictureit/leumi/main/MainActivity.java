@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity {
 	ViewGroup vgHome, vgMyProfile, vgAdvanceSearch;
 	ImageView ivSwipeToOpenWebView;
 	WebView wvMoreServices;
+	private ViewGroup vgSliderContainer;
 
 	FragmentPagerAdapter mAdapter;
 	CustomViewPager mPager;
@@ -71,7 +72,10 @@ public class MainActivity extends FragmentActivity {
 		vgHome = (ViewGroup) findViewById(R.id.button1);
 		vgMyProfile = (ViewGroup) findViewById(R.id.button3);
 		vgAdvanceSearch = (ViewGroup) findViewById(R.id.button2);
+		
 		wvMoreServices = (WebView) findViewById(R.id.wv_main_webview);
+		vgSliderContainer = (ViewGroup) findViewById(R.id.ll_test);
+		
 		ivSwipeToOpenWebView = (ImageView) findViewById(R.id.iv_btn_open_webview);
 		tabsButtonsContainer = (ViewGroup) findViewById(R.id.tabsButtonsHost1);
 		fHome = new HomeFragment();
@@ -80,7 +84,7 @@ public class MainActivity extends FragmentActivity {
 
 		initListeners();
 	}
-
+	
 	public void addFragment(Fragment f) {
 		
 		int res;
@@ -189,12 +193,12 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected boolean hideWebView() {
-		return ExtraServicesWebViewManager.collapseExtraServicesByY(findViewById(R.id.ll_test),
+		return ExtraServicesWebViewManager.collapseExtraServicesByY(vgSliderContainer,
 				wvMoreServices, MainActivity.this);
 	}
 
 	protected void showWebView() {
-		ExtraServicesWebViewManager.expandExtraServicesByY(findViewById(R.id.ll_test),
+		ExtraServicesWebViewManager.expandExtraServicesByY(vgSliderContainer,
 				wvMoreServices, MainActivity.this);
 	}
 

@@ -2,12 +2,18 @@ package com.pictureit.leumi.main;
 
 import java.util.HashMap;
 
+import com.pictureit.leumi.animation.AnimationManager;
+
 import utilities.PixelsConverter;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 
 public class ExtraServicesWebViewManager {
 
@@ -22,14 +28,18 @@ public class ExtraServicesWebViewManager {
 		if(isExtraServicesVisible)
 			return;
 
-		int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
+		int targetHeight = AnimationManager.getHeightToExpand(65, activity, null);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, targetHeight);
+		view.setLayoutParams(params);
+		
+		//int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
 		container.animate().yBy(-targetHeight).setListener(new AnimatorListener() {
 			
 			@Override
 			public void onAnimationStart(Animator animation) {
 				view.setVisibility(View.VISIBLE);
 				WebView webView = (WebView) activity.findViewById(R.id.wv_main_webview);
-				webView.loadUrl("http://m.leumi.co.il");;
+				webView.loadUrl("http://m.leumi.co.il");
 			}
 			
 			@Override
@@ -55,7 +65,9 @@ public class ExtraServicesWebViewManager {
 		if(!isExtraServicesVisible)
 			return false;
 				
-		int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
+		//int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
+		int targetHeight = AnimationManager.getHeightToExpand(65, activity, null);
+		
 		container.animate().yBy(targetHeight).setListener(new AnimatorListener() {
 			
 			@Override

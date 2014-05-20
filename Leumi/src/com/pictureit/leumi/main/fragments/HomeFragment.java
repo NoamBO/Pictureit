@@ -79,12 +79,11 @@ public class HomeFragment extends BaseFragment {
 
 		@Override
 		public void onAnswerReturn(Object answer) {
-			if (answer != null) {
+			if (JsonToObject.isStatusOk((String) answer)) {
 				mLastServicesList = JsonToObject.jsonToLastServicesList((String) answer);
 				LocalStorageManager.homeServicesList = mLastServicesList;
-				setServicesList();
 			}
-
+			setServicesList();
 		}
 	};
 
