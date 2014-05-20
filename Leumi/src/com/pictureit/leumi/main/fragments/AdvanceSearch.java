@@ -32,18 +32,6 @@ public class AdvanceSearch extends BaseFragment {
 	private ArrayList<AutoCompleteTextView> autoCompleteTextViewArray;
 	private ArrayList<AutoCompleteTextViewHandler> handlersArray;
 	
-	public void resetTextViews() {
-		if(etFirstName == null
-				|| etLastName == null
-				|| etFreeText == null
-				|| etFreeUnitSearch == null
-				|| etSearchByJob == null)
-			return;
-		for (int i = 0; i < autoCompleteTextViewArray.size(); i++) {
-			autoCompleteTextViewArray.get(i).setText("");
-		}
-	}
-	
 	public void removeCallbacks() {
 		if(handlersArray != null)
 			for (int i = 0; i < handlersArray.size(); i++) {

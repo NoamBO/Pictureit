@@ -228,6 +228,7 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case ADVANCE_SEARCH_FRAGMENT_ID:
 			vgAdvanceSearch.setBackgroundResource(R.drawable.tb_selectedtab);
+			clearHomeTextView();
 			break;
 		case MY_PROFILE_FRAGMENT_ID:
 			clearAdvanceSearchTextViews();
@@ -238,12 +239,18 @@ public class MainActivity extends FragmentActivity {
 		hideWebView();
 	}
 	
+	private void clearHomeTextView() {
+		Fragment fragment = getSupportFragmentManager().findFragmentByTag("HomeFragment");
+		if(fragment instanceof HomeFragment){
+			((HomeFragment) fragment).clearFreeSearchEditText();
+		}
+	}
+
 	//private void clearHomeFragmentTextView()
 	
 	private void clearAdvanceSearchTextViews() {
 		Fragment fragment = getSupportFragmentManager().findFragmentByTag("AdvanceSearch");
 		 if(fragment instanceof AdvanceSearch) {
-			 ((AdvanceSearch) fragment).resetTextViews();
 			 ((AdvanceSearch) fragment).removeCallbacks();
 		 }
 	}

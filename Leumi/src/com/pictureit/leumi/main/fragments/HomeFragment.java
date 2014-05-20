@@ -51,6 +51,7 @@ public class HomeFragment extends BaseFragment {
 	private AutoCompleteTextView etSearch;
 	private ImageButton ibTellUsYouDidntFindService;
 	private ImageButton ibSearch;
+	private AutoCompleteTextViewHandler actvHandler;
 
 	private ArrayList<LeumiService> mLastServicesList;
 	
@@ -118,9 +119,9 @@ public class HomeFragment extends BaseFragment {
 		
 		etSearch = (AutoCompleteTextView) v.findViewById(R.id.et_search);
 		etSearch.setText("");
-		new AutoCompleteTextViewHandler().setListener(getActivity(), etSearch,Const.MOBILE_FULL);
-//		lvAutoCompleteSearch = (ListView) v
-//				.findViewById(R.id.lv_main_autocomplete_search);
+		actvHandler = new AutoCompleteTextViewHandler();
+		actvHandler.setListener(getActivity(), etSearch,Const.MOBILE_FULL);
+
 		lvServicesList = (ListView) v.findViewById(R.id.lv_main_services_list);
 
 		ibTellUsYouDidntFindService = (ImageButton) v.findViewById(R.id.ib_main_no_service_found);
@@ -193,6 +194,11 @@ public class HomeFragment extends BaseFragment {
 			}
 		});
 		
+	}
+	
+	public void clearFreeSearchEditText() {
+		if(actvHandler!=null)
+			actvHandler.cancelTask();
 	}
 
 	protected void onAutocopletionPressed(Emploee emploee) {

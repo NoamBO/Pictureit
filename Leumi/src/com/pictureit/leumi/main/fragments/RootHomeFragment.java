@@ -16,7 +16,7 @@ public class RootHomeFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.home_root_layout, null);
 		FragmentTransaction t = getFragmentManager().beginTransaction();
-		t.replace(R.id.root_view_home, new HomeFragment());
+		t.replace(R.id.root_view_home, new HomeFragment(), "HomeFragment");
 		t.commit();
 		return v;
 	}

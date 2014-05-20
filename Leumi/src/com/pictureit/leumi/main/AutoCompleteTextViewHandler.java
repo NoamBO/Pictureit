@@ -76,6 +76,8 @@ public class AutoCompleteTextViewHandler {
 			autoComplete.cancel(true);
 		}
 		isOkToShowDropDown = false;
+		editText.setText("");
+		completionPerforce();
 	}
 
 	private void setCallback() {
