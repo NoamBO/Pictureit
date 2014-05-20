@@ -9,16 +9,16 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/iv_empty_view_to_messure_slider_height" >
+        android:layout_above="@+id/buttonsHost" >
     </utilities.view.CustomViewPager>
 
-    <ImageView
+ <!--   <ImageView
         android:id="@+id/iv_empty_view_to_messure_slider_height"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/emptyView2"
         android:background="@drawable/btn_to_web"
-        android:visibility="invisible" />
+        android:visibility="invisible" />  --> 
 
     <LinearLayout
         android:id="@+id/ll_test"

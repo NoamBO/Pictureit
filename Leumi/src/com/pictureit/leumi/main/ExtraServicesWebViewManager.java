@@ -2,18 +2,14 @@ package com.pictureit.leumi.main;
 
 import java.util.HashMap;
 
-import com.pictureit.leumi.animation.AnimationManager;
-
-import utilities.PixelsConverter;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.app.Activity;
-import android.os.Handler;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
+
+import com.pictureit.leumi.animation.AnimationManager;
 
 public class ExtraServicesWebViewManager {
 
@@ -33,7 +29,7 @@ public class ExtraServicesWebViewManager {
 		view.setLayoutParams(params);
 		
 		//int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
-		container.animate().yBy(-targetHeight).setListener(new AnimatorListener() {
+		container.animate().yBy(-targetHeight).setListener(new BaseAnimatorListener() {
 			
 			@Override
 			public void onAnimationStart(Animator animation) {
@@ -43,17 +39,10 @@ public class ExtraServicesWebViewManager {
 			}
 			
 			@Override
-			public void onAnimationRepeat(Animator animation) {
-			}
-			
-			@Override
 			public void onAnimationEnd(Animator animation) {
 				isExtraServicesVisible = true;
 			}
 			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-			}
 		});
 	}
 	
@@ -68,27 +57,22 @@ public class ExtraServicesWebViewManager {
 		//int targetHeight = (int) PixelsConverter.convertDpToPixel(350f, activity);
 		int targetHeight = AnimationManager.getHeightToExpand(65, activity, null);
 		
-		container.animate().yBy(targetHeight).setListener(new AnimatorListener() {
-			
-			@Override
-			public void onAnimationStart(Animator animation) {
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-			}
+		container.animate().yBy(targetHeight).setListener(new BaseAnimatorListener() {
 			
 			@Override
 			public void onAnimationEnd(Animator animation) {
 				isExtraServicesVisible = false;
 			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-			}
 		});
 		
 		return true;
+	}
+	
+	private static class BaseAnimatorListener implements AnimatorListener {
+		@Override public void onAnimationCancel(Animator animation) {}
+		@Override public void onAnimationEnd(Animator animation) {}
+		@Override public void onAnimationRepeat(Animator animation) {}
+		@Override public void onAnimationStart(Animator animation) {}
 	}
 
 }
