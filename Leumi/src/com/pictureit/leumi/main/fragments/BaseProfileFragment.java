@@ -2,10 +2,10 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
-import utilities.AutoResizeTextView;
-import utilities.AutoResizeTextViewSetter;
 import utilities.BaseFragment;
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
+import utilities.view.AutoResizeTextView;
+import utilities.view.AutoResizeTextViewSetter;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;

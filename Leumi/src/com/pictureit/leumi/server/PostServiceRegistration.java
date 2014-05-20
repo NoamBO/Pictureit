@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import com.pictureit.leumi.main.Const;
 
 import android.content.Context;
-import utilities.BaseHttpPost;
+import utilities.server.BaseHttpPost;
 
 public class PostServiceRegistration extends BaseHttpPost {
 

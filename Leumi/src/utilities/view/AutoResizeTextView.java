@@ -1,4 +1,4 @@
-package utilities;
+package utilities.view;
 
 import android.content.Context;
 import android.text.Layout.Alignment;

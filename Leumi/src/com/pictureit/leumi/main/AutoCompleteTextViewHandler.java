@@ -2,8 +2,8 @@ package com.pictureit.leumi.main;
 
 import java.util.ArrayList;
 
-import utilities.HttpBase.HttpCalback;
-import utilities.SoftKeyboard;
+import utilities.server.HttpBase.HttpCalback;
+import utilities.view.SoftKeyboard;
 import android.app.Activity;
 import android.content.Context;
 import android.widget.AutoCompleteTextView;

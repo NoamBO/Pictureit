@@ -2,8 +2,8 @@ package com.pictureit.leumi.main;
 
 import java.util.HashMap;
 
-import utilities.CustomViewPager;
-import utilities.SoftKeyboard;
+import utilities.view.CustomViewPager;
+import utilities.view.SoftKeyboard;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;

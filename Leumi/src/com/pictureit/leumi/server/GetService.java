@@ -7,7 +7,7 @@ import com.google.gson.Gson;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.Service;
 
-import utilities.BaseHttpGet;
+import utilities.server.BaseHttpGet;
 import android.content.Context;
 import android.util.Log;
 

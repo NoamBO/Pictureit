@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import utilities.BaseHttpPost;
+import utilities.server.BaseHttpPost;
 import android.content.Context;
 
 import com.pictureit.leumi.main.Const;

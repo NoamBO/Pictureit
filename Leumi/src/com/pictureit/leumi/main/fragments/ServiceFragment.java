@@ -2,7 +2,7 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;

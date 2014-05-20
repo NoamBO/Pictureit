@@ -7,7 +7,7 @@ import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.R;
 
 import android.content.Context;
-import utilities.BaseHttpPost;
+import utilities.server.BaseHttpPost;
 
 public class PostLike extends BaseHttpPost {
 

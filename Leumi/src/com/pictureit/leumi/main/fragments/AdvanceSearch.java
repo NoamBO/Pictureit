@@ -3,7 +3,7 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import utilities.BaseFragment;
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;

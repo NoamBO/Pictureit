@@ -7,7 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import utilities.BaseFragment;
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
 import utilities.OutgoingCommunication;
 import android.content.BroadcastReceiver;
 import android.content.Context;

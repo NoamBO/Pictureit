@@ -1,6 +1,6 @@
 package com.pictureit.leumi.server;
 
-import utilities.BaseHttpGet;
+import utilities.server.BaseHttpGet;
 import android.content.Context;
 
 

@@ -1,4 +1,4 @@
-package utilities;
+package utilities.server;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

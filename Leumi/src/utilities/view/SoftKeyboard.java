@@ -1,4 +1,4 @@
-package utilities;
+package utilities.view;
 
 import android.app.Activity;
 import android.view.inputmethod.InputMethodManager;

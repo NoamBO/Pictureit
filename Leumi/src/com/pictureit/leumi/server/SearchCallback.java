@@ -13,7 +13,7 @@ import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.main.fragments.ResultsFragment;
 import com.pictureit.leumi.server.parse.JsonToObject;
 
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
 
 public class SearchCallback implements HttpCalback {
 

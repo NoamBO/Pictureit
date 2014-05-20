@@ -28,7 +28,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import utilities.BaseFragment;
-import utilities.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCalback;
 
 public class BranchFragment extends BaseRegularFragmentNotMain {
 
