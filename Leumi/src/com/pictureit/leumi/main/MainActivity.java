@@ -74,6 +74,7 @@ public class MainActivity extends FragmentActivity {
 		vgAdvanceSearch = (ViewGroup) findViewById(R.id.button2);
 		
 		wvMoreServices = (WebView) findViewById(R.id.wv_main_webview);
+		wvMoreServices.loadUrl("http://m.leumi.co.il");
 		vgSliderContainer = (ViewGroup) findViewById(R.id.ll_test);
 		
 		ivSwipeToOpenWebView = (ImageView) findViewById(R.id.iv_btn_open_webview);
@@ -193,13 +194,11 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected boolean hideWebView() {
-		return ExtraServicesWebViewManager.collapseExtraServicesByY(vgSliderContainer,
-				wvMoreServices, MainActivity.this);
+		return ExtraServicesWebViewManager.slideDown(MainActivity.this, vgSliderContainer, wvMoreServices);
 	}
 
 	protected void showWebView() {
-		ExtraServicesWebViewManager.expandExtraServicesByY(vgSliderContainer,
-				wvMoreServices, MainActivity.this);
+		ExtraServicesWebViewManager.expand(wvMoreServices, MainActivity.this);
 	}
 
 	private void onTabChange(int tabPosition) {
