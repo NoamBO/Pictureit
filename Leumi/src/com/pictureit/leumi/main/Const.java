@@ -14,6 +14,8 @@ public class Const {
 	
 	public static final String SYSTEM_TYPE_SNIF = "Snif";
 	
+	public static final String SYSTEM_TYPE_SNIF_OTHER_BASK = "SnifOtherBank";
+	
 	public static final String SERVICE_CLICK = "ServiceClick";
 	
 	public static final String JSON = "json";
@@ -39,6 +41,8 @@ public class Const {
 	public static final String FIRST_NAME = "FirstName";
 	
 	public static final String JOB = "Job";
+	
+	public static final String PEOPLE = "People";
 	
 	public static final String ACCOUNT_NAME = "AccountName";
 	

@@ -116,7 +116,7 @@ public class ResultsFragment extends BaseRegularFragmentNotMain {
 				Bundle b = new Bundle();
 				b.putString(Const.JSON, profileJson);
 				
-				Fragment f = new ProfileFragmentKindSingle();
+				Fragment f = new EmploeeProfileFragment();
 				f.setArguments(b);
 				
 				((MainActivity) getActivity()).addFragment(f);

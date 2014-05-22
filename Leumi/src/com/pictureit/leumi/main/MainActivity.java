@@ -194,7 +194,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected boolean hideWebView() {
-		return ExtraServicesWebViewManager.slideDown(MainActivity.this, vgSliderContainer, wvMoreServices);
+		return ExtraServicesWebViewManager.collapse(MainActivity.this, wvMoreServices);
 	}
 
 	protected void showWebView() {

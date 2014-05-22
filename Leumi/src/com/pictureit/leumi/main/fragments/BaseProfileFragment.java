@@ -90,14 +90,7 @@ public class BaseProfileFragment extends BaseFragment {
 		ibSms = (ImageButton) v.findViewById(R.id.ib_profile_send_sms);
 		ibMail = (ImageButton) v.findViewById(R.id.ib_profile_email);
 		mListView = (ListView) v.findViewById(R.id.lv_profile_organization_hierarchy);
-		
-		if (mProfile == null) {
-			Bundle b = getArguments();
-			if (b != null) {
-				String s = b.getString(Const.JSON);
-				mProfile = JsonToObject.jsonToUserProfile(s);
-			}
-		}
+
 		if (mProfile != null) {
 			tvProfileName.setText(mProfile.L144FirstName + " "
 					+ mProfile.L144LastName);

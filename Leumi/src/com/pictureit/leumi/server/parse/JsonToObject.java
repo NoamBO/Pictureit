@@ -112,39 +112,26 @@ public class JsonToObject {
 		return services;
 	}
 
-	/**
-	 * Use to parse json array received from http call
-	 * 
-	 * 
-	 * @param json
-	 * @return Profile object
-	 */
-	public static Profile jsonToUserProfile(String json) {
-		Profile p = null;
+	public static ArrayList<Profile> jsonToUserProfilesArrayList(String json) {
+		ArrayList<Profile> arrayList = new ArrayList<Profile>();
 		try {
 			JSONObject jsonObject = new JSONObject(json);
 			if(!isStatusOk(json))
 				return null;
 			
 			JSONArray jsonArray = jsonObject.getJSONArray("persons");
-			if (jsonArray.length() > 0) {
-				p = new Gson().fromJson(jsonArray.get(0).toString(),
+			for (int i = 0; i < jsonArray.length(); i++) {
+				Profile p = new Gson().fromJson(jsonArray.get(0).toString(),
 						Profile.class);
+				arrayList.add(p);
 			}
 		} catch (JSONException e) {
-			p = jsonToSingleEmploeeProfile(json);
 			e.printStackTrace();
+			return null;
 		}
-		return p;
+		return arrayList;
 	}
-	
-	
-	/**
-	 * Use to parse json object received from within the app
-	 * 
-	 * @param json
-	 * @return Profile object
-	 */
+
 	public static Profile jsonToSingleEmploeeProfile(String s) {
 		Profile p = null;
 		try {

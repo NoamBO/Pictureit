@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.pictureit.leumi.main.AutoCompleteTextViewHandler;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
@@ -43,6 +44,7 @@ import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
+import com.pictureit.leumi.server.parse.Profile;
 
 public class HomeFragment extends BaseFragment {
 
@@ -200,54 +202,95 @@ public class HomeFragment extends BaseFragment {
 	}
 
 	protected void onAutocopletionPressed(Emploee emploee) {
-		final Fragment f;
 		String searchType = emploee.SearchType;
 		String systemType = emploee.SystemType;
 
-		if(searchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF))
-			f = new BranchFragment();
-		else if(searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
-			f = new ProfileFragmentKindAutocomplete();
-		else if(searchType.equalsIgnoreCase(Const.DEPARTMENT) || searchType.equalsIgnoreCase(Const.JOB))
-			f = new ResultsFragment();
-		else if(systemType.equalsIgnoreCase(Const.SERVICE_CLICK))
-			f = new ServiceFragment();
-		else
-			return;
-		HttpCalback callback = new HttpCalback() {
-			
+		if (systemType.equalsIgnoreCase(Const.PEOPLE)) {
+			if (searchType.equalsIgnoreCase(Const.JOB)) {
+			}
+
+			else if (searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
+				searchForPersons(emploee.SearchID);
+			else if (searchType.equals(Const.SYSTEM_TYPE_SNIF))
+				searchForSnif(emploee.SearchID);
+			else if (searchType.equals(Const.DEPARTMENT))
+				searchForDepartment(emploee.SearchID);
+		} else if (systemType.equalsIgnoreCase(Const.SERVICE_CLICK)
+				&& searchType.equalsIgnoreCase(""))
+			searchForService(emploee.SearchID);
+		else if(systemType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF_OTHER_BASK) &&
+				searchType.equalsIgnoreCase(""))
+			searchForSnif(emploee.SearchID);
+
+//		} else if(searchType.equalsIgnoreCase(Const.JOB)) {
+//			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
+//			searchForDepartment.getEmployeeForDepartment(emploee.SearchKey);
+
+		
+	}
+
+	private HttpCalback callbackForPersonArry = new HttpCalback() {
+
+		@Override
+		public void onAnswerReturn(Object object) {
+			ArrayList<Profile> p = JsonToObject.jsonToUserProfilesArrayList((String) object);
+			etSearch.setText("");
+			if(p == null) {
+				showErrorDialog();
+				return;
+			}
+			if(p.size() > 1) {
+				Fragment f = new ResultsFragment();
+				Bundle b = new Bundle();
+				b.putString(Const.JSON, (String) object);
+				f.setArguments(b);
+				((MainActivity)getActivity()).addFragment(f);
+			} else {
+				EmploeeProfileFragment f = new EmploeeProfileFragment();
+				Bundle b = new Bundle();
+				b.putString(Const.JSON, new Gson().toJson(p.get(0), Profile.class));
+				f.setArguments(b);
+				((MainActivity)getActivity()).addFragment(f);
+			}
+		}
+	};
+	
+	private void searchForDepartment(String searchID) {
+		PostSearch searchForDepartment = new PostSearch(getActivity(), callbackForPersonArry);
+		searchForDepartment.getBranchEmployeesForDepartmentCode(searchID);
+	}
+
+	private void searchForPersons(String searchId) {
+		PostSearch postSearch = new PostSearch(getActivity(), callbackForPersonArry);
+		postSearch.getEmploeeForSearchID(searchId);
+	}
+	
+	private void searchForSnif(String searchID) {
+		GetBrunch getBranch = new GetBrunch(getActivity(), new HttpCalback() {
 			@Override
-			public void onAnswerReturn(Object answer) {
-				if(answer == null || !JsonToObject.isStatusOk(answer.toString())) {
+			public void onAnswerReturn(Object object) {
+				etSearch.setText("");
+				if(object == null) {
 					showErrorDialog();
 					return;
 				}
-				etSearch.setText("");
-				Bundle args = new Bundle();
-				args.putString(Const.JSON, answer.toString());
-				f.setArguments(args);
+				if(!JsonToObject.isStatusOk((String) object)) {
+					showErrorDialog();
+					return;
+				}
+				Fragment f = new BranchFragment();
+				Bundle b = new Bundle();
+				b.putString(Const.JSON, (String) object);
+				f.setArguments(b);
 				((MainActivity)getActivity()).addFragment(f);
 			}
-		};
-		
-		if(searchType.equalsIgnoreCase(Const.SYSTEM_TYPE_SNIF)) {
-			GetBrunch getBranch = new GetBrunch(getActivity(), callback);
-			getBranch.execute(emploee.SearchID);
-		} else if(searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME)) {
-			PostSearch postSearch = new PostSearch(getActivity(), callback);
-			postSearch.getEmploeeForSearchID(emploee.SearchID);
-		} else if(searchType.equalsIgnoreCase(Const.DEPARTMENT)) {
-			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
-			searchForDepartment.getBranchEmployeesForDepartmentCode(emploee.SearchID);
-		} else if(searchType.equalsIgnoreCase(Const.JOB)) {
-			PostSearch searchForDepartment = new PostSearch(getActivity(), callback);
-			searchForDepartment.getEmployeeForDepartment(emploee.SearchKey);
-		} else if(systemType.equalsIgnoreCase(Const.SERVICE_CLICK)) {
-			GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
-			getService.execute(emploee.SearchID);
-		}
-		
+		});
+		getBranch.execute(searchID);
+	}
 	
+	private void searchForService(String searchID) {
+		GetService getService = new GetService(getActivity(), getCallbackForServiceClick());
+		getService.execute(searchID);
 	}
 
 	private HttpCalback getCallbackForServiceClick() {
