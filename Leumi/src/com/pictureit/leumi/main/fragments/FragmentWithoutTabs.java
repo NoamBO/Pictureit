@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.pictureit.leumi.main.MainActivity;
 
-public class BaseRegularFragmentNotMain extends BaseFragment {
+public class FragmentWithoutTabs extends BaseFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

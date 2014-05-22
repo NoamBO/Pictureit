@@ -25,7 +25,7 @@ import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 
-public class BranchFragment extends BaseRegularFragmentNotMain {
+public class BranchFragment extends FragmentWithoutTabs {
 
 	private static final Integer[] NUMBERS_VALID_BANK = {10, 34};
 	

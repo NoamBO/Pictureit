@@ -33,7 +33,7 @@ import com.pictureit.leumi.server.parse.Service;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 import com.pictureit.leumi.server.parse.Service.LikingData;
 
-public class ServiceFragment extends BaseRegularFragmentNotMain {
+public class ServiceFragment extends FragmentWithoutTabs {
 	
 	private Service mService;
 	private TextView tvResponsibleParty, tvLike;

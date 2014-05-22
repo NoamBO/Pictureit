@@ -74,9 +74,9 @@ public class HomeFragment extends BaseFragment {
 		public void run(){
 	        try {
 	        	i++;
-	        	imageLoader.displayImage(LocalStorageManager.systemAddition.baners.get(i).BanerImage, ibBaner);
-	        	mBaner = LocalStorageManager.systemAddition.baners.get(i);
-	        	if(i == LocalStorageManager.systemAddition.baners.size() -1)
+	        	imageLoader.displayImage(LocalStorageManager.getInstance().systemAddition.baners.get(i).BanerImage, ibBaner);
+	        	mBaner = LocalStorageManager.getInstance().systemAddition.baners.get(i);
+	        	if(i == LocalStorageManager.getInstance().systemAddition.baners.size() -1)
 	        		i = -1;
 	            handler.postDelayed(this, 10 * 1000);    
 	        }
@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment {
 	        NetworkInfo info = cm.getActiveNetworkInfo();
 	        if (info != null) {
 	            if (info.isConnected()) {
-	                if(LocalStorageManager.homeServicesList == null) {
+	                if(LocalStorageManager.getInstance().homeServicesList == null) {
 	                	setServicesListAndBaners();
 	                	getActivity().unregisterReceiver(this);
 	                }
@@ -113,7 +113,7 @@ public class HomeFragment extends BaseFragment {
 		public void onAnswerReturn(Object answer) {
 			if (JsonToObject.isStatusOk((String) answer)) {
 				mLastServicesList = JsonToObject.jsonToLastServicesList((String) answer);
-				LocalStorageManager.homeServicesList = mLastServicesList;
+				LocalStorageManager.getInstance().homeServicesList = mLastServicesList;
 				initialServiceListPending = false;
 			}
 			setServicesListAndBaners();
@@ -126,7 +126,7 @@ public class HomeFragment extends BaseFragment {
 		public void onAnswerReturn(Object answer) {
 			if (JsonToObject.isStatusOk((String) answer)) {
 				mSystemAddition = JsonToObject.jsonToSystemAddition((String) answer);
-				LocalStorageManager.systemAddition = mSystemAddition;
+				LocalStorageManager.getInstance().systemAddition = mSystemAddition;
 				initialSystemAdditionPending = false;
 			}
 			setServicesListAndBaners();
@@ -134,10 +134,10 @@ public class HomeFragment extends BaseFragment {
 	};
 
 	private void setServicesListAndBaners() {
-		if (LocalStorageManager.homeServicesList != null)
-			mLastServicesList = LocalStorageManager.homeServicesList;
-		if(LocalStorageManager.systemAddition != null)
-			mSystemAddition = LocalStorageManager.systemAddition;
+		if (LocalStorageManager.getInstance().homeServicesList != null)
+			mLastServicesList = LocalStorageManager.getInstance().homeServicesList;
+		if(LocalStorageManager.getInstance().systemAddition != null)
+			mSystemAddition = LocalStorageManager.getInstance().systemAddition;
 		if (!(mLastServicesList != null && mSystemAddition!= null)) {
 			if(!Settings.isNetworkAvailable(getActivity())) {
 				registerInternetReceiver();
@@ -164,7 +164,7 @@ public class HomeFragment extends BaseFragment {
 	}
 	
 	private void setSystemAddition() {
-		((MainActivity) getActivity()).initWebView(mSystemAddition);
+		((MainActivity) getActivity()).initWebView(mSystemAddition.AdditionServiceUrl);
 		handler.post(setBanerData);
 	}
 
@@ -200,7 +200,7 @@ public class HomeFragment extends BaseFragment {
 			
 			@Override
 			public void onClick(View arg0) {
-				String url = LocalStorageManager.systemAddition.PageHelpUrl;
+				String url = LocalStorageManager.getInstance().systemAddition.PageHelpUrl;
 				((MainActivity) getActivity()).onBanerTouch(url);
 			}
 		});

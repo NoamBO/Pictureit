@@ -28,7 +28,7 @@ import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Profile;
 
-public class ResultsFragment extends BaseRegularFragmentNotMain {
+public class ResultsFragment extends FragmentWithoutTabs {
 
 	ArrayList<Profile> mArrayList;
 	private ListView lvFilterByUnit, lvFilterByJob;

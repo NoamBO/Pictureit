@@ -84,10 +84,10 @@ public class MainActivity extends FragmentActivity {
 		initListeners();
 	}
 	
-	public void initWebView(SystemAddition systemAddition) {
+	public void initWebView(String url) {
 		wvMoreServices.getSettings().setJavaScriptEnabled(true);
 		wvMoreServices.setWebViewClient(new WebViewClient());
-		wvMoreServices.loadUrl(systemAddition.AdditionServiceUrl);
+		wvMoreServices.loadUrl(url);
 	}
 	
 	public void onBanerTouch(String url){
@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity {
 	
 	public void addFragment(Fragment f) {
 		
-		int res;
+		int res = 0;
 		FragmentTransaction t = getSupportFragmentManager().beginTransaction();
 		switch (mPager.getCurrentItem()) {
 		case 0:
@@ -112,8 +112,6 @@ public class MainActivity extends FragmentActivity {
 			break;
 		case 2:
 			res = ROOT_VIEW_MY_PROFILE;
-		default:
-			res = ROOT_VIEW_HOME;
 			break;
 		}
 		
