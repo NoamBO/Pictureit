@@ -12,6 +12,7 @@ import com.google.gson.reflect.TypeToken;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 import com.pictureit.leumi.server.parse.Service.LikingData;
 import com.pictureit.leumi.server.parse.Service.Register;
+import com.pictureit.leumi.server.parse.SystemAddition.Baner;
 
 public class JsonToObject {
 	
@@ -41,6 +42,25 @@ public class JsonToObject {
 			return false;
 		}
 		return false;
+	}
+	
+	public static SystemAddition jsonToSystemAddition(String json) {
+		SystemAddition s = null;
+		try {
+			JSONObject j = new JSONObject(json).getJSONObject("systemaddition");
+			s = new SystemAddition();
+			s.AdditionServiceUrl = jsonGetString(j, "AdditionServiceUrl");
+			s.PageHelpUrl = jsonGetString(j, "PageHelpUrl");
+			
+			Type typeOfBaner = new TypeToken<ArrayList<Baner>>(){}.getType();
+			ArrayList<Baner> banners = new Gson().fromJson(jsonGetJsonArray(j, "Baners").toString(), typeOfBaner);
+			s.baners = banners;
+			
+		} catch (JSONException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return s;
 	}
 	
 	public static Branch jsonToBranch(String json) {
@@ -107,7 +127,7 @@ public class JsonToObject {
 						LeumiService.class));
 			}
 		} catch (Exception e) {
-			return new ArrayList<LeumiService>();
+			return null;
 		}
 		return services;
 	}

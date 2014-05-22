@@ -1,7 +1,11 @@
 package com.pictureit.leumi.main;
 
+import java.util.ArrayList;
+
 import utilities.view.CustomViewPager;
 import utilities.view.SoftKeyboard;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -25,6 +29,8 @@ import com.pictureit.leumi.main.fragments.HomeFragment;
 import com.pictureit.leumi.main.fragments.RootAdvanceSearchFragment;
 import com.pictureit.leumi.main.fragments.RootHomeFragment;
 import com.pictureit.leumi.main.fragments.RootMyProfileFragment;
+import com.pictureit.leumi.server.parse.SystemAddition;
+import com.pictureit.leumi.server.parse.SystemAddition.Baner;
 
 public class MainActivity extends FragmentActivity {
 	
@@ -34,7 +40,6 @@ public class MainActivity extends FragmentActivity {
 	ViewGroup vgHome, vgMyProfile, vgAdvanceSearch;
 	ImageView ivSwipeToOpenWebView;
 	WebView wvMoreServices;
-	private ViewGroup vgSliderContainer;
 
 	FragmentPagerAdapter mAdapter;
 	CustomViewPager mPager;
@@ -48,12 +53,6 @@ public class MainActivity extends FragmentActivity {
 	private final int MY_PROFILE_FRAGMENT_ID = 2;
 	
 	private boolean isOkToFinishApp = false;
-	
-//	public void goHome() {
-//
-//		replaceTab(HOME_FRAGMENT_ID);
-//		returnTabsButtons();
-//	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +73,6 @@ public class MainActivity extends FragmentActivity {
 		vgAdvanceSearch = (ViewGroup) findViewById(R.id.button2);
 		
 		wvMoreServices = (WebView) findViewById(R.id.wv_main_webview);
-		wvMoreServices.loadUrl("http://m.leumi.co.il");
-		vgSliderContainer = (ViewGroup) findViewById(R.id.ll_test);
 		
 		ivSwipeToOpenWebView = (ImageView) findViewById(R.id.iv_btn_open_webview);
 		tabsButtonsContainer = (ViewGroup) findViewById(R.id.tabsButtonsHost1);
@@ -84,6 +81,16 @@ public class MainActivity extends FragmentActivity {
 		fMyProfile = new BaseProfileFragment();
 
 		initListeners();
+	}
+	
+	public void initWebView(SystemAddition systemAddition) {
+		wvMoreServices.loadUrl(systemAddition.AdditionServiceUrl);
+	}
+	
+	public void onBanerTouch(String url){
+		Intent i = new Intent(Intent.ACTION_VIEW);
+		i.setData(Uri.parse(url));
+		startActivity(i);
 	}
 	
 	public void addFragment(Fragment f) {

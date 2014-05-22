@@ -15,9 +15,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -40,11 +43,15 @@ import com.pictureit.leumi.main.Settings;
 import com.pictureit.leumi.server.GetBrunch;
 import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
+import com.pictureit.leumi.server.GetSystemAddition;
 import com.pictureit.leumi.server.PostSearch;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
 import com.pictureit.leumi.server.parse.Profile;
+import com.pictureit.leumi.server.parse.SystemAddition;
+import com.pictureit.leumi.server.parse.SystemAddition.Baner;
+import com.squareup.picasso.Picasso;
 
 public class HomeFragment extends BaseFragment {
 
@@ -52,9 +59,31 @@ public class HomeFragment extends BaseFragment {
 	private AutoCompleteTextView etSearch;
 	private ImageButton ibTellUsYouDidntFindService;
 	private ImageButton ibSearch;
+	private ImageButton ibBaner;
 	private AutoCompleteTextViewHandler actvHandler;
+	private Baner mBaner;
 
 	private ArrayList<LeumiService> mLastServicesList;
+	private SystemAddition mSystemAddition;
+	private boolean initialServiceListPending, initialSystemAdditionPending;
+	
+	private Handler handler = new Handler();
+	private final Runnable setBanerData = new Runnable(){
+	    int i = -1;
+		public void run(){
+	        try {
+	        	i++;
+	        	imageLoader.displayImage(LocalStorageManager.systemAddition.baners.get(i).BanerImage, ibBaner);
+	        	mBaner = LocalStorageManager.systemAddition.baners.get(i);
+	        	if(i == LocalStorageManager.systemAddition.baners.size() -1)
+	        		i = -1;
+	            handler.postDelayed(this, 10 * 1000);    
+	        }
+	        catch (Exception e) {
+	            e.printStackTrace();
+	        }   
+	    }
+	};
 	
 	private final BroadcastReceiver mNetworkStateReceiver = new BroadcastReceiver() {
 	    @Override
@@ -64,7 +93,7 @@ public class HomeFragment extends BaseFragment {
 	        if (info != null) {
 	            if (info.isConnected()) {
 	                if(LocalStorageManager.homeServicesList == null) {
-	                	setServicesList();
+	                	setServicesListAndBaners();
 	                	getActivity().unregisterReceiver(this);
 	                }
 	            } 
@@ -84,31 +113,60 @@ public class HomeFragment extends BaseFragment {
 			if (JsonToObject.isStatusOk((String) answer)) {
 				mLastServicesList = JsonToObject.jsonToLastServicesList((String) answer);
 				LocalStorageManager.homeServicesList = mLastServicesList;
+				initialServiceListPending = false;
 			}
-			setServicesList();
+			setServicesListAndBaners();
+		}
+	};
+	
+	private HttpCalback systemAdditionCallback = new HttpCalback() {
+		
+		@Override
+		public void onAnswerReturn(Object answer) {
+			if (JsonToObject.isStatusOk((String) answer)) {
+				mSystemAddition = JsonToObject.jsonToSystemAddition((String) answer);
+				LocalStorageManager.systemAddition = mSystemAddition;
+				initialSystemAdditionPending = false;
+			}
+			setServicesListAndBaners();
 		}
 	};
 
-	private void setServicesList() {
+	private void setServicesListAndBaners() {
 		if (LocalStorageManager.homeServicesList != null)
 			mLastServicesList = LocalStorageManager.homeServicesList;
-		if (!(mLastServicesList != null && mLastServicesList.size() > 0)) {
+		if(LocalStorageManager.systemAddition != null)
+			mSystemAddition = LocalStorageManager.systemAddition;
+		if (!(mLastServicesList != null && mSystemAddition!= null)) {
 			if(!Settings.isNetworkAvailable(getActivity())) {
 				registerInternetReceiver();
 				return;
 			}
-			GetListLastServices getListLastServices = new GetListLastServices(
-					getActivity(), getLastServicesCallback);
-			getListLastServices.execute();
+			if(mLastServicesList == null && !initialServiceListPending) {
+				initialServiceListPending = true;
+				GetListLastServices getListLastServices = new GetListLastServices(
+						getActivity(), getLastServicesCallback);
+				getListLastServices.execute();
+			}
+			if(mSystemAddition == null && !initialSystemAdditionPending) {
+				initialSystemAdditionPending = true;
+				GetSystemAddition getSystemAddition = new GetSystemAddition(getActivity(), systemAdditionCallback);
+				getSystemAddition.execute();
+			}
 			return;
 		}
-
 		LastServicesListViewAdapter adapter = new LastServicesListViewAdapter(
 				getActivity(), android.R.layout.simple_list_item_1,
 				mLastServicesList);
 		lvServicesList.setAdapter(adapter);
+		setSystemAddition();
 	}
 	
+	private void setSystemAddition() {
+		((MainActivity) getActivity()).initWebView(mSystemAddition);
+		handler.post(setBanerData);
+	}
+
 	public HomeFragment() {
 	}
 
@@ -121,12 +179,13 @@ public class HomeFragment extends BaseFragment {
 		etSearch.setText("");
 		actvHandler = new AutoCompleteTextViewHandler();
 		actvHandler.setListener(getActivity(), etSearch,Const.MOBILE_FULL);
+		ibBaner = findView(v, R.id.ib_main_banner);
 
 		lvServicesList = (ListView) v.findViewById(R.id.lv_main_services_list);
 
 		ibTellUsYouDidntFindService = (ImageButton) v.findViewById(R.id.ib_main_no_service_found);
 		ibSearch = (ImageButton) v.findViewById(R.id.ib_search);
-		setServicesList();
+		setServicesListAndBaners();
 		
 		return v;
 	}
@@ -135,8 +194,18 @@ public class HomeFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
-
-		
+		ibBaner.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				String url = mBaner.BanerUrl;
+				if (!url.startsWith("https://") && !url.startsWith("http://")){
+				    url = "http://" + url;
+				}
+				((MainActivity) getActivity()).onBanerTouch(url);
+			}
+		});
+				
 		lvServicesList.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
