@@ -62,6 +62,7 @@ public class HomeFragment extends BaseFragment {
 	private ImageButton ibBaner;
 	private AutoCompleteTextViewHandler actvHandler;
 	private Baner mBaner;
+	private TextView tvHelp;
 
 	private ArrayList<LeumiService> mLastServicesList;
 	private SystemAddition mSystemAddition;
@@ -180,7 +181,8 @@ public class HomeFragment extends BaseFragment {
 		actvHandler = new AutoCompleteTextViewHandler();
 		actvHandler.setListener(getActivity(), etSearch,Const.MOBILE_FULL);
 		ibBaner = findView(v, R.id.ib_main_banner);
-
+		tvHelp = findView(v, R.id.tv_main_help);
+		
 		lvServicesList = (ListView) v.findViewById(R.id.lv_main_services_list);
 
 		ibTellUsYouDidntFindService = (ImageButton) v.findViewById(R.id.ib_main_no_service_found);
@@ -194,14 +196,19 @@ public class HomeFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		tvHelp.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				String url = LocalStorageManager.systemAddition.PageHelpUrl;
+				((MainActivity) getActivity()).onBanerTouch(url);
+			}
+		});
 		ibBaner.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
 				String url = mBaner.BanerUrl;
-				if (!url.startsWith("https://") && !url.startsWith("http://")){
-				    url = "http://" + url;
-				}
 				((MainActivity) getActivity()).onBanerTouch(url);
 			}
 		});

@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -84,10 +85,15 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	public void initWebView(SystemAddition systemAddition) {
+		wvMoreServices.getSettings().setJavaScriptEnabled(true);
+		wvMoreServices.setWebViewClient(new WebViewClient());
 		wvMoreServices.loadUrl(systemAddition.AdditionServiceUrl);
 	}
 	
 	public void onBanerTouch(String url){
+		if (!url.startsWith("https://") && !url.startsWith("http://")){
+		    url = "http://" + url;
+		}
 		Intent i = new Intent(Intent.ACTION_VIEW);
 		i.setData(Uri.parse(url));
 		startActivity(i);
