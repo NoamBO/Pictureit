@@ -282,9 +282,8 @@ public class HomeFragment extends BaseFragment {
 		String systemType = emploee.SystemType;
 
 		if (systemType.equalsIgnoreCase(Const.PEOPLE)) {
-			if (searchType.equalsIgnoreCase(Const.JOB)) {
-			}
-
+			if (searchType.equalsIgnoreCase(Const.JOB))
+				searchForJob(emploee.SearchID);
 			else if (searchType.equalsIgnoreCase(Const.FIRST_LAST_NAME))
 				searchForPersons(emploee.SearchID);
 			else if (searchType.equals(Const.SYSTEM_TYPE_SNIF))
@@ -330,6 +329,11 @@ public class HomeFragment extends BaseFragment {
 			}
 		}
 	};
+	
+	private void searchForJob(String searchID) {
+		PostSearch searchForJob = new PostSearch(getActivity(), callbackForPersonArry);
+		searchForJob.getEmployeesForJob(searchID);
+	}
 	
 	private void searchForDepartment(String searchID) {
 		PostSearch searchForDepartment = new PostSearch(getActivity(), callbackForPersonArry);

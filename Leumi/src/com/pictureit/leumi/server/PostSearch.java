@@ -97,6 +97,25 @@ public class PostSearch extends BaseHttpPost {
 		}
 		this.execute();
 	}
+	
+	//Brings Employee for job from autocompletion click in home fragment
+	public void getEmployeesForJob(String job) {
+		JSONArray jsonArray = new JSONArray();
+		try {
+
+			jsonArray.put(
+					new JSONObject()
+					.put(Const.SEARCH_KEY, Const.JOB)
+					.put(Const.SEARCH_VALUE, job)
+					);
+			
+			addObjectToMainJsonArray(jsonArray);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		this.execute();
+	}
+	
 	//Brings Employee for advance searching
 	public void getEmployeesForAdvanceSearch(String lastName ,String firstName ,String department ,String role ,String freeText) {
 		JSONArray jsonArray = new JSONArray();
