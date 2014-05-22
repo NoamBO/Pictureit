@@ -2,7 +2,7 @@ package com.pictureit.leumi.main;
 
 import java.util.ArrayList;
 
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 import utilities.view.SoftKeyboard;
 import android.app.Activity;
 import android.content.Context;
@@ -16,7 +16,7 @@ public class AutoCompleteTextViewHandler {
 
 	Context ctx;
 
-	HttpCalback callback;
+	HttpCallback callback;
 
 	AutoCompleteTextView editText;
 	
@@ -33,7 +33,7 @@ public class AutoCompleteTextViewHandler {
 	}
 
 	public void setListener(Context _ctx, AutoCompleteTextView _editText,
-			final String serverRequestType, HttpCalback httpCalback) {
+			final String serverRequestType, HttpCallback httpCalback) {
 
 		this.ctx = _ctx;
 		this.editText = _editText;
@@ -81,7 +81,7 @@ public class AutoCompleteTextViewHandler {
 	}
 
 	private void setCallback() {
-		callback = new HttpCalback() {
+		callback = new HttpCallback() {
 
 			@Override
 			public void onAnswerReturn(Object answer) {

@@ -5,7 +5,7 @@ import android.content.Context;
 
 public class GetListLastServices extends BaseHttpGet {
 
-	public GetListLastServices(Context ctx, HttpCalback callback) {
+	public GetListLastServices(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

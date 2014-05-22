@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import utilities.BaseFragment;
 import utilities.OutgoingCommunication;
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -45,6 +45,7 @@ import com.pictureit.leumi.server.GetListLastServices;
 import com.pictureit.leumi.server.GetService;
 import com.pictureit.leumi.server.GetSystemAddition;
 import com.pictureit.leumi.server.PostSearch;
+import com.pictureit.leumi.server.SearchCallback;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
@@ -107,7 +108,7 @@ public class HomeFragment extends BaseFragment {
 			getActivity().registerReceiver(mNetworkStateReceiver , mNetworkStateFilter);
 		}
 
-	private HttpCalback getLastServicesCallback = new HttpCalback() {
+	private HttpCallback getLastServicesCallback = new HttpCallback() {
 
 		@Override
 		public void onAnswerReturn(Object answer) {
@@ -120,7 +121,7 @@ public class HomeFragment extends BaseFragment {
 		}
 	};
 	
-	private HttpCalback systemAdditionCallback = new HttpCalback() {
+	private HttpCallback systemAdditionCallback = new HttpCallback() {
 		
 		@Override
 		public void onAnswerReturn(Object answer) {
@@ -242,7 +243,7 @@ public class HomeFragment extends BaseFragment {
 				if(searchText.length() < 1)
 					return;
 				
-				PostSearch postSearch = new PostSearch(getActivity(), new HttpCalback() {
+				PostSearch postSearch = new PostSearch(getActivity(), new HttpCallback() {
 					
 					@Override
 					public void onAnswerReturn(Object answer) {
@@ -303,50 +304,24 @@ public class HomeFragment extends BaseFragment {
 
 		
 	}
-
-	private HttpCalback callbackForPersonArry = new HttpCalback() {
-
-		@Override
-		public void onAnswerReturn(Object object) {
-			ArrayList<Profile> p = JsonToObject.jsonToUserProfilesArrayList((String) object);
-			etSearch.setText("");
-			if(p == null) {
-				showErrorDialog();
-				return;
-			}
-			if(p.size() > 1) {
-				Fragment f = new ResultsFragment();
-				Bundle b = new Bundle();
-				b.putString(Const.JSON, (String) object);
-				f.setArguments(b);
-				((MainActivity)getActivity()).addFragment(f);
-			} else {
-				EmploeeProfileFragment f = new EmploeeProfileFragment();
-				Bundle b = new Bundle();
-				b.putString(Const.JSON, new Gson().toJson(p.get(0), Profile.class));
-				f.setArguments(b);
-				((MainActivity)getActivity()).addFragment(f);
-			}
-		}
-	};
 	
 	private void searchForJob(String searchID) {
-		PostSearch searchForJob = new PostSearch(getActivity(), callbackForPersonArry);
+		PostSearch searchForJob = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity(), etSearch));
 		searchForJob.getEmployeesForJob(searchID);
 	}
 	
 	private void searchForDepartment(String searchID) {
-		PostSearch searchForDepartment = new PostSearch(getActivity(), callbackForPersonArry);
+		PostSearch searchForDepartment = new PostSearch(getActivity(),  SearchCallback.getCallback(getActivity(), etSearch));
 		searchForDepartment.getBranchEmployeesForDepartmentCode(searchID);
 	}
 
 	private void searchForPersons(String searchId) {
-		PostSearch postSearch = new PostSearch(getActivity(), callbackForPersonArry);
+		PostSearch postSearch = new PostSearch(getActivity(),  SearchCallback.getCallback(getActivity(), etSearch));
 		postSearch.getEmploeeForSearchID(searchId);
 	}
 	
 	private void searchForSnif(String searchID) {
-		GetBrunch getBranch = new GetBrunch(getActivity(), new HttpCalback() {
+		GetBrunch getBranch = new GetBrunch(getActivity(), new HttpCallback() {
 			@Override
 			public void onAnswerReturn(Object object) {
 				etSearch.setText("");
@@ -373,8 +348,8 @@ public class HomeFragment extends BaseFragment {
 		getService.execute(searchID);
 	}
 
-	private HttpCalback getCallbackForServiceClick() {
-		return new HttpCalback() {
+	private HttpCallback getCallbackForServiceClick() {
+		return new HttpCallback() {
 
 			@Override
 			public void onAnswerReturn(Object answer) {

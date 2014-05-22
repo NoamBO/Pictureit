@@ -1,7 +1,7 @@
 package com.pictureit.leumi.main.fragments;
 
 import utilities.BaseFragment;
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 
 import com.google.gson.Gson;
 import com.pictureit.leumi.main.Const;
@@ -25,7 +25,7 @@ public class RootMyProfileFragment extends BaseFragment {
 		View v = inflater.inflate(R.layout.my_profile_root_layout, null);
 		
 		if(LocalStorageManager.getInstance().currentUserProfile == null) {
-			GetCurrentUserData getCurrentUserData = new GetCurrentUserData(getActivity(), new HttpCalback() {
+			GetCurrentUserData getCurrentUserData = new GetCurrentUserData(getActivity(), new HttpCallback() {
 				
 				@Override
 				public void onAnswerReturn(Object object) {

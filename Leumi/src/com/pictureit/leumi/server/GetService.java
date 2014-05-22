@@ -5,7 +5,7 @@ import android.content.Context;
 
 public class GetService extends BaseHttpGet {
 
-	public GetService(Context ctx, HttpCalback callback) {
+	public GetService(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

@@ -1,6 +1,6 @@
 package com.pictureit.leumi.main.fragments;
 
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.server.GetCurrentUserData;

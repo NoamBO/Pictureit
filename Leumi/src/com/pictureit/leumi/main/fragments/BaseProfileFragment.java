@@ -3,7 +3,7 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import utilities.BaseFragment;
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 import utilities.view.AutoResizeTextView;
 import utilities.view.AutoResizeTextViewSetter;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ import com.pictureit.leumi.server.parse.Profile;
 
 public class BaseProfileFragment extends BaseFragment {
 
-	private HttpCalback callback = new HttpCalback() {
+	private HttpCallback callback = new HttpCallback() {
 		
 		@Override
 		public void onAnswerReturn(Object answer) {

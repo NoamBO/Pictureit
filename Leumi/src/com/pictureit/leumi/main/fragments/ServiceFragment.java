@@ -2,7 +2,7 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
-import utilities.server.HttpBase.HttpCalback;
+import utilities.server.HttpBase.HttpCallback;
 import utilities.view.AutoResizeTextView;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -144,7 +144,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		ibLike.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				PostLike like = new PostLike(getActivity(), new HttpCalback() {
+				PostLike like = new PostLike(getActivity(), new HttpCallback() {
 					
 					@Override
 					public void onAnswerReturn(Object object) {
@@ -213,7 +213,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		}
 		
 		// TODO signin to service
-		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCalback() {
+		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCallback() {
 			@Override
 			public void onAnswerReturn(Object object) {
 				

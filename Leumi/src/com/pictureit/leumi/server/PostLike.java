@@ -10,7 +10,7 @@ import com.pictureit.leumi.main.Const;
 
 public class PostLike extends BaseHttpPost {
 
-	public PostLike(Context ctx, HttpCalback calback) {
+	public PostLike(Context ctx, HttpCallback calback) {
 		super(ctx);
 		this.callback = calback;
 	}

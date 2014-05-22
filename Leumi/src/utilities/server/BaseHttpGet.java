@@ -16,7 +16,7 @@ import android.content.Context;
 
 public class BaseHttpGet extends HttpBase {
 	
-	protected HttpCalback callback;
+	protected HttpCallback callback;
 	protected String response;
 	
 	public BaseHttpGet(Context ctx) {

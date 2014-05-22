@@ -5,7 +5,7 @@ import android.content.Context;
 
 public class GetBrunch extends BaseHttpGet {
 
-	public GetBrunch(Context ctx, HttpCalback callback) {
+	public GetBrunch(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

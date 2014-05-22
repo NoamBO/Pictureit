@@ -5,7 +5,7 @@ import utilities.server.BaseHttpGet;
 
 public class GetCurrentUserData extends BaseHttpGet {
 
-	public GetCurrentUserData(Context ctx, HttpCalback callback) {
+	public GetCurrentUserData(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

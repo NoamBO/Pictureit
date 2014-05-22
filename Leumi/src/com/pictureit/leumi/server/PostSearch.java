@@ -13,7 +13,7 @@ public class PostSearch extends BaseHttpPost {
 
 
 
-	public PostSearch(Context ctx, HttpCalback callback) {
+	public PostSearch(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 		mMainJson = new JSONObject();

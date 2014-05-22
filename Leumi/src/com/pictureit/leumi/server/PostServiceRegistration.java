@@ -10,7 +10,7 @@ import utilities.server.BaseHttpPost;
 
 public class PostServiceRegistration extends BaseHttpPost {
 
-	public PostServiceRegistration(Context ctx, HttpCalback callback) {
+	public PostServiceRegistration(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

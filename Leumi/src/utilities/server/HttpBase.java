@@ -152,7 +152,7 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 		this.statusCode = statusCode;
 	}
 	
-	public interface HttpCalback{
+	public interface HttpCallback{
 		public void onAnswerReturn(Object object);
 	}
 	

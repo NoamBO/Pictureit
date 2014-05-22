@@ -8,7 +8,7 @@ public class GetAutoComplete extends BaseHttpGet {
 
 	private String searchType;
 	
-	public GetAutoComplete(Context ctx, String searchType, HttpCalback callback) {
+	public GetAutoComplete(Context ctx, String searchType, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 		this.searchType = searchType;

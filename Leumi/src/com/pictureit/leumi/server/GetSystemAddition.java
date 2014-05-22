@@ -5,7 +5,7 @@ import utilities.server.BaseHttpGet;
 
 public class GetSystemAddition extends BaseHttpGet {
 
-	public GetSystemAddition(Context ctx, HttpCalback callback) {
+	public GetSystemAddition(Context ctx, HttpCallback callback) {
 		super(ctx);
 		this.callback = callback;
 	}

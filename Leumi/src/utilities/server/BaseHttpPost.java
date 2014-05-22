@@ -16,7 +16,7 @@ import android.content.Context;
 
 public abstract class BaseHttpPost extends HttpBase {
 
-	protected HttpCalback callback;
+	protected HttpCallback callback;
 	protected String response;
 	protected JSONObject mMainJson;
 	
