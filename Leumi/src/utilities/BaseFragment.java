@@ -30,11 +30,11 @@ public class BaseFragment extends Fragment {
 	.showImageForEmptyUri(R.drawable.cellprofileimg)
 	.showImageOnFail(R.drawable.cellprofileimg)
 	.showImageOnLoading(R.drawable.cellprofileimg)
-    .resetViewBeforeLoading(false)  // default
-    .cacheInMemory(true) // default
-    .cacheOnDisc(false) // default
-    .considerExifParams(false) // default
-    .displayer(new SimpleBitmapDisplayer()) // default
+    .resetViewBeforeLoading(false)
+    .cacheInMemory(true)
+    .cacheOnDisc(false)
+    .considerExifParams(false)
+    .displayer(new SimpleBitmapDisplayer())
     .build();
 	protected com.nostra13.universalimageloader.core.ImageLoader imageLoader = com.nostra13.universalimageloader.core.ImageLoader.getInstance();
 }

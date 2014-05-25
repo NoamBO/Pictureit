@@ -1,9 +1,8 @@
 package com.pictureit.leumi.main;
 
-import java.util.ArrayList;
-
 import utilities.view.CustomViewPager;
 import utilities.view.SoftKeyboard;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,7 +21,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.fragments.AdvanceSearch;
 import com.pictureit.leumi.main.fragments.BaseProfileFragment;
@@ -30,8 +28,6 @@ import com.pictureit.leumi.main.fragments.HomeFragment;
 import com.pictureit.leumi.main.fragments.RootAdvanceSearchFragment;
 import com.pictureit.leumi.main.fragments.RootHomeFragment;
 import com.pictureit.leumi.main.fragments.RootMyProfileFragment;
-import com.pictureit.leumi.server.parse.SystemAddition;
-import com.pictureit.leumi.server.parse.SystemAddition.Baner;
 
 public class MainActivity extends FragmentActivity {
 	
@@ -84,9 +80,21 @@ public class MainActivity extends FragmentActivity {
 		initListeners();
 	}
 	
-	public void initWebView(String url) {
+	@SuppressLint("SetJavaScriptEnabled")
+	public void initWebView(final String url) {
 		wvMoreServices.getSettings().setJavaScriptEnabled(true);
-		wvMoreServices.setWebViewClient(new WebViewClient());
+		wvMoreServices.setWebViewClient(new WebViewClient()
+		{
+		    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		        if (url != null && url.startsWith("http") && !url.contains("generalMobilePage/android")) {
+		            view.getContext().startActivity(
+		                new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+		            return true;
+		        } else {
+		            return false;
+		        }
+		    }
+		});
 		wvMoreServices.loadUrl(url);
 	}
 	
@@ -294,7 +302,6 @@ public class MainActivity extends FragmentActivity {
 		
 		public myPagerAdapter(FragmentManager fm) {
 			super(fm);
-			// TODO Auto-generated constructor stub
 		}
 		
 		
@@ -314,8 +321,9 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			// TODO Auto-generated method stub
 			return TOTAL_PAGES;
-		}}
+		}
+		
+	}
 
 }
