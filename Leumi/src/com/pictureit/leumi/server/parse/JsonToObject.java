@@ -199,7 +199,6 @@ public class JsonToObject {
 		final String ApealerDetails = "ApealerDetails";
 		final String BllBusinessService = "BllBusinessService";
 		final String ContactInfo = "ContactInfo";
-		final String LikingData = "LikingData";
 		final String Register = "Register";
 		final String ServiceHourOperatation = "ServiceHourOperatation";
 		final String ServiceOwner = "ServiceOwner";

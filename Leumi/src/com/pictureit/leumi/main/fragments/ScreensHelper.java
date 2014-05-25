@@ -2,7 +2,6 @@ package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
 
-import utilities.view.AutoResizeTextView;
 import utilities.view.AutoResizeTextViewSetter;
 import android.app.Activity;
 import android.widget.TextView;

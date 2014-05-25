@@ -1,15 +1,12 @@
 package com.pictureit.leumi.main.fragments;
 
-import utilities.server.HttpBase.HttpCallback;
-
-import com.pictureit.leumi.main.Const;
-import com.pictureit.leumi.server.GetCurrentUserData;
-import com.pictureit.leumi.server.parse.JsonToObject;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.pictureit.leumi.main.Const;
+import com.pictureit.leumi.server.parse.JsonToObject;
 
 public class CurrentUserProfileFragment extends BaseProfileFragment {
 	

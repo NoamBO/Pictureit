@@ -15,12 +15,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +31,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.pictureit.leumi.main.AutoCompleteTextViewHandler;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
@@ -49,10 +46,8 @@ import com.pictureit.leumi.server.SearchCallback;
 import com.pictureit.leumi.server.parse.Emploee;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.LeumiService;
-import com.pictureit.leumi.server.parse.Profile;
 import com.pictureit.leumi.server.parse.SystemAddition;
 import com.pictureit.leumi.server.parse.SystemAddition.Baner;
-import com.squareup.picasso.Picasso;
 
 public class HomeFragment extends BaseFragment {
 

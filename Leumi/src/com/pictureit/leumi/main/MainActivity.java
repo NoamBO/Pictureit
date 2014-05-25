@@ -143,7 +143,6 @@ public class MainActivity extends FragmentActivity {
 		if(tabsButtonsContainer
 				.getVisibility() == View.GONE)
 			AnimationManager.expand(tabsButtonsContainer, 200);
-//		tabsButtonsContainer.setVisibility(View.VISIBLE);
 	}
 
 	public void replaceTab(int fragmentId) {
@@ -193,7 +192,6 @@ public class MainActivity extends FragmentActivity {
 			int to = -1;
 			@Override
 			public void onPageSelected(int arg0) {
-//				onTabChange(arg0);
 				to = arg0;
 			}
 			
@@ -221,9 +219,7 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void onTabChange(int tabPosition) {
-//		getFragmentManager().executePendingTransactions();
-//		getFragmentManager().popBackStack(null,
-//				FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
 		vgHome.setBackgroundResource(0);
 		vgAdvanceSearch.setBackgroundResource(0);
 		vgMyProfile.setBackgroundResource(0);
@@ -252,8 +248,6 @@ public class MainActivity extends FragmentActivity {
 			((HomeFragment) fragment).clearFreeSearchEditText();
 		}
 	}
-
-	//private void clearHomeFragmentTextView()
 	
 	private void clearAdvanceSearchTextViews() {
 		Fragment fragment = getSupportFragmentManager().findFragmentByTag("AdvanceSearch");

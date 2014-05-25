@@ -1,7 +1,5 @@
 package com.pictureit.leumi.main.fragments;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

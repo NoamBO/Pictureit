@@ -3,7 +3,6 @@ package com.pictureit.leumi.main.fragments;
 import java.util.ArrayList;
 
 import utilities.server.HttpBase.HttpCallback;
-import utilities.view.AutoResizeTextView;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Html;
