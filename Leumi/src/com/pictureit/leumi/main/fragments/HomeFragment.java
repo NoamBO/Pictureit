@@ -28,9 +28,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.pictureit.leumi.main.AutoCompleteTextViewHandler;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.LocalStorageManager;
@@ -51,11 +54,12 @@ import com.pictureit.leumi.server.parse.SystemAddition.Baner;
 
 public class HomeFragment extends BaseFragment {
 
+	private boolean isInit = false;
 	private ListView lvServicesList;
 	private AutoCompleteTextView etSearch;
 	private ImageButton ibTellUsYouDidntFindService;
 	private ImageButton ibSearch;
-	private ImageButton ibBaner;
+	private ImageView ivBaner;
 	private AutoCompleteTextViewHandler actvHandler;
 	private Baner mBaner;
 	private TextView tvHelp;
@@ -70,7 +74,11 @@ public class HomeFragment extends BaseFragment {
 		public void run(){
 	        try {
 	        	i++;
-	        	imageLoader.displayImage(LocalStorageManager.getInstance().systemAddition.baners.get(i).BanerImage, ibBaner);
+	        	imageLoader.displayImage(LocalStorageManager.getInstance().systemAddition.baners.get(i).BanerImage, ivBaner,
+	        			new DisplayImageOptions.Builder()
+	            .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+	            .build()
+	        	);
 	        	mBaner = LocalStorageManager.getInstance().systemAddition.baners.get(i);
 	        	if(i == LocalStorageManager.getInstance().systemAddition.baners.size() -1)
 	        		i = -1;
@@ -160,8 +168,11 @@ public class HomeFragment extends BaseFragment {
 	}
 	
 	private void setSystemAddition() {
+		if(isInit)
+			return;
 		((MainActivity) getActivity()).initWebView(mSystemAddition.AdditionServiceUrl);
 		handler.post(setBanerData);
+		isInit = true;
 	}
 
 	public HomeFragment() {
@@ -176,7 +187,7 @@ public class HomeFragment extends BaseFragment {
 		etSearch.setText("");
 		actvHandler = new AutoCompleteTextViewHandler();
 		actvHandler.setListener(getActivity(), etSearch,Const.MOBILE_FULL);
-		ibBaner = findView(v, R.id.ib_main_banner);
+		ivBaner = findView(v, R.id.iv_main_banner);
 		tvHelp = findView(v, R.id.tv_main_help);
 		
 		lvServicesList = (ListView) v.findViewById(R.id.lv_main_services_list);
@@ -200,7 +211,7 @@ public class HomeFragment extends BaseFragment {
 				((MainActivity) getActivity()).onBanerTouch(url);
 			}
 		});
-		ibBaner.setOnClickListener(new OnClickListener() {
+		ivBaner.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
@@ -265,7 +276,7 @@ public class HomeFragment extends BaseFragment {
 				onAutocopletionPressed(e);
 			}
 		});
-		
+
 	}
 	
 	public void clearFreeSearchEditText() {

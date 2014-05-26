@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="40dp" >
+        android:paddingBottom="@dimen/fragmen_padding_bottom" >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -97,17 +97,18 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/ll_home_search_container"
                 android:layout_alignRight="@+id/ll_home_search_container"
-                android:layout_marginBottom="-15dp"
+                android:layout_marginBottom="-12dp"
                 android:background="@drawable/woman_pic" />
         </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/ib_main_banner"
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/iv_main_banner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:background="@drawable/banner" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp" />
     </LinearLayout>
 
 </ScrollView>
