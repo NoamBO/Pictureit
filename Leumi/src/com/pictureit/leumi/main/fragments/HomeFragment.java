@@ -114,8 +114,8 @@ public class HomeFragment extends BaseFragment {
 	private HttpCallback getLastServicesCallback = new HttpCallback() {
 
 		@Override
-		public void onAnswerReturn(Object answer) {
-			if (JsonToObject.isStatusOk((String) answer)) {
+		public void onAnswerReturn(String answer) {
+			if (JsonToObject.isStatusOk(answer)) {
 				mLastServicesList = JsonToObject.jsonToLastServicesList((String) answer);
 				LocalStorageManager.getInstance().homeServicesList = mLastServicesList;
 				initialServiceListPending = false;
@@ -127,9 +127,9 @@ public class HomeFragment extends BaseFragment {
 	private HttpCallback systemAdditionCallback = new HttpCallback() {
 		
 		@Override
-		public void onAnswerReturn(Object answer) {
-			if (JsonToObject.isStatusOk((String) answer)) {
-				mSystemAddition = JsonToObject.jsonToSystemAddition((String) answer);
+		public void onAnswerReturn(String answer) {
+			if (JsonToObject.isStatusOk(answer)) {
+				mSystemAddition = JsonToObject.jsonToSystemAddition(answer);
 				LocalStorageManager.getInstance().systemAddition = mSystemAddition;
 				initialSystemAdditionPending = false;
 			}
@@ -252,10 +252,10 @@ public class HomeFragment extends BaseFragment {
 				PostSearch postSearch = new PostSearch(getActivity(), new HttpCallback() {
 					
 					@Override
-					public void onAnswerReturn(Object answer) {
-						if(JsonToObject.isStatusOk((String) answer)) {
+					public void onAnswerReturn(String answer) {
+						if(JsonToObject.isStatusOk(answer)) {
 							Bundle b = new Bundle();
-							b.putString(Const.JSON, (String) answer);
+							b.putString(Const.JSON, answer);
 							
 							Fragment f = new ResultsFragment();
 							f.setArguments(b);
@@ -329,19 +329,19 @@ public class HomeFragment extends BaseFragment {
 	private void searchForSnif(String searchID) {
 		GetBrunch getBranch = new GetBrunch(getActivity(), new HttpCallback() {
 			@Override
-			public void onAnswerReturn(Object object) {
+			public void onAnswerReturn(String object) {
 				etSearch.setText("");
 				if(object == null) {
 					showErrorDialog();
 					return;
 				}
-				if(!JsonToObject.isStatusOk((String) object)) {
+				if(!JsonToObject.isStatusOk(object)) {
 					showErrorDialog();
 					return;
 				}
 				Fragment f = new BranchFragment();
 				Bundle b = new Bundle();
-				b.putString(Const.JSON, (String) object);
+				b.putString(Const.JSON, object);
 				f.setArguments(b);
 				((MainActivity)getActivity()).addFragment(f);
 			}
@@ -358,13 +358,13 @@ public class HomeFragment extends BaseFragment {
 		return new HttpCallback() {
 
 			@Override
-			public void onAnswerReturn(Object answer) {
+			public void onAnswerReturn(String answer) {
 				if (answer == null) {
 					showErrorDialog();
 					return;
 				}
 				try {
-					JSONObject j = new JSONObject(answer.toString());
+					JSONObject j = new JSONObject(answer);
 					if (!JsonToObject.isStatusOk(j.getString("result"))) {
 						showErrorDialog();
 						return;
@@ -376,7 +376,7 @@ public class HomeFragment extends BaseFragment {
 				}
 				etSearch.setText("");
 				Bundle b = new Bundle();
-				String s = answer.toString();
+				String s = answer;
 				b.putString(Const.JSON, s);
 
 				ServiceFragment f = new ServiceFragment();

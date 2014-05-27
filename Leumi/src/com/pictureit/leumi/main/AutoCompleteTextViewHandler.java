@@ -84,10 +84,10 @@ public class AutoCompleteTextViewHandler {
 		callback = new HttpCallback() {
 
 			@Override
-			public void onAnswerReturn(Object answer) {
+			public void onAnswerReturn(String answer) {
 				if (isOkToShowDropDown) {
 					ArrayList<Emploee> emploees = JsonToObject
-							.jsonToAutoComplete((String) answer);
+							.jsonToAutoComplete(answer);
 					AutoCompleteAdapter adapter = new AutoCompleteAdapter(ctx,
 							android.R.layout.simple_list_item_2, emploees);
 

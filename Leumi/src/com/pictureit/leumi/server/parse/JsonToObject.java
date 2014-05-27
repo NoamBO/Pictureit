@@ -89,7 +89,7 @@ public class JsonToObject {
 			b.BranchHourOperatation = BranchHourOperatation;
 			
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		
@@ -111,7 +111,7 @@ public class JsonToObject {
 						Emploee.class));
 			}
 		} catch (JSONException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		return emploees;
@@ -159,7 +159,7 @@ public class JsonToObject {
 				p = new Gson().fromJson(jsonObject.toString(),
 						Profile.class);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return p;
@@ -226,13 +226,11 @@ public class JsonToObject {
 			
 			Type typeOfContactInfo = new TypeToken<ArrayList<ContactInfo>>(){}.getType();
 			ArrayList<ContactInfo> ContactInfoList = new Gson().fromJson(jsonGetJsonArray(o, ContactInfo).toString(), typeOfContactInfo);
-
-			LikingData LikingDataList = jsonGetFromGson(jsonGetJsonArray(o, ContactInfo).toString(), LikingData.class);			
-			Register RegisterList = jsonGetFromGson(jsonGetJsonArray(o, ContactInfo).toString(), Register.class);
+	
+			Register RegisterData = jsonGetFromGson(o.getJSONObject(Register).toString(), Register.class);
 			
 			s.ContactInfo = ContactInfoList;
-			s.LikingData = LikingDataList;
-			s.Register = RegisterList;
+			s.Register = RegisterData;
 			s.ServiceHourOperatation = ServiceHourOperatationList;
 			s.LikingData = new Gson().fromJson(o.getJSONObject("LikingData").toString(), LikingData.class);
 		} catch (JSONException e) {
@@ -254,10 +252,23 @@ public class JsonToObject {
 			ld = new LikingData();
 			ld.LikingCount = String.valueOf(jsonGetInteger(o, "count"));
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return ld;
+	}
+	
+
+	public static String jsonToMessage(String answer) {
+		String msg = null;
+		try {
+			JSONObject j = new JSONObject(answer);
+			msg = jsonGetString(j, "Msg");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return msg;
 	}
 	
 	
@@ -268,7 +279,7 @@ public class JsonToObject {
 		try {
 			return (T) new Gson().fromJson(json,  classType);
 		} catch (Exception e) {
-			// TODO: handle exception
+
 		}
 		return (T) null;
 	}
@@ -278,7 +289,7 @@ public class JsonToObject {
 		try {
 			value = jsonObject.getJSONArray(key);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return value;
@@ -289,7 +300,7 @@ public class JsonToObject {
 		try {
 			value = jsonObject.getString(key);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return value;
@@ -300,7 +311,7 @@ public class JsonToObject {
 		try {
 			value = jsonObject.getInt(key);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 		return value;

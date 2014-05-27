@@ -21,7 +21,7 @@ import android.os.AsyncTask;
 
 //Written by @Noam Bar-Oz
 
-public abstract class HttpBase extends AsyncTask<String, String, Object>{
+public abstract class HttpBase extends AsyncTask<String, String, String>{
 
 	private HttpResponse response;
 	private String url;
@@ -64,7 +64,7 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 	}
 	
 	@Override
-	protected void onPostExecute(Object result) {
+	protected void onPostExecute(String result) {
 		if(mProgressDialog!=null)
 			mProgressDialog.cancel();
 		super.onPostExecute(result);
@@ -153,7 +153,7 @@ public abstract class HttpBase extends AsyncTask<String, String, Object>{
 	}
 	
 	public interface HttpCallback{
-		public void onAnswerReturn(Object object);
+		public void onAnswerReturn(String answer);
 	}
 	
 }

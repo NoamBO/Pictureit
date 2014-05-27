@@ -28,9 +28,9 @@ public class RootMyProfileFragment extends BaseFragment {
 			GetCurrentUserData getCurrentUserData = new GetCurrentUserData(getActivity(), new HttpCallback() {
 				
 				@Override
-				public void onAnswerReturn(Object object) {
-					if(object != null && JsonToObject.isStatusOk((String) object)) {
-						LocalStorageManager.getInstance().currentUserProfile = JsonToObject.jsonToUserProfilesArrayList((String) object).get(0);
+				public void onAnswerReturn(String object) {
+					if(object != null && JsonToObject.isStatusOk(object)) {
+						LocalStorageManager.getInstance().currentUserProfile = JsonToObject.jsonToUserProfilesArrayList(object).get(0);
 						launchProfileFragment();
 					} else {
 						showErrorDialog();

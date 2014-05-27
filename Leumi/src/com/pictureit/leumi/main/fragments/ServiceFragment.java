@@ -146,8 +146,8 @@ public class ServiceFragment extends FragmentWithoutTabs {
 				PostLike like = new PostLike(getActivity(), new HttpCallback() {
 					
 					@Override
-					public void onAnswerReturn(Object object) {
-						LikingData likingData = JsonToObject.jsonToLikingData((String) object);
+					public void onAnswerReturn(String answer) {
+						LikingData likingData = JsonToObject.jsonToLikingData(answer);
 						if(Integer.valueOf(likingData.LikingCount) > Integer.valueOf(mService.LikingData.LikingCount))
 							likingData.Liking = Const.LIKING_REQUEST_TYPE_LIKE;
 						else
@@ -197,16 +197,14 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		});
 	}
 
-
-	@SuppressWarnings("unused")
 	protected void follow() {
-		if(true)
-			return;
+		boolean alreadyRegister = mService.Register.Status.equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED);
 
-		if(mService.Register.Status .equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED)) {
+		if(alreadyRegister) {
 			new AlertDialog.Builder(getActivity())
 			.setTitle(R.string.impossible_to_load_service)
 			.setMessage(R.string.already_signed_to_this_service)
+			.setNeutralButton("Ok", null)
 			.create().show();
 			return;
 		}
@@ -214,11 +212,21 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		// TODO signin to service
 		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCallback() {
 			@Override
-			public void onAnswerReturn(Object object) {
+			public void onAnswerReturn(String answer) {
+				if(answer==null)
+					return;
+				String msg = (JsonToObject.jsonToMessage(answer) != null ? JsonToObject
+						.jsonToMessage(answer)
+							: getString(R.string.register_success));
 				
+				mService.Register.Status = "1";
+				new AlertDialog.Builder(getActivity())
+				.setMessage(msg)
+				.setNeutralButton("Ok", null)
+				.create().show();
 			}
 		});
-		register.registerToService("identity");
+		register.registerToService(mService.ServiceID);
 	}
 
 	protected void searchPeopleInResponsibleUnit() {

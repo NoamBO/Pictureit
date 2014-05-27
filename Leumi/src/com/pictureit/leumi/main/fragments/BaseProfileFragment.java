@@ -37,14 +37,14 @@ public class BaseProfileFragment extends BaseFragment {
 	private HttpCallback callback = new HttpCallback() {
 		
 		@Override
-		public void onAnswerReturn(Object answer) {
-		if(!JsonToObject.isStatusOk((String)answer)) {
+		public void onAnswerReturn(String answer) {
+		if(!JsonToObject.isStatusOk(answer)) {
 			showErrorDialog();
 			return;
 		}
 			ResultsFragment f = new ResultsFragment();
 			Bundle b = new Bundle();
-			b.putString(Const.JSON, (String) answer);
+			b.putString(Const.JSON, answer);
 			f.setArguments(b);
 			((MainActivity)getActivity()).addFragment(f);
 		}

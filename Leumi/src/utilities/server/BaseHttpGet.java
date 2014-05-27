@@ -42,7 +42,7 @@ public class BaseHttpGet extends HttpBase {
 	}
 	
 	@Override
-	protected void onPostExecute(Object result) {
+	protected void onPostExecute(String result) {
 		if(callback != null)
 			callback.onAnswerReturn(result);
 		super.onPostExecute(result);

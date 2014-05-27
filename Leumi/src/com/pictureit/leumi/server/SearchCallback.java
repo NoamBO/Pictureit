@@ -50,8 +50,8 @@ public class SearchCallback implements HttpCallback {
 	}
 
 	@Override
-	public void onAnswerReturn(Object answer) {
-		if (answer != null && JsonToObject.isStatusOk((String) answer)) {
+	public void onAnswerReturn(String answer) {
+		if (answer != null && JsonToObject.isStatusOk(answer)) {
 
 			if (mEditTextArray != null) {
 				for (int i = 0; i < mEditTextArray.size(); i++) {
@@ -61,11 +61,11 @@ public class SearchCallback implements HttpCallback {
 			} else if(mSingleAutoCompleteTextView != null)
 				mSingleAutoCompleteTextView.setText("");
 
-			ArrayList<Profile> p = JsonToObject.jsonToUserProfilesArrayList((String) answer);
+			ArrayList<Profile> p = JsonToObject.jsonToUserProfilesArrayList(answer);
 			Bundle b = new Bundle();
 			if (p.size() > 1) {
 				
-				b.putString(Const.JSON, (String) answer);
+				b.putString(Const.JSON, answer);
 				Fragment f = new ResultsFragment();
 				f.setArguments(b);
 				((MainActivity) mActivity).addFragment(f);

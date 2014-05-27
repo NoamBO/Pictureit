@@ -19,6 +19,7 @@ public class PostServiceRegistration extends BaseHttpPost {
 	protected String doInBackground(String... params) {
 		if (mMainJson == null)
 			return null;
+		prepare(null);
 		return super.doInBackground(params);
 	}
 	
@@ -27,6 +28,7 @@ public class PostServiceRegistration extends BaseHttpPost {
 		try {
 			jsonObject.put(Const.SYSTEM_IDENTITY, identity);
 			jsonObject.put(Const.SYSTEM_IDENTITY_DESC, Const.SERVICE_CLICK);
+			jsonObject.put("Val", "1");
 			mMainJson = jsonObject;
 		} catch (JSONException e) {
 			e.printStackTrace();

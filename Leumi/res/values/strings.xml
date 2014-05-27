@@ -22,6 +22,7 @@
  	<string name="make_a_call">התקשר</string>
  	<string name="no_email_found">לא קיימת כתובת אי מייל במערכת</string>
  	<string name="no_internet_connection">לא נמצא חיבור פעיל לאינטרנט</string>
+ 	<string name="register_success">הרשמה בוצעה בהצלחה</string>
  	
  	<string name="first_name">שם פרטי:</string>
  	<string name="last_name">שם משפחה:</string>
