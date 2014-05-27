@@ -3,6 +3,7 @@ package com.pictureit.leumi.server;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.widget.AutoCompleteTextView;
@@ -63,6 +64,11 @@ public class SearchCallback implements HttpCallback {
 
 			ArrayList<Profile> p = JsonToObject.jsonToUserProfilesArrayList(answer);
 			Bundle b = new Bundle();
+			if(p.size() == 0) {
+				showNO_RESULTSdialog();
+				return;
+			}
+			
 			if (p.size() > 1) {
 				
 				b.putString(Const.JSON, answer);
@@ -83,5 +89,14 @@ public class SearchCallback implements HttpCallback {
 		}
 
 	};
+	
+	private void showNO_RESULTSdialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+		builder.setTitle(R.string.search_results)
+		.setMessage(R.string.no_results)
+		.setNeutralButton("Ok", null)
+		.create()
+		.show();
+	}
 
 }
