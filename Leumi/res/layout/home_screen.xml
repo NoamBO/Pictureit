@@ -49,36 +49,53 @@
                     android:layout_below="@id/tv_main_help"
                     android:orientation="vertical" >
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/searchbox"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal" >
+                        android:background="@drawable/searchbox" >
 
-                        <ImageButton
-                            android:id="@+id/ib_search"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:background="@drawable/search_btn_main" />
-
-                        <AutoCompleteTextView
-                            android:id="@+id/et_search"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/edittext_shape"
-                            android:inputType="textNoSuggestions"
-                            android:paddingRight="15dp"
-                            android:singleLine="true" />
-                    </LinearLayout>
+                            android:layout_marginTop="10dp"
+                            android:paddingRight="10dp"
+                            android:text="@string/search_for_people_branches_services"
+                            android:textColor="@android:color/white" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <ImageButton
+                                android:id="@+id/ib_search"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/search_btn_main" />
+
+                            <AutoCompleteTextView
+                                android:id="@+id/et_search"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/edittext_shape"
+                                android:inputType="textNoSuggestions"
+                                android:paddingRight="15dp"
+                                android:singleLine="true" />
+                        </LinearLayout>
+                    </RelativeLayout>
 
                     <ImageButton
                         android:id="@+id/ib_main_no_service_found"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="3dp"
                         android:background="@drawable/mail_to_support" />
+
                 </LinearLayout>
 
                 <ListView
@@ -106,9 +123,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp" />
     </LinearLayout>
 
 </ScrollView>

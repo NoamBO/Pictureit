@@ -208,8 +208,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 			.create().show();
 			return;
 		}
-		
-		// TODO signin to service
+
 		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCallback() {
 			@Override
 			public void onAnswerReturn(String answer) {

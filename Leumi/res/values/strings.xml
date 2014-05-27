@@ -5,6 +5,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="search_for_people_branches_services"><b>חיפוש אנשים, מוקדים, סניפים, שירותים</b></string>
+    
     <string name="tel_num"><b>טל:</b></string>
     <string name="cell_num"><b>נייד:</b></string>
     <string name="fax"><b>פקס:</b></string>
