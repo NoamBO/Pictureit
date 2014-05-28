@@ -79,22 +79,6 @@
             android:layout_weight="1" >
 
             <AutoCompleteTextView
-                android:id="@+id/et_advance_search_free_search"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/edittext_shape"
-                android:hint="@string/free_search"
-                android:paddingRight="15dp"
-                android:singleLine="true" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-            <AutoCompleteTextView
                 android:id="@+id/et_advance_search_free_unit_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +100,23 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
-                android:hint="@string/job"
+                android:hint="@string/job_unbold"
+                android:paddingRight="15dp"
+                android:singleLine="true" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" >
+
+            <AutoCompleteTextView
+                android:id="@+id/et_advance_search_free_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/edittext_shape"
+                android:hint="@string/free_search"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>

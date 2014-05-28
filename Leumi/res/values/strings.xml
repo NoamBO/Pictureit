@@ -15,6 +15,7 @@
     <string name="job"><b>תפקיד:</b></string>
     <string name="organization_hierarchy">היררכיה אירגונית</string>
     
+    
     <string name="somthing_went_wrong">זמנית לא ניתן להציג את העמוד המבוקש. אנא נסה שנית במועד מאוחר יותר</string>
     <string name="office">משרד:</string>
  	<string name="cellphone">נייד: </string>
@@ -29,6 +30,7 @@
  	
  	<string name="first_name">שם פרטי:</string>
  	<string name="last_name">שם משפחה:</string>
+ 	 <string name="job_unbold">תפקיד:</string>
  	<string name="free_search">חיפוש חופשי:</string>
  	<string name="free_unit_search">חיפוש יחידה ישירה:</string>
  	<string name="advance_search">חיפוש מתקדם</string>
