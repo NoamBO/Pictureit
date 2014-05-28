@@ -4,6 +4,8 @@
     <string name="app_name">Leumi</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="crash_toast_text">FAILED!!</string>
 
     <string name="search_for_people_branches_services"><b>חיפוש אנשים, מוקדים, סניפים, שירותים</b></string>
     

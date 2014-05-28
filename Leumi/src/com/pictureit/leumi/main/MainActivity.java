@@ -21,6 +21,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.fragments.AdvanceSearch;
 import com.pictureit.leumi.main.fragments.BaseProfileFragment;
@@ -59,6 +60,11 @@ public class MainActivity extends FragmentActivity {
 		initUI();
 
 	}
+	
+//	private void crashTest() {
+//		ArrayList<String> arr = null;
+//		arr.get(0);
+//	}
 
 	private void initUI() {
 		mPager = (CustomViewPager) findViewById(R.id.pager);
