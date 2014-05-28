@@ -167,24 +167,27 @@ public class BaseProfileFragment extends BaseFragment {
 					long id) {
 				if (position == 0 || position == 1)
 					return;
-				PostSearch httpPost = new PostSearch(getActivity(), callback);
-				httpPost.getBranchEmployeesForDepartmentCode(mArrayList.get(position).value);
+				search(mArrayList.get(position).value);
 			}
 		});
+		// TODO
 		tvUnit.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				
-					PostSearch postSearchPeopleInResponsibleUnit = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity()));
-					postSearchPeopleInResponsibleUnit.getEmployeeForDepartment(mProfile.L144Department);
+					search(mArrayList.get(mArrayList.size() - 1).value);
 				}
 			});
 	}
 	
+	private void search(String unitID) {
+		PostSearch httpPost = new PostSearch(getActivity(), SearchCallback.getCallback(getActivity()));
+		httpPost.getBranchEmployeesForDepartmentCode(unitID);
+	}
+	
 	protected void changeHierarchyListVisibility() {
 		if (mListView.getVisibility() == View.GONE) {
-			arrowHierarchy.setBackgroundResource(R.drawable.arrowleft);
+			arrowHierarchy.setBackgroundResource(R.drawable.arrowup);
 			//AnimationManager.expand(mListView);
 			mListView.setVisibility(View.VISIBLE);
 		} else {
