@@ -268,8 +268,11 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		if(ci == null)
 			Dialogs.generalDialog(getActivity(), (String) getText(R.string.no_email_found));
 		for (int i = 0; i < mService.ContactInfo.size(); i++) {
+			if(mService.ContactInfo.get(i) == null)
+				continue;
 			if (mService.ContactInfo.get(i).contact.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_E_MAIL)) {
 				CallSmsEMailMenager.sendEMail(mService.ContactInfo.get(i).Value, getActivity());
+				break;
 			}
 		}		
 	}
@@ -277,6 +280,8 @@ public class ServiceFragment extends FragmentWithoutTabs {
 	protected void call() {
 		ArrayList<NameValue> nums = new ArrayList<NameValue>();
 		for (int i = 0; i < mService.ContactInfo.size(); i++) {
+			if(mService.ContactInfo.get(i) == null)
+				continue;
 			if (mService.ContactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_PHONE))
 				nums.add(new NameValue(getResources().getString(

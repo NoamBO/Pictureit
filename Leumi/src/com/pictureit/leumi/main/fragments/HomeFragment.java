@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import utilities.BaseFragment;
 import utilities.OutgoingCommunication;
 import utilities.server.HttpBase.HttpCallback;
+import utilities.view.AutoResizeTextView;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -406,8 +407,8 @@ public class HomeFragment extends BaseFragment {
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			convertView = getActivity().getLayoutInflater().inflate(
 					R.layout.simple_textview, null);
-			TextView textView = (TextView) convertView
-					.findViewById(R.id.textview1);
+			AutoResizeTextView textView = (AutoResizeTextView) convertView.findViewById(R.id.textview1);
+			textView.setSingleLine(true);
 
 			textView.setBackgroundColor(getResources().getColor(
 					android.R.color.white));

@@ -59,6 +59,8 @@ public class ScreensHelper {
 		StringBuilder sbAddress = new StringBuilder();
 		StringBuilder sbAddressType = new StringBuilder();
 		for (int i = 0; i < contactInfo.size(); i++) {
+			if(contactInfo.get(i) == null)
+				continue;
 			if (contactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_PHONE)) {
 				sbAddressType.append(activity.getText(R.string.tel_num));
