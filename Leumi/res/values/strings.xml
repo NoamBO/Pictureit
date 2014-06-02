@@ -22,12 +22,15 @@
     <string name="office">משרד:</string>
  	<string name="cellphone">נייד: </string>
  	<string name="impossible_to_load_service">לא ניתן להשלים את השירות</string>
- 	<string name="already_signed_to_this_service">אתה כבר רשום לשירות זה</string>
  	<string name="no_phone_num_found">לא קיים מספר טלפון במערכת</string>
  	<string name="make_a_call">התקשר</string>
  	<string name="no_email_found">לא קיימת כתובת אי מייל במערכת</string>
  	<string name="no_internet_connection">לא נמצא חיבור פעיל לאינטרנט</string>
  	<string name="register_success">הרשמה בוצעה בהצלחה</string>
+ 	<string name="service_follow_dialog_title">מעקב אחר שירות</string>
+ 	<string name="service_follow_question">האם ברצונך לעקוב אחר השירות?</string>
+ 	<string name="service_unfollow_dialog_title">המעקב אחר שירות זה פעיל</string>
+ 	<string name="already_signed_to_this_service">האם ברצונך לבטל את המעקב אחר השירות?</string>
  	<string name="no_results">אין תוצאות לחיפוש המבוקש</string>
  	
  	<string name="first_name">שם פרטי</string>

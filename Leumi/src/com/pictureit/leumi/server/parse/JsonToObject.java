@@ -259,16 +259,10 @@ public class JsonToObject {
 	}
 	
 
-	public static String jsonToMessage(String answer) {
-		String msg = null;
-		try {
-			JSONObject j = new JSONObject(answer);
-			msg = jsonGetString(j, "Msg");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return msg;
+	public static ServiceRegistration jsonToServiceRegistrationResponse(String answer) {
+		ServiceRegistration s = null;
+		s = jsonGetFromGson(answer, ServiceRegistration.class);
+		return s;
 	}
 	
 	

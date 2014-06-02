@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import utilities.server.HttpBase.HttpCallback;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -31,6 +32,7 @@ import com.pictureit.leumi.server.parse.NameValue;
 import com.pictureit.leumi.server.parse.Service;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 import com.pictureit.leumi.server.parse.Service.LikingData;
+import com.pictureit.leumi.server.parse.ServiceRegistration;
 
 public class ServiceFragment extends FragmentWithoutTabs {
 	
@@ -137,7 +139,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		ibFollow.setOnClickListener(new OnClickListener() {	
 			@Override
 			public void onClick(View view) {
-				follow();
+				onFollowClick();
 			}
 		});
 		ibLike.setOnClickListener(new OnClickListener() {	
@@ -197,35 +199,50 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		});
 	}
 
-	protected void follow() {
-		boolean alreadyRegister = mService.Register.Status.equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED);
+	protected void onFollowClick() {
+		final boolean alreadyRegister = mService.Register.Status.equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED);
 
-		if(alreadyRegister) {
 			new AlertDialog.Builder(getActivity())
-			.setTitle(R.string.impossible_to_load_service)
-			.setMessage(R.string.already_signed_to_this_service)
-			.setNeutralButton("Ok", null)
+			.setTitle(
+				alreadyRegister ? R.string.service_unfollow_dialog_title :
+						R.string.service_follow_dialog_title
+					)
+			.setMessage(
+				alreadyRegister ? R.string.already_signed_to_this_service
+						: R.string.service_follow_question
+					)
+			.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					follow(alreadyRegister);
+				}
+			})
+			.setNegativeButton("Cancel", null)
 			.create().show();
-			return;
-		}
-
+	}
+	
+	private void follow(boolean alreadyRegister) {
+		
 		PostServiceRegistration register = new PostServiceRegistration(getActivity(), new HttpCallback() {
 			@Override
 			public void onAnswerReturn(String answer) {
 				if(answer==null)
 					return;
-				String msg = (JsonToObject.jsonToMessage(answer) != null ? JsonToObject
-						.jsonToMessage(answer)
-							: getString(R.string.register_success));
-				
-				mService.Register.Status = "1";
+				ServiceRegistration s = JsonToObject.jsonToServiceRegistrationResponse(answer);
+				String msg = (s != null ? s.Msg
+							: getString(R.string.somthing_went_wrong));				
+				if(s == null)
+					return;
+
+				mService.Register.Status = s.StatusResult;
 				new AlertDialog.Builder(getActivity())
 				.setMessage(msg)
 				.setNeutralButton("Ok", null)
 				.create().show();
 			}
 		});
-		register.registerToService(mService.ServiceID);
+		register.registerToService(mService.ServiceID, alreadyRegister);
 	}
 
 	protected void searchPeopleInResponsibleUnit() {

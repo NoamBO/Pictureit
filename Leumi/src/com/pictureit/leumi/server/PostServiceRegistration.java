@@ -23,12 +23,12 @@ public class PostServiceRegistration extends BaseHttpPost {
 		return super.doInBackground(params);
 	}
 	
-	public void registerToService(String identity) {
+	public void registerToService(String identity, boolean isRegister) {
 		JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put(Const.SYSTEM_IDENTITY, identity);
 			jsonObject.put(Const.SYSTEM_IDENTITY_DESC, Const.SERVICE_CLICK);
-			jsonObject.put("Val", "1");
+			jsonObject.put("Val", isRegister ? "0" : "1");
 			mMainJson = jsonObject;
 		} catch (JSONException e) {
 			e.printStackTrace();
