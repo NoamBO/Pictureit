@@ -120,30 +120,35 @@ public class PostSearch extends BaseHttpPost {
 	public void getEmployeesForAdvanceSearch(String lastName ,String firstName ,String department ,String role ,String freeText) {
 		JSONArray jsonArray = new JSONArray();
 		try {
+			if(lastName != null && !lastName.equalsIgnoreCase(""))
 			jsonArray.put(
 					new JSONObject()
 					.put(Const.SEARCH_KEY, Const.LAST_NAME)
 					.put(Const.SEARCH_VALUE, lastName)
 					);
 			
+			if(firstName != null && !firstName.equalsIgnoreCase(""))
 			jsonArray.put(
 					new JSONObject()
 					.put(Const.SEARCH_KEY, Const.FIRST_NAME)
 					.put(Const.SEARCH_VALUE, firstName)
 					);
 
+			if(department != null && !department.equalsIgnoreCase(""))
 			jsonArray.put(
 					new JSONObject()
 					.put(Const.SEARCH_KEY, Const.DEPARTMENT)
 					.put(Const.SEARCH_VALUE, department)
 					);
 
+			if(role != null && !role.equalsIgnoreCase(""))
 			jsonArray.put(
 					new JSONObject()
 					.put(Const.SEARCH_KEY, Const.JOB)
 					.put(Const.SEARCH_VALUE, role)
 					);
 
+			if(freeText != null && !freeText.equalsIgnoreCase(""))
 			jsonArray.put(
 					new JSONObject()
 					.put(Const.SEARCH_KEY, Const.FREE_TEXT)
