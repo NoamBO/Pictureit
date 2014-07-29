@@ -279,7 +279,7 @@ public class JsonToObject {
 	}
 	
 	private static JSONArray jsonGetJsonArray(JSONObject jsonObject, String key) {
-		JSONArray value = null;
+		JSONArray value = new JSONArray();
 		try {
 			value = jsonObject.getJSONArray(key);
 		} catch (JSONException e) {
@@ -290,7 +290,7 @@ public class JsonToObject {
 	}
 	
 	private static String jsonGetString(JSONObject jsonObject, String key) {
-		String value = null;
+		String value = "";
 		try {
 			value = jsonObject.getString(key);
 		} catch (JSONException e) {

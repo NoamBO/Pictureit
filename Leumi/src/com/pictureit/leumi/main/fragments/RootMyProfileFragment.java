@@ -30,11 +30,14 @@ public class RootMyProfileFragment extends BaseFragment {
 				@Override
 				public void onAnswerReturn(String object) {
 					if(object != null && JsonToObject.isStatusOk(object)) {
+						if(JsonToObject.jsonToUserProfilesArrayList(object).size() > 0) {
 						LocalStorageManager.getInstance().currentUserProfile = JsonToObject.jsonToUserProfilesArrayList(object).get(0);
 						launchProfileFragment();
-					} else {
-						showErrorDialog();
+						return;
+						}
 					}
+					showErrorDialog();
+					
 				}
 			});
 			getCurrentUserData.execute();
