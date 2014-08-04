@@ -92,12 +92,18 @@ public class BaseProfileFragment extends BaseFragment {
 		mListView = (ListView) v.findViewById(R.id.lv_profile_organization_hierarchy);
 
 		if (mProfile != null) {
+			if(mProfile.L144FirstName != null && mProfile.L144LastName!=null)
 			tvProfileName.setText(mProfile.L144FirstName + " "
 					+ mProfile.L144LastName);
+			if(mProfile.L144WorkPhone!=null)
 			tvLineNum.setText(mProfile.L144WorkPhone);
+			if(mProfile.L144MobileCellular!=null)
 			tvCellPhoneNum.setText(mProfile.L144MobileCellular);
+			if(mProfile.L144Fax2Mail!=null)
 			tvFaxNum.setText(mProfile.L144Fax2Mail);
+			if(mProfile.WorkEmeil!=null)
 			tvEMail.setText(mProfile.WorkEmeil);
+			if(mProfile.L144Job!=null)
 			tvJob.setText(mProfile.L144Job);
 
 			if (mProfile.L144Department != null && !mProfile.L144Department.equalsIgnoreCase(""))

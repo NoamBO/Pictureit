@@ -294,7 +294,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 	private void setTvOpenHours(
 			ArrayList<HourOperatation> serviceHourOperatation, TextView tvOpenHours, TextView tvOpenDays) {
 		
-		if(serviceHourOperatation == null) {
+		if(serviceHourOperatation == null || serviceHourOperatation.size() == 0) {
 			vgOpenHours.setVisibility(View.GONE);
 			return;
 		}
@@ -306,7 +306,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 	}
 
 	private void setTvCommunication(ArrayList<ContactInfo> contactInfo, TextView tvCommunication, TextView tvCommunicationName) {
-		if(contactInfo == null) {
+		if(contactInfo == null || contactInfo.size() == 0) {
 			vgCommunication.setVisibility(View.GONE);
 			return;
 		}
