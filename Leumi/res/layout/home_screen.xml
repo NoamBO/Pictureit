@@ -105,6 +105,7 @@
                     android:layout_alignRight="@+id/ll_search_bubble1"
                     android:layout_below="@+id/ll_search_bubble1"
                     android:layout_marginRight="5dp"
+                    android:layout_marginBottom="7dp"
                     android:divider="@null" >
                 </ListView>
             </RelativeLayout>

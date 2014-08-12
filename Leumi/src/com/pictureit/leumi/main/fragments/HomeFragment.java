@@ -405,15 +405,18 @@ public class HomeFragment extends BaseFragment {
 
 		@Override
 		public View getView(final int position, View convertView, ViewGroup parent) {
-			convertView = getActivity().getLayoutInflater().inflate(
-					R.layout.simple_textview, null);
-			AutoResizeTextView textView = (AutoResizeTextView) convertView.findViewById(R.id.textview1);
-			textView.setSingleLine(true);
+			ViewHolder holder;
+			if (convertView == null) {
+				holder = new ViewHolder();
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.simple_textview, parent, false);
+				holder.textView = (AutoResizeTextView) convertView.findViewById(R.id.textview1);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			holder.textView.setBackgroundColor(getResources().getColor(android.R.color.white));
 
-			textView.setBackgroundColor(getResources().getColor(
-					android.R.color.white));
-			
-			setRowText(textView, position);
+			setRowText(holder.textView, position);
 			return convertView;
 		}
 
@@ -443,6 +446,10 @@ public class HomeFragment extends BaseFragment {
 			return list.get(list.size() - 1 - position);
 		}
 
+	}
+	
+	private static class ViewHolder {
+		public AutoResizeTextView textView;
 	}
 
 }
