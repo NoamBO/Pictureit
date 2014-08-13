@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="help"
+                    android:text="@string/help"
                     android:textSize="16sp"
                     android:typeface="serif" />
 
