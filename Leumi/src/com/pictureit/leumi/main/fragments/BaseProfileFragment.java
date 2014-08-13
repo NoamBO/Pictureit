@@ -225,7 +225,6 @@ public class BaseProfileFragment extends BaseFragment {
 		public View getView(int position, View arg01, ViewGroup listView) {
 			View v = getActivity().getLayoutInflater().inflate(R.layout.hierarchy_row, null);
 			AutoResizeTextView tvName = (AutoResizeTextView) v.findViewById(R.id.tv_listview_row_name);
-			tvName.setSingleLine(true);
 			ImageView ivArrowLeft = (ImageView) v.findViewById(R.id.iv_listview_row_arrow_left);
 			RelativeLayout parent = (RelativeLayout) v.findViewById(R.id.rl_hierarchy_row_parent);
 			if(position == 0

@@ -21,7 +21,7 @@ public class GetService extends BaseHttpGet {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append(ServerAddresses.GET_SERVICE_METHOD_PATH)
-		.append(ServerAddresses.GET_SERVICE_ACTION_PATH)
+		.append(ServerAddresses.SERVICE_CLICK_ACTION_PATH)
 		.append("?").append(ServerAddresses.ID)
 		.append("=").append(request);
 		

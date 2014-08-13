@@ -33,6 +33,8 @@ public class JsonToObject {
 	private static final String BRANCHS = "branchs";
 
 	public static boolean isStatusOk(String json) {
+		if(json == null)
+			return false;
 		try {
 			JSONObject o = new JSONObject(json);
 			String results = o.getString("SearchStatus");
