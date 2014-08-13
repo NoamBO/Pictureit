@@ -140,6 +140,11 @@ public class ResultsFragment extends FragmentWithoutTabs {
 					adapter.selectedPosition = position;
 				}
 				adapter.notifyDataSetChanged();
+
+				if (lvFilterByUnit.getVisibility() == View.VISIBLE)
+					lvFilterByUnit.setVisibility(View.GONE);
+				if (lvFilterByJob.getVisibility() == View.VISIBLE)
+					lvFilterByJob.setVisibility(View.GONE);
 			}
 		});
 	}
