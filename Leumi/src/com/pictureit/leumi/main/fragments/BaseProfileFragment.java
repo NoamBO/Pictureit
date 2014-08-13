@@ -105,8 +105,8 @@ public class BaseProfileFragment extends BaseFragment {
 					+ mProfile.L144LastName);
 			if(mProfile.L144WorkPhone!=null)
 			tvLineNum.setText(mProfile.L144WorkPhone);
-			if(mProfile.L144MobileCellular!=null)
-			tvCellPhoneNum.setText(mProfile.L144MobileCellular);
+			if(mProfile.L144BankCellular!=null)
+			tvCellPhoneNum.setText(mProfile.L144BankCellular);
 			if(mProfile.L144Fax2Mail!=null)
 			tvFaxNum.setText(mProfile.L144Fax2Mail);
 			if(mProfile.WorkEmeil!=null)
@@ -153,6 +153,9 @@ public class BaseProfileFragment extends BaseFragment {
 				}
 				if(mProfile.L144MobileCellular != null && mProfile.L144MobileCellular.length() >0){
 					nums.add(new NameValue(getResources().getString(R.string.cellphone), mProfile.L144MobileCellular));
+				}
+				if(mProfile.L144BankCellular != null && mProfile.L144BankCellular.length() >0){
+					nums.add(new NameValue(getResources().getString(R.string.cellphone), mProfile.L144BankCellular));
 				}
 				CallSmsEMailMenager.call(nums, getActivity());
 			}
