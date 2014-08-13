@@ -4,9 +4,12 @@ import utilities.BaseFragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.pictureit.leumi.main.MainActivity;
+import com.pictureit.leumi.main.R;
 
 public class FragmentWithoutTabs extends BaseFragment {
 
@@ -17,17 +20,17 @@ public class FragmentWithoutTabs extends BaseFragment {
 		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 	
-//	@Override
-//	public void onResume() {
-//		super.onResume();
-//		ImageButton ibHome = findView(getView(), R.id.ib_go_home);
-//
-//		ibHome.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
-//				((MainActivity) getActivity()).goHome();
-//			}
-//		});
-//	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		ImageButton ibHome = findView(getView(), R.id.ib_go_home);
+
+		ibHome.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				((MainActivity) getActivity()).goHome();
+			}
+		});
+	}
 }

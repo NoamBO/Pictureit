@@ -53,6 +53,7 @@ public class BaseProfileFragment extends BaseFragment {
 	public BaseProfileFragment() {
 	}
 
+	private ImageButton ibHome;
 	private ImageView arrowHierarchy;
 	private ViewGroup vgHierarchyHeader;
 	private TextView tvUnit;
@@ -71,6 +72,13 @@ public class BaseProfileFragment extends BaseFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.profile_screen, container, false);
+		
+		if(savedInstanceState != null) {
+			if(savedInstanceState.getBoolean(EmploeeProfileFragment.KEY_SHOW_HOME_BUTTON_ON_PROFILE_SCREEN)) {
+				ibHome = findView(v, R.id.ib_go_home_profile_screen);
+				ibHome.setVisibility(View.VISIBLE);
+			}
+		}
 
 		ImageView profilePic = findView(v, R.id.iv_profile_screen);
 		
@@ -127,6 +135,14 @@ public class BaseProfileFragment extends BaseFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if(ibHome != null)
+			ibHome.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					((MainActivity) getActivity()).goHome();
+				}
+			});
 		ibCall.setOnClickListener(new OnClickListener() {
 			
 			@Override

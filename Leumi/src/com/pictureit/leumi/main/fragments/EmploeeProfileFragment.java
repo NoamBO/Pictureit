@@ -11,11 +11,15 @@ import com.pictureit.leumi.server.parse.JsonToObject;
 
 public class EmploeeProfileFragment extends BaseProfileFragment {
 
+	public static String KEY_SHOW_HOME_BUTTON_ON_PROFILE_SCREEN = "EmploeeProfileFragment";
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		((MainActivity) getActivity()).lowerTabsButtons();
-		
+		if(savedInstanceState == null)
+			savedInstanceState = new Bundle();
+		savedInstanceState.putBoolean(KEY_SHOW_HOME_BUTTON_ON_PROFILE_SCREEN, true);
 		if (mProfile == null) {
 			Bundle b = getArguments();
 			if (b != null) {

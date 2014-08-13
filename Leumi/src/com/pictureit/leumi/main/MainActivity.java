@@ -139,6 +139,13 @@ public class MainActivity extends FragmentActivity {
 		SoftKeyboard.hideSoftKeyboard(MainActivity.this);
 		
 	}
+	
+	public void goHome() {
+		getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+		mPager.setCurrentItem(HOME_FRAGMENT_ID);
+		mPager.setPagingEnabled(true);
+		returnTabsButtons();
+	}
 
 	public void lowerTabsButtons() {
 		if(tabsButtonsContainer.getVisibility() == View.VISIBLE)
