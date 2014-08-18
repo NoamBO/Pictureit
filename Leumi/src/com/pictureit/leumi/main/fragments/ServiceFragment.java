@@ -236,12 +236,13 @@ public class ServiceFragment extends FragmentWithoutTabs {
 				if(answer==null)
 					return;
 				ServiceRegistration s = JsonToObject.jsonToServiceRegistrationResponse(answer);
-				String msg = (s != null ? s.Msg
-							: getString(R.string.somthing_went_wrong));				
 				if(s == null)
 					return;
+				String msg = (s != null ? s.Msg
+							: getString(R.string.somthing_went_wrong));				
 
 				mService.Register.Status = s.StatusResult;
+				onFollowChange();
 				new AlertDialog.Builder(getActivity())
 				.setMessage(msg)
 				.setNeutralButton("Ok", null)
@@ -249,6 +250,15 @@ public class ServiceFragment extends FragmentWithoutTabs {
 			}
 		});
 		register.registerToService(mService.ServiceID, alreadyRegister);
+	}
+
+	protected void onFollowChange() {
+		final boolean alreadyRegister = mService.Register.Status.equalsIgnoreCase(Const.REGISTER_STATUS_REGISTERED);
+		if(alreadyRegister) {
+			ibFollow.setBackgroundResource(R.drawable.followicon_unselected);
+		} else {
+			ibFollow.setBackgroundResource(R.drawable.followicon);
+		}
 	}
 
 	protected void searchPeopleInResponsibleUnit() {
