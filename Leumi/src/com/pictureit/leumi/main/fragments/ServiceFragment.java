@@ -79,6 +79,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		sliderLinkToService = findView(v, R.id.ll_service_dropdown_link_to_service);
 		
 		tvTitle.setText(mService.BllBusinessService);
+		setTvDescription(mService.BllDescription, tvDescription);
 		setTvResponsibleParty(tvResponsibleParty ,mService.ServiceOwner, mService.ServiceUnitCode);
 		setTvCommunication(mService.ContactInfo, tvCommunication, tvCommunicationName);
 		setTvOpenHours(mService.ServiceHourOperatation, tvOpenHours, tvOpenDays);
@@ -88,12 +89,17 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		return v;
 	}
 	
+	private void setTvDescription(String bllDescription, TextView textView) {
+		if (bllDescription != null && !bllDescription.equalsIgnoreCase(""))
+			textView.setText(bllDescription);
+	}
+
 	private void setTvLike() {
 		tvLike.setText(mService.LikingData.LikingCount);
 		if(mService.LikingData.Liking.equalsIgnoreCase(Const.ALREADY_LIKE))
-			ibLike.setBackgroundResource(R.drawable.likeiconblue);
-		else
 			ibLike.setBackgroundResource(R.drawable.likeicongray);
+		else
+			ibLike.setBackgroundResource(R.drawable.likeiconblue);
 	}
 
 	private void setTvResponsibleParty(TextView tvResponsibleParty2, String serviceOwner, String serviceUnitCode) {

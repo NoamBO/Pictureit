@@ -20,6 +20,7 @@ public class Service {
 	public String ServiceUnitCode;
 	public String ServiceUrl;
 	public String ServiceID;
+	public String BllDescription;
 
 	public static class ContactInfo {
 		

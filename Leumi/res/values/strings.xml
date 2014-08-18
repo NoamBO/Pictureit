@@ -18,7 +18,7 @@
     <string name="job"><b>תפקיד:</b></string>
     <string name="organization_hierarchy">היררכיה אירגונית</string>
     
-    
+    <string name="no_description">אין תיאור זמין</string>
     <string name="somthing_went_wrong">זמנית לא ניתן להציג את העמוד המבוקש. אנא נסה שנית במועד מאוחר יותר</string>
     <string name="office">משרד:</string>
  	<string name="cellphone">נייד: </string>
