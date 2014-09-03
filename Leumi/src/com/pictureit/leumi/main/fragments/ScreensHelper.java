@@ -68,7 +68,7 @@ public class ScreensHelper {
 			} else if (contactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_E_MAIL)) {
 				sbAddressType.append(activity.getText(R.string.email));
-				sbAddress.append(AutoResizeTextViewSetter.elipsizeText(35, contactInfo.get(i).Value));
+				sbAddress.append(contactInfo.get(i).Value);
 
 			} else if (contactInfo.get(i).contact
 					.equalsIgnoreCase(JsonToObject.CONTACT_INFO_CONTACT_VALUE_FAX)) {
