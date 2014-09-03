@@ -207,6 +207,7 @@ public class JsonToObject {
 		final String ServiceUnitCode = "ServiceUnitCode";
 		final String ServiceUrl = "ServiceUrl";
 		final String ServiceID = "ServiceID";
+		final String BllDescription = "BllDescription";
 		
 		Service s = new Service();
 		try {
@@ -221,6 +222,7 @@ public class JsonToObject {
 			s.ServiceUnitCode = jsonGetString(o, ServiceUnitCode);
 			s.ServiceUrl = jsonGetString(o, ServiceUrl);
 			s.ServiceID = jsonGetString(o, ServiceID);
+			s.BllDescription = jsonGetString(o, BllDescription);
 			
 
 			Type typeOfServiceHourOperatation = new TypeToken<ArrayList<HourOperatation>>(){}.getType();
