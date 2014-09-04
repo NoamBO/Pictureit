@@ -46,7 +46,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
-		View v = inflater.inflate(R.layout.service_layout, null);
+		View v = inflater.inflate(R.layout.service_layout, container, false);
 
 		if(mService == null) {
 			Bundle b = getArguments();
@@ -75,7 +75,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		vgLinkToService = findView(v, R.id.rl_service_clickable_header_link_to_service);
 		vgResponsibleParty = findView(v, R.id.rl_service_clickable_header_responsible_party);
 		sliderOpenHours = findView(v, R.id.ll_service_dropdown_days_of_service);
-		sliderCommunication = findView(v, R.id.ll_service_dropdown_communication_options);
+		sliderCommunication = findView(v, R.id.rl_service_dropdown_communication_options);
 		sliderLinkToService = findView(v, R.id.ll_service_dropdown_link_to_service);
 		
 		tvTitle.setText(mService.BllBusinessService);
@@ -85,6 +85,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		setTvOpenHours(mService.ServiceHourOperatation, tvOpenHours, tvOpenDays);
 		setTvLinkToService(tvLinkToService, mService.ServiceUrl);
 		setTvLike();
+		onFollowChange();
 		
 		return v;
 	}

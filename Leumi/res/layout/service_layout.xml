@@ -131,8 +131,8 @@
                 android:background="@drawable/arrowdown" />
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_service_dropdown_communication_options"
+        <RelativeLayout
+            android:id="@+id/rl_service_dropdown_communication_options"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
@@ -140,23 +140,25 @@
             android:visibility="gone" >
 
             <TextView
-                android:id="@+id/tv_service_communication_options"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:gravity="right"
-                android:lineSpacingExtra="1dp" />
-
-            <TextView
                 android:id="@+id/tv_service_communication_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
                 android:gravity="right"
                 android:lineSpacingExtra="1dp"
                 android:textStyle="bold" />
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_service_communication_options"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/tv_service_communication_name"
+                android:gravity="right"
+                android:lineSpacingExtra="1dp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/rl_service_clickable_header_hour_opening"
