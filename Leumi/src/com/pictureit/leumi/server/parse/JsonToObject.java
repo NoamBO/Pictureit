@@ -124,7 +124,7 @@ public class JsonToObject {
 		try {
 			JSONArray results = new JSONObject(json)
 					.getJSONArray("servicelist");
-			for (int i = 0; i < results.length(); i++) {
+			for (int i = results.length() - 1; i >= 0; i--) {
 				services.add(new Gson().fromJson(results.get(i).toString(),
 						LeumiService.class));
 			}
