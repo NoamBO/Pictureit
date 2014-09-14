@@ -39,7 +39,7 @@
  	<string name="last_name">שם משפחה</string>
  	 <string name="job_unbold">תפקיד</string>
  	<string name="free_search">חיפוש חופשי</string>
- 	<string name="free_unit_search">חיפוש יחידה ישירה</string>
+ 	<string name="free_unit_search">חיפוש יחידה</string>
  	<string name="advance_search">חיפוש מתקדם</string>
  	
  	<string name="search_results">תוצאות חיפוש:</string>
