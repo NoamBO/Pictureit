@@ -97,12 +97,21 @@
                         android:background="@drawable/mail_to_support" />
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/tv_home_screen_list_last_services"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_search_bubble1"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/last_services"
+                    android:textColor="@color/dodgerblue" />
+
                 <ListView
                     android:id="@+id/lv_main_services_list"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignRight="@+id/ll_search_bubble1"
-                    android:layout_below="@+id/ll_search_bubble1"
+                    android:layout_below="@+id/tv_home_screen_list_last_services"
                     android:layout_marginBottom="7dp"
                     android:layout_marginRight="5dp"
                     android:divider="@null" >
