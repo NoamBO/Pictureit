@@ -113,7 +113,8 @@
                     android:layout_alignRight="@+id/ll_search_bubble1"
                     android:layout_below="@+id/tv_home_screen_list_last_services"
                     android:layout_marginBottom="7dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="-7dp"
+                    android:layout_marginRight="-7dp"
                     android:divider="@null" >
                 </ListView>
             </RelativeLayout>

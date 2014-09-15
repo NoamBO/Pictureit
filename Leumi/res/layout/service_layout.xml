@@ -290,7 +290,7 @@
             android:layout_marginRight="10dp"
             android:gravity="right"
             android:paddingTop="5dp"
-            android:textColor="@color/pacific_blue"
+            android:textColor="@color/link_blue_color"
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone" />

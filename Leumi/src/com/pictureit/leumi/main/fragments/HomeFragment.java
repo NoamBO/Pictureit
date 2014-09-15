@@ -415,7 +415,8 @@ public class HomeFragment extends BaseFragment {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			holder.textView.setBackgroundColor(getResources().getColor(android.R.color.white));
-
+			holder.textView.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.green_v, 0);
+			holder.textView.setCompoundDrawablePadding(15);
 			setRowText(holder.textView, position);
 			return convertView;
 		}
@@ -427,7 +428,7 @@ public class HomeFragment extends BaseFragment {
 
 			String s = "<u>"+sb.toString()+"</u>";
 			textView.setText(Html.fromHtml(s));
-			textView.setTextColor(getResources().getColor(R.color.dodgerblue));
+			textView.setTextColor(getResources().getColor(R.color.link_blue_color));
 
 		}
 
