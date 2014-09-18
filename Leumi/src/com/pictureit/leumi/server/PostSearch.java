@@ -1,5 +1,7 @@
 package com.pictureit.leumi.server;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,14 +164,14 @@ public class PostSearch extends BaseHttpPost {
 		this.execute();
 	}
 	
-	public void getManagersWithArray(String[] accounts) {
+	public void getManagersWithArray(ArrayList<String> serviceManagerIds) {
 		JSONArray jsonArray = new JSONArray();
 		try {
-			for (int i = 0; i < accounts.length; i++) {
+			for (int i = 0; i < serviceManagerIds.size(); i++) {
 				jsonArray.put(
 						new JSONObject()
 						.put(Const.SEARCH_KEY, Const.ACCOUNT_NAME)
-						.put(Const.SEARCH_VALUE, accounts[i])
+						.put(Const.SEARCH_VALUE, serviceManagerIds.get(i))
 						);
 			}
 			addObjectToMainJsonArray(jsonArray);

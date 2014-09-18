@@ -208,6 +208,8 @@ public class JsonToObject {
 		final String ServiceUrl = "ServiceUrl";
 		final String ServiceID = "ServiceID";
 		final String BllDescription = "BllDescription";
+		final String ServiceUsers = "ServiceUsers";
+		final String ServiceManager = "ServiceManager";
 		
 		Service s = new Service();
 		try {
@@ -237,6 +239,23 @@ public class JsonToObject {
 			s.Register = RegisterData;
 			s.ServiceHourOperatation = ServiceHourOperatationList;
 			s.LikingData = new Gson().fromJson(o.getJSONObject("LikingData").toString(), LikingData.class);
+			
+			ArrayList<String> managersIds = new ArrayList<String>();
+			String manager = jsonGetString(o, ServiceManager);
+			if(manager != null && !manager.equalsIgnoreCase(""))
+				managersIds.add(manager);
+			
+			JSONArray ja = jsonGetJsonArray(o, ServiceUsers);
+			if(ja!=null) {
+				for (int i = 0; i < ja.length(); i++) {
+					String id = jsonGetString(ja.getJSONObject(i), "UserAccount");
+					if(id != null && !id.equalsIgnoreCase("") && !id.equalsIgnoreCase(manager))
+						managersIds.add(id);
+				}
+			}
+			
+			s.ServiceManagerIds = managersIds;
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;

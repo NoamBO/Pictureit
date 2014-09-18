@@ -21,6 +21,7 @@ public class Service {
 	public String ServiceUrl;
 	public String ServiceID;
 	public String BllDescription;
+	public ArrayList<String> ServiceManagerIds;
 
 	public static class ContactInfo {
 		

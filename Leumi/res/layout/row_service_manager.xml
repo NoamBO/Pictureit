@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <ImageView
+        android:id="@+id/iv_row_service_manager"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/tv_row_service_manager_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/iv_row_service_manager"
+        android:textColor="@android:color/black"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_row_service_manager_name"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/ib_row_service_manager_sms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/smsicon" />
+
+        <ImageButton
+            android:id="@+id/ib_row_service_manager_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/phoneicon" />
+    </LinearLayout>
+
+</RelativeLayout>

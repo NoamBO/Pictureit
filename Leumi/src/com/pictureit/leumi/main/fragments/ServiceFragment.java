@@ -1,25 +1,36 @@
 package com.pictureit.leumi.main.fragments;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import utilities.server.HttpBase.HttpCallback;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.pictureit.leumi.animation.AnimationManager;
 import com.pictureit.leumi.main.CallSmsEMailMenager;
 import com.pictureit.leumi.main.Const;
 import com.pictureit.leumi.main.Dialogs;
+import com.pictureit.leumi.main.MainActivity;
 import com.pictureit.leumi.main.R;
 import com.pictureit.leumi.main.Settings;
 import com.pictureit.leumi.server.PostLike;
@@ -29,6 +40,7 @@ import com.pictureit.leumi.server.SearchCallback;
 import com.pictureit.leumi.server.parse.HourOperatation;
 import com.pictureit.leumi.server.parse.JsonToObject;
 import com.pictureit.leumi.server.parse.NameValue;
+import com.pictureit.leumi.server.parse.Profile;
 import com.pictureit.leumi.server.parse.Service;
 import com.pictureit.leumi.server.parse.Service.ContactInfo;
 import com.pictureit.leumi.server.parse.Service.LikingData;
@@ -39,8 +51,9 @@ public class ServiceFragment extends FragmentWithoutTabs {
 	private Service mService;
 	private TextView tvResponsibleParty, tvLike;
 	private ImageButton ibCall, ibMail, ibFollow, ibLike;
-	private ViewGroup vgCommunication, vgOpenHours, vgLinkToService, vgResponsibleParty;
+	private ViewGroup vgCommunication, vgOpenHours, vgLinkToService, vgResponsibleParty, vgServiceManager;
 	private ViewGroup sliderOpenHours, sliderCommunication, sliderLinkToService;
+	private ListView lvManagersList;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +91,9 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		sliderCommunication = findView(v, R.id.rl_service_dropdown_communication_options);
 		sliderLinkToService = findView(v, R.id.ll_service_dropdown_link_to_service);
 		
+		lvManagersList = findView(v, R.id.lv_service_managers);
+		vgServiceManager = findView(v, R.id.rl_service_clickable_header_service_manager);
+		
 		tvTitle.setText(mService.BllBusinessService);
 		setTvDescription(mService.BllDescription, tvDescription);
 		setTvResponsibleParty(tvResponsibleParty ,mService.ServiceOwner, mService.ServiceUnitCode);
@@ -85,11 +101,27 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		setTvOpenHours(mService.ServiceHourOperatation, tvOpenHours, tvOpenDays);
 		setTvLinkToService(tvLinkToService, mService.ServiceUrl);
 		setTvLike();
+		getServiceManagersList();
 		onFollowChange();
 		
 		return v;
 	}
 	
+	private void getServiceManagersList() {
+		PostSearch postSearch = new PostSearch(getActivity(), new HttpCallback() {
+			
+			@Override
+			public void onAnswerReturn(String answer) {
+				if(JsonToObject.isStatusOk(answer)){
+					ArrayList<Profile> managers = JsonToObject.jsonToUserProfilesArrayList(answer);
+					if(managers.size() > 0)
+						setServiceManagersList(managers);
+				}
+			}
+		});
+		postSearch.getManagersWithArray(mService.ServiceManagerIds);
+	}
+
 	private void setTvDescription(String bllDescription, TextView textView) {
 		if (bllDescription != null && !bllDescription.equalsIgnoreCase(""))
 			textView.setText(bllDescription);
@@ -202,6 +234,13 @@ public class ServiceFragment extends FragmentWithoutTabs {
 			@Override
 			public void onClick(View v) {
 				searchPeopleInResponsibleUnit();
+			}
+		});
+		vgServiceManager.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View view) {
+				showHideView(lvManagersList, R.id.iv_service_manager_arrow, view);
 			}
 		});
 	}
@@ -331,6 +370,91 @@ public class ServiceFragment extends FragmentWithoutTabs {
 		
 		if(minimumNumbersToShowFeature < 1)
 			vgCommunication.setVisibility(View.GONE);
+	}
+	
+	private void setServiceManagersList(ArrayList<Profile> managers) {
+		vgServiceManager.setVisibility(View.VISIBLE);
+		final ManagersListViewAdapter adapter = new ManagersListViewAdapter(getActivity(), 0, managers);
+		lvManagersList.setAdapter(adapter);
+		lvManagersList.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Profile p = (Profile) parent.getItemAtPosition(position);
+				String profileJson = new Gson().toJson(p);
+				Bundle b = new Bundle();
+				b.putString(Const.JSON, profileJson);
+				
+				Fragment f = new EmploeeProfileFragment();
+				f.setArguments(b);
+				
+				((MainActivity) getActivity()).addFragment(f);
+			}
+		});
+	}
+	
+	private class ManagersListViewAdapter extends ArrayAdapter<Profile> {
+		
+		public ManagersListViewAdapter(Context context, int resource, List<Profile> objects) {
+			super(context, resource, objects);
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final ViewHolder holder;
+			if(convertView == null) {
+				holder = new ViewHolder();
+				convertView = ((Activity) getContext()).getLayoutInflater().inflate(R.layout.row_service_manager, parent, false);
+				holder.call = findView(convertView, R.id.ib_row_service_manager_call);
+				holder.image = findView(convertView, R.id.iv_row_service_manager);
+				holder.name = findView(convertView, R.id.tv_row_service_manager_name);
+				holder.sms = findView(convertView, R.id.ib_row_service_manager_sms);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+			
+			final Profile p = getItem(position);
+			holder.call.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					ArrayList<NameValue> nums = new ArrayList<NameValue>();
+					if(p.L144WorkPhone != null && p.L144WorkPhone.length() >0){
+						nums.add(new NameValue(getResources().getString(R.string.office), p.L144WorkPhone));
+					}
+					if(p.L144MobileCellular != null && p.L144MobileCellular.length() >0){
+						nums.add(new NameValue(getResources().getString(R.string.cellphone), p.L144MobileCellular));
+					}
+					if(p.L144BankCellular != null && p.L144BankCellular.length() >0){
+						nums.add(new NameValue(getResources().getString(R.string.cellphone), p.L144BankCellular));
+					}
+					CallSmsEMailMenager.call(nums, getActivity());
+				}
+			});
+			if(p.L144WorkerPictureUrl != null)
+				imageLoader.displayImage(p.L144WorkerPictureUrl, holder.image, options);
+			
+			holder.name.setText(p.L144FirstName+ " " + p.L144LastName);
+			
+			holder.sms.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					CallSmsEMailMenager.sendSms(p.L144MobileCellular, getActivity());
+				}
+			});
+			return convertView;
+		}
+		
+	}
+	
+	private static class ViewHolder {
+		ImageView image;
+		ImageButton call;
+		ImageButton sms;
+		TextView name;
+		
 	}
 
 }

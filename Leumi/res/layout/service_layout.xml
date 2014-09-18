@@ -294,6 +294,40 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/rl_service_clickable_header_service_manager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/actionbarservice"
+            android:visibility="gone" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:text="@string/service_manager"
+                android:textColor="@color/royalblue4"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:id="@+id/iv_service_manager_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/arrowdown" />
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_service_managers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+        </ListView>
     </LinearLayout>
 
 </ScrollView>
