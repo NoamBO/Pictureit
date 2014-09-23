@@ -52,7 +52,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
+                android:gravity="right"
                 android:hint="@string/first_name"
+                android:inputType="textCapWords"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>
@@ -68,7 +70,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
+                android:gravity="right"
                 android:hint="@string/last_name"
+                android:inputType="textCapWords"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>
@@ -84,7 +88,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
+                android:gravity="right"
                 android:hint="@string/free_unit_search"
+                android:inputType="textCapWords"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>
@@ -100,7 +106,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
+                android:gravity="right"
                 android:hint="@string/job_unbold"
+                android:inputType="textCapWords"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>
@@ -116,7 +124,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/edittext_shape"
+                android:gravity="right"
                 android:hint="@string/free_search"
+                android:inputType="textCapWords"
                 android:paddingRight="15dp"
                 android:singleLine="true" />
         </FrameLayout>
