@@ -228,6 +228,8 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	protected void showWebView() {
+		if(LocalStorageManager.getInstance().systemAddition.AdditionServiceUrl!=null)
+			wvMoreServices.loadUrl(LocalStorageManager.getInstance().systemAddition.AdditionServiceUrl);
 		ExtraServicesWebViewManager.expand(wvMoreServices, MainActivity.this);
 	}
 
