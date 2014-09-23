@@ -435,7 +435,7 @@ public class ServiceFragment extends FragmentWithoutTabs {
 			if(p.L144WorkerPictureUrl != null)
 				imageLoader.displayImage(p.L144WorkerPictureUrl, holder.image, options);
 			
-			holder.name.setText(p.L144FirstName+ " " + p.L144LastName);
+			holder.name.setText(p.L144LastName+" "+p.L144FirstName);
 			
 			holder.sms.setOnClickListener(new OnClickListener() {
 				
